@@ -6,18 +6,14 @@ import java.util.Scanner;
 
 public class Reader {
 
-	public static ArrayList<String> read(String filePath) {
+	public static ArrayList<String> read(String filePath) throws FileNotFoundException {
 		ArrayList<String> inputFileLines = new ArrayList<String>();
-		try {
-			System.out.println("Opening file: " + filePath);
-			FileReader inputFileReader = new FileReader(filePath);
-			Scanner inputFileScanner = new Scanner(inputFileReader);
-			while(inputFileScanner.hasNextLine())
-				inputFileLines.add(inputFileScanner.nextLine());
-			inputFileScanner.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found.");
-		}
+		System.out.println("Opening file: " + filePath);
+		FileReader inputFileReader = new FileReader(filePath);
+		Scanner inputFileScanner = new Scanner(inputFileReader);
+		while(inputFileScanner.hasNextLine())
+			inputFileLines.add(inputFileScanner.nextLine());
+		inputFileScanner.close();
 		return inputFileLines;
 	}
 
