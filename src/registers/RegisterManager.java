@@ -1,3 +1,4 @@
+package registers;
 public class RegisterManager {
 
 	private Register registers[] = new Register[32];

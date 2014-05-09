@@ -1,3 +1,4 @@
+package registers;
 public class Register {
 
 	private String value;
