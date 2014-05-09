@@ -42,15 +42,15 @@ public class ALU {
 
 	public HashMap<String, String> execute(String inputA, String inputB,
 			ALUControl control) {
-		Process p = new Process(inputA, inputB);
-		String operation = control.getOperation();
+		Operation op = new Operation(inputA, inputB);
+		String operator = control.getOperation();
 		String className = "alu.command."
-				+ operation.substring(0, 0).toUpperCase()
-				+ operation.substring(1).toLowerCase() + "Command";
+				+ operator.substring(0, 0).toUpperCase()
+				+ operator.substring(1).toLowerCase() + "Command";
 		try {
 			Class<?> commandClass = Class.forName(className);
 			Constructor<?> constructor = commandClass.getConstructor(String.class);
-			Command result = (Command) constructor.newInstance(p);
+			Command result = (Command) constructor.newInstance(op);
 			return result.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
