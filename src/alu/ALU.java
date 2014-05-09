@@ -1,11 +1,12 @@
+package alu;
+
 public class ALU {
 	
 	private String inputA, inputB;
 	
-	public ALU(String inputA, String inputB, String operation) {
+	public ALU(String inputA, String inputB) {
 		this.inputA = inputA;
 		this.inputB = inputB;
-		this.operation = operation;
 	}
 
 	public String getInputA() {
