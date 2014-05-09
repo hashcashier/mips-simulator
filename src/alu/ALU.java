@@ -1,12 +1,18 @@
 package alu;
 
+import java.util.HashMap;
+
+import alu.command.AddCommand;
+
 public class ALU {
 	
 	private String inputA, inputB;
+	private ALUControl control;
 	
-	public ALU(String inputA, String inputB) {
+	public ALU(String inputA, String inputB, ALUControl control) {
 		this.inputA = inputA;
 		this.inputB = inputB;
+		this.control = control;
 	}
 
 	public String getInputA() {
@@ -25,16 +31,21 @@ public class ALU {
 		this.inputB = inputB;
 	}
 	
-	public String execute(String operation) {
-		if (operation == "ADD") {
-			
+	public ALUControl getControl() {
+		return control;
+	}
+	
+	public void setControl(ALUControl control) {
+		this.control = control;
+	}
+	
+	public HashMap<String, String> execute() {
+		Operation o = new Operation(inputA, inputB);
+		String op = control.getOperation();
+		if (op == "add") {
+			AddCommand c = new AddCommand(o);
+			return c.execute();
 		}
-		else if (operation == "ADDI") {
-			
-		}
-		else if (operation == "SUB") {
-			
-		}
-		return "";
+		return null;
 	}
 }

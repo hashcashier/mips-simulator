@@ -7,7 +7,7 @@ public class RegisterManager {
 		init();
 	}
 
-	public String getRegisterValue(int regNumber, String regValue) {
+	public String getRegisterValue(int regNumber) {
 		return registers[regNumber].getValue();
 	}
 	

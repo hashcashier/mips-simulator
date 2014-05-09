@@ -7,14 +7,14 @@ import java.lang.reflect.InvocationTargetException;
 
 public class InstructionFactory {
 	public static Instruction createInstruction(String name, String parameters) throws UnkownInstructionException {
+		name = name.substring(0, 0).toUpperCase() + name.substring(1);
 		Class<?> instructionClass = null;
 		Constructor<?> constructor = null;
 		Instruction result = null;
 		try {
 			instructionClass = Class.forName(name);
-			constructor = instructionClass.getConstructor(String[].class);
-			String[] params = parameters.split(" ");
-			result = (Instruction) constructor.newInstance(params);
+			constructor = instructionClass.getConstructor(String.class);
+			result = (Instruction) constructor.newInstance(parameters);
 		} catch (NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
