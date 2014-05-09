@@ -1,5 +1,7 @@
 package instructions;
 
+import instructions.isa.Instruction;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 

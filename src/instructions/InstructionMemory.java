@@ -1,5 +1,7 @@
 package instructions;
 
+import instructions.isa.Instruction;
+
 public class InstructionMemory {
 	private Instruction[] instructions;
 	private int instructionCount;
@@ -20,7 +22,7 @@ public class InstructionMemory {
 				instructions[instructionCount++] = InstructionFactory.createInstruction(name, params);
 			} catch (UnkownInstructionException e) {
 				// Throw more stuff
-			} 
+			}
 		}
 	}
 	
