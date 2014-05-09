@@ -7,8 +7,19 @@ public class RegisterManager {
 	}
 
 	public String getRegisterValue(String regTitle) {
-		String value = "";
-		return value;
+		for (int i = 0; i < 32; i++)
+			if (registers[i].getTitle().equals(regTitle))
+				return registers[i].getValue();
+		return "Register Not Found.";
+	}
+
+	public boolean setRegisterValue(String regTitle, String regValue) {
+		for (int i = 0; i < 32; i++)
+			if (registers[i].getTitle().equals(regTitle)) {
+				registers[i].setValue(regValue);
+				return true;
+			}
+		return false;
 	}
 
 	private void init() {
@@ -66,7 +77,7 @@ public class RegisterManager {
 	}
 
 	private String zeros32() {
-		return "00000000000000000000000000";
+		return "00000000000000000000000000000000";
 	}
 
 	public static void main(String... args) {

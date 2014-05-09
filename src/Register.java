@@ -26,8 +26,20 @@ public class Register {
 		this.title = title;
 		this.type[type] = true;
 	}
-	
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	public String toString() {
-		return title + " :=  " + value; 
+		return title + " :=  " + value;
 	}
 }
