@@ -27,12 +27,13 @@ public class ASMReader {
 			String inputFileLine = inputFileLines[i].trim();
 			
 			boolean marked = inputFileLine.equals("." + marker);
-			if(inputFileLine.charAt(0) == '.')
+			if(inputFileLine.charAt(0) == '.') {
 				reading = marked;
-			
-			if(reading) {
-				filtered.add(inputFileLines[i]);
+				continue;
 			}
+			
+			if(reading)
+				filtered.add(inputFileLines[i]);
 		}
 		
 		return filtered.toArray(inputFileLines);

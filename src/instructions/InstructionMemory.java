@@ -12,7 +12,6 @@ public class InstructionMemory {
 		instructionCount = 0;
 		for(int i = 0; i < lines; i++) {
 			String instructionLine = instructionLines[i].trim();
-			instructionLine.replace(".text", "");
 			
 			try {
 				String[] instruction = instructionLine.split(" ");
