@@ -7,6 +7,10 @@ public class RegisterManager {
 		init();
 	}
 
+	public String getRegisterValue(int regNumber, String regValue) {
+		return registers[regNumber].getValue();
+	}
+	
 	public String getRegisterValue(String regTitle) {
 		for (int i = 0; i < 32; i++)
 			if (registers[i].getTitle().equals(regTitle))
@@ -14,6 +18,10 @@ public class RegisterManager {
 		return "Register Not Found.";
 	}
 
+	public void setRegisterValue(int regNumber, String regValue) {
+		registers[regNumber].setValue(regValue);
+	}
+	
 	public boolean setRegisterValue(String regTitle, String regValue) {
 		for (int i = 0; i < 32; i++)
 			if (registers[i].getTitle().equals(regTitle)) {
