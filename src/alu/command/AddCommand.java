@@ -2,13 +2,13 @@ package alu.command;
 
 import java.util.HashMap;
 
-import alu.Operation;
+import alu.Process;
 
 public class AddCommand implements Command {
 
-	private Operation o;
+	private Process o;
 	
-	public AddCommand(Operation o) {
+	public AddCommand(Process o) {
 		this.o = o;
 	}
 	
