@@ -1,8 +1,12 @@
 package instructions;
 
+import java.util.Hashtable;
+
 public class InstructionMemory {
 	private Instruction[] instructions;
 	private int instructionCount;
+	Hashtable<String, Integer> labelTable;
+	
 	
 	public InstructionMemory(String[] instructionLines) {
 		boolean reading = false;
@@ -20,6 +24,17 @@ public class InstructionMemory {
 			
 			if(reading) {
 				try {
+					if(instructionLine.contains(":")) {
+						String[] instructionSplit = instructionLine.split(":");
+						String label = instructionSplit[0];
+						instructionLine = instructionSplit[1];
+						if(labelTable.contains(label)) {
+							
+						}
+					}
+					if(instructionLine.matches("(\\w*)[:]")) {
+						
+					}
 					instructions[instructionCount++] = new Instruction(instructionLine);
 				} catch (UnkownInstructionException e) {
 					// Throw more stuff
@@ -35,4 +50,6 @@ public class InstructionMemory {
 	public Instruction getInstruction(int number) {
 		return instructions[number];
 	}
+	
+	
 }
