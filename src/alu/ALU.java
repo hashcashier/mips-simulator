@@ -1,8 +1,12 @@
 package alu;
 
+import instructions.isa.Instruction;
+
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
 import alu.command.AddCommand;
+import alu.command.Command;
 
 public class ALU {
 	
@@ -40,11 +44,19 @@ public class ALU {
 	}
 	
 	public HashMap<String, String> execute() {
+		Class<?> commandClass = null;
+		Constructor<?> constructor = null;
+		Command result = null;
 		Operation o = new Operation(inputA, inputB);
 		String op = control.getOperation();
-		if (op == "add") {
-			AddCommand c = new AddCommand(o);
-			return c.execute();
+		String className = "alu.command." + op.substring(0, 0).toUpperCase() + op.substring(1).toLowerCase() + "Command";
+		try {
+			commandClass = Class.forName(className);
+			constructor = commandClass.getConstructor(String.class);
+			result = (Command) constructor.newInstance(o);
+			return result.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
