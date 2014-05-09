@@ -1,5 +1,7 @@
 package instructions;
 
+import instructions.isa.Instruction;
+
 public class InstructionMemory {
 	private Instruction[] instructions;
 	private int instructionCount;
@@ -13,7 +15,11 @@ public class InstructionMemory {
 			instructionLine.replace(".text", "");
 			
 			try {
-				instructions[instructionCount++] = new Instruction(instructionLine);
+				String[] instruction = instructionLine.split(" ");
+				String name = instruction[0].trim(), params = "";
+				for(int j = 1; j < instruction.length; j++)
+					params += instruction[j];
+				instructions[instructionCount++] = InstructionFactory.createInstruction(name, params);
 			} catch (UnkownInstructionException e) {
 				// Throw more stuff
 			}
