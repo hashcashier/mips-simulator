@@ -9,7 +9,7 @@ public class Add extends Instruction {
 	@Override
 	public String getBits() {
 		// TODO Auto-generated method stub
-		return null;
+		return "00000000000000000000000000000000";
 	}
 
 }

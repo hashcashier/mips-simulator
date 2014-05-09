@@ -38,13 +38,13 @@ public class ASMReader {
 		return filtered.toArray(inputFileLines);
 	}
 
-	public String[] getInstructions() throws FileNotFoundException {
+	public String[] getInstructions() {
 		if(instructionFile == null)
 			instructionFile = read("text");
 		return instructionFile;
 	}
 
-	public String[] getData() throws FileNotFoundException {
+	public String[] getData() {
 		if(dataFile == null)
 			dataFile = read("data");
 		return dataFile;

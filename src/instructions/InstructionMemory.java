@@ -22,6 +22,7 @@ public class InstructionMemory {
 				instructions[instructionCount++] = InstructionFactory.createInstruction(name, params);
 			} catch (UnkownInstructionException e) {
 				// Throw more stuff
+				System.out.println("Unkown instruction: " + instructionLine);
 			}
 		}
 	}

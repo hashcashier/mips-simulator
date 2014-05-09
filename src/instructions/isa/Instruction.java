@@ -1,6 +1,5 @@
 package instructions.isa;
 
-import instructions.UnkownInstructionException;
 
 public abstract class Instruction {
 	protected String[] params;
