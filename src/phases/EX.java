@@ -1,4 +1,4 @@
-package simulation;
+package phases;
 
 public class EX {
 
