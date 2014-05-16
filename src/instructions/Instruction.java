@@ -1,11 +1,14 @@
 package instructions;
 
+import registers.RegisterManager;
+
 
 
 public abstract class Instruction {
 	protected String[] params;
 	protected int[] paramTypes;
 	protected InstructionType instructionType;
+	protected String opcode, rs, rt, rd, shamt, funct, immediate, address;
 	
 	protected Instruction(InstructionType type, String[] parameters, int[] types, int[] expectedTypes, int expectedCount) throws InvalidParameterException {
 		instructionType = type;
@@ -21,5 +24,16 @@ public abstract class Instruction {
 				params[i] = params[i].trim();
 	}
 	
-	public abstract String getBits();
+	public String getBits() {
+		switch(instructionType) {
+			case RFormat:
+				return opcode + rs + rt + rd + shamt + funct;
+			case IFormat:
+				return opcode + rs + rt + immediate;
+			case JFormat:
+				return opcode + address;
+			default:
+				return RegisterManager.zeros32();
+		}
+	}
 }

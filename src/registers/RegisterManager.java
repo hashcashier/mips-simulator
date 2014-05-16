@@ -85,7 +85,7 @@ public class RegisterManager {
 		}
 	}
 
-	public String zeros32() {
+	public static String zeros32() {
 		return "00000000000000000000000000000000";
 	}
 

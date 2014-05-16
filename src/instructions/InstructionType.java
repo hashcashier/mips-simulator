@@ -1,5 +1,5 @@
 package instructions;
 
 public enum InstructionType {
-	IFormat, RFormat, BFormat, JFormat
+	IFormat, RFormat, JFormat
 }
