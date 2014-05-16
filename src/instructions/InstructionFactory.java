@@ -6,15 +6,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public class InstructionFactory {
-	public static Instruction createInstruction(String name, String parameters) throws UnkownInstructionException {
+	public static Instruction createInstruction(String name, String[] parameters, int[] types) throws UnkownInstructionException {
 		name = name.substring(0, 0).toUpperCase() + name.substring(1);
+		
 		Class<?> instructionClass = null;
 		Constructor<?> constructor = null;
 		Instruction result = null;
+		
 		try {
 			instructionClass = Class.forName(name);
-			constructor = instructionClass.getConstructor(String.class);
-			result = (Instruction) constructor.newInstance(parameters);
+			constructor = instructionClass.getConstructor(String[].class, int[].class);
+			result = (Instruction) constructor.newInstance(parameters, types);
 		} catch (NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

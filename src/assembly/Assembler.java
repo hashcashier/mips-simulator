@@ -20,7 +20,7 @@ public class Assembler {
 				String label = data[i].substring(0, idx);
 				if(labelManager.containsLabel(label))
 					throw new DuplicateLabelException();
-				labelManager.setLabel(label, i, 0);
+				labelManager.setLabel(label, i, 1);
 			}
 		}
 	}
@@ -36,7 +36,7 @@ public class Assembler {
 				filteredInstructions[i] = instructions[i].substring(idx+1);
 				if(labelManager.containsLabel(label))
 					throw new DuplicateLabelException();
-				labelManager.setLabel(label, i, 1);
+				labelManager.setLabel(label, i, 2);
 			}
 		}
 	}
@@ -48,4 +48,6 @@ public class Assembler {
 	public String[] assembleData() {
 		return null;
 	}
+	
+	
 }

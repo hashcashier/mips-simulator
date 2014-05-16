@@ -10,20 +10,7 @@ public class InstructionMemory {
 		int lines = instructionLines.length;
 		instructions = new Instruction[lines];
 		instructionCount = 0;
-		for(int i = 0; i < lines; i++) {
-			String instructionLine = instructionLines[i].trim();
-			
-			try {
-				String[] instruction = instructionLine.split(" ");
-				String name = instruction[0].trim(), params = "";
-				for(int j = 1; j < instruction.length; j++)
-					params += instruction[j];
-				instructions[instructionCount++] = InstructionFactory.createInstruction(name, params);
-			} catch (UnkownInstructionException e) {
-				// Throw more stuff
-				System.out.println("Unkown instruction: " + instructionLine);
-			}
-		}
+		
 	}
 	
 	public int getInstructionCount() {
