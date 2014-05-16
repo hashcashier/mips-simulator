@@ -1,6 +1,8 @@
 package assembly;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Map.Entry;
 
 import registers.RegisterManager;
 
@@ -35,4 +37,20 @@ public class LabelManager {
 		return labelValue.contains(label);
 	}
 	
+	public String[] getAllLabels(int type) {
+		ArrayList<String> labels = new ArrayList<String>();
+		for(Entry<String, Integer> entry : labelType.entrySet())
+			if(entry.getValue() == type)
+				labels.add(entry.getKey());
+		
+		return labels.toArray(new String[1]);
+	}
+	
+	public String[] getAllDataLabels() {
+		return getAllLabels(1);
+	}
+	
+	public String[] getAllInstructionLabels() {
+		return getAllLabels(2);
+	}
 }
