@@ -85,12 +85,11 @@ public class RegisterManager {
 		}
 	}
 
-	private String zeros32() {
+	public String zeros32() {
 		return "00000000000000000000000000000000";
 	}
 
-	public static void main(String... args) {
-		RegisterManager rm = new RegisterManager();
-		rm.displayRegisters();
+	public String getRegisterTitle(int regNumber) {
+		return registers[regNumber].getTitle();
 	}
 }

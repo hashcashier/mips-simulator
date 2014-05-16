@@ -1,5 +1,5 @@
 package simulation;
 
-public class Pipeline {
+public class Datapath {
 
 }

@@ -6,6 +6,11 @@ public class Assembler {
 	public Assembler(String[] instructions, String[] data) throws DuplicateLabelException {
 		labelManager = new LabelManager();
 		
+		filterData(data);
+		filterInstructions(instructions);
+	}
+	
+	private void filterData(String[] data) throws DuplicateLabelException {
 		filteredData = data;
 		for(int i = 0; i < data.length; i++) {
 			int idx = data[i].indexOf(':'), idx2 = data[i].indexOf('"');
@@ -18,7 +23,9 @@ public class Assembler {
 				labelManager.setLabel(label, i, 0);
 			}
 		}
-		
+	}
+	
+	private void filterInstructions(String[] instructions) throws DuplicateLabelException {
 		filteredInstructions = new String[instructions.length];
 		for(int i = 0; i < instructions.length; i++) {
 			int idx = instructions[i].indexOf(':');
@@ -34,15 +41,11 @@ public class Assembler {
 		}
 	}
 	
-	public String[] getFilteredInstructions() {
-		return filteredInstructions;
+	public String[] assembleInstructions() {
+		return null;
 	}
 	
-	public String[] getFilteredData() {
-		return filteredData;
-	}
-	
-	public LabelManager getLabeManager() {
-		return labelManager;
+	public String[] assembleData() {
+		return null;
 	}
 }

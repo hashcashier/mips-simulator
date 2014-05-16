@@ -6,6 +6,7 @@ public class Register {
 
 	private boolean type[] = new boolean[11];
 
+	static int TYPE_ZERO = 0;
 	static int TYPE_ARGUMENT = 1;
 	static int TYPE_RESULT_VALUE = 2;
 	static int TYPE_TEMPORARY = 3;
@@ -14,7 +15,6 @@ public class Register {
 	static int TYPE_STACK_POINTER = 6;
 	static int TYPE_FRAME_POINTER = 7;
 	static int TYPE_RETURN_ADDRESS = 8;
-	static int TYPE_ZERO = 0;
 	static int TYPE_KERNEL = 9;
 	static int TYPE_ASSEMBLER_TEMPORARY = 10;
 
