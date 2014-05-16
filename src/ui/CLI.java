@@ -1,15 +1,32 @@
 package ui;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import assembly.DuplicateLabelException;
+
+import simulation.Simulator;
 
 public class CLI {
 
 	public static void main(String[] args) {
+		String filePath;
 		if(args.length == 0) {
 			Scanner commandLineScanner = new Scanner(System.in);
-			args = new String[1];
 			System.out.print("Enter file path: ");
-			args[0] = commandLineScanner.nextLine();
+			filePath = commandLineScanner.nextLine();
 			commandLineScanner.close();
+		} else {
+			filePath = args[0];
+		}
+		
+		try {
+			Simulator mipsSimulator = new Simulator(filePath);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DuplicateLabelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

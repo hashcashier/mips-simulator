@@ -1,6 +1,5 @@
 package instructions;
 
-import instructions.isa.Instruction;
 
 public class InstructionMemory {
 	private Instruction[] instructions;

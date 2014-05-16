@@ -1,5 +1,9 @@
 package instructions.isa;
 
+import instructions.Instruction;
+import instructions.InstructionType;
+import instructions.InvalidParameterException;
+
 public class Add extends Instruction {
 
 	public Add(String[] parameters, int[] types) throws InvalidParameterException {

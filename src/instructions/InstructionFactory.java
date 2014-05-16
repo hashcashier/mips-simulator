@@ -1,20 +1,19 @@
 package instructions;
 
-import instructions.isa.Instruction;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public class InstructionFactory {
 	public static Instruction createInstruction(String name, String[] parameters, int[] types) throws UnkownInstructionException {
-		name = name.substring(0, 0).toUpperCase() + name.substring(1);
+		name = name.substring(0, 1).toUpperCase() + name.substring(1);
 		
 		Class<?> instructionClass = null;
 		Constructor<?> constructor = null;
 		Instruction result = null;
 		
 		try {
-			instructionClass = Class.forName(name);
+			instructionClass = Class.forName("instructions.isa." + name);
 			constructor = instructionClass.getConstructor(String[].class, int[].class);
 			result = (Instruction) constructor.newInstance(parameters, types);
 		} catch (NoSuchMethodException | SecurityException e) {
@@ -22,7 +21,8 @@ public class InstructionFactory {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
+			throw new UnkownInstructionException();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,4 +1,4 @@
-package instructions.isa;
+package instructions;
 
 public enum InstructionType {
 	IFormat, RFormat, BFormat, JFormat

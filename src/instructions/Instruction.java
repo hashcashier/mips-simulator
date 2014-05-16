@@ -1,4 +1,5 @@
-package instructions.isa;
+package instructions;
+
 
 
 public abstract class Instruction {

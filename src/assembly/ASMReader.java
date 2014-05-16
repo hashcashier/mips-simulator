@@ -17,7 +17,7 @@ public class ASMReader {
 		while(inputFileScanner.hasNextLine())
 			inputFileLines.add(inputFileScanner.nextLine());
 		inputFileScanner.close();
-		this.inputFileLines = inputFileLines.toArray(this.inputFileLines); 
+		this.inputFileLines = inputFileLines.toArray(new String[0]); 
 	}
 	
 	private String[] read(String marker) {
@@ -36,7 +36,7 @@ public class ASMReader {
 				filtered.add(inputFileLines[i]);
 		}
 		
-		return filtered.toArray(inputFileLines);
+		return filtered.toArray(new String[0]);
 	}
 
 	public String[] getInstructions() {

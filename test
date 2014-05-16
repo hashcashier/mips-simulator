@@ -1,0 +1,5 @@
+.text
+add $zero, $at, $t1
+lw $t1, 12345($s1)
+.data
+.ascii "heh"

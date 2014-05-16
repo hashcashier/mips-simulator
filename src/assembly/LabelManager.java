@@ -19,13 +19,16 @@ public class LabelManager {
 		RegisterManager tempRegisterManager = new RegisterManager();
 		for(int i = 0; i < 32; i++) {
 			String label = tempRegisterManager.getRegisterTitle(i);
-			labelType.put(label, 4);
-			labelValue.put(label, i);
+			setLabel(label, i, 4);
 		}
 	}
 	
 	public Integer getLabelValue(String label) {
 		return labelValue.get(label);
+	}
+	
+	public Integer getLabelType(String label) {
+		return labelType.get(label);
 	}
 	
 	public void setLabel(String key, Integer value, Integer type) {
@@ -34,7 +37,7 @@ public class LabelManager {
 	}
 	
 	public boolean containsLabel(String label) {
-		return labelValue.contains(label);
+		return labelValue.containsKey(label);
 	}
 	
 	public String[] getAllLabels(int type) {

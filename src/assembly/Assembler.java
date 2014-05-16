@@ -1,6 +1,8 @@
 package assembly;
 
-import instructions.isa.Instruction;
+import instructions.Instruction;
+import instructions.InstructionFactory;
+import instructions.UnkownInstructionException;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -10,7 +12,8 @@ public class Assembler {
 	String[] filteredInstructions, filteredData, assembledInstructions, assembledData, parsedData;
 	Instruction[] parsedInstructions;
 	LabelManager labelManager;
-	public Assembler(String[] instructions, String[] data) throws DuplicateLabelException {
+	
+	public Assembler(String[] instructions, String[] data) throws DuplicateLabelException, UnkownLabelException, UnkownInstructionException {
 		labelManager = new LabelManager();
 		
 		filteredData = data;
@@ -95,11 +98,51 @@ public class Assembler {
 		for(Entry<String, Integer> entry : shiftBuffer.entrySet())
 			labelManager.setLabel(entry.getKey(), entry.getValue(), 1);
 		
-		parsedData = data.toArray(parsedData);
+		parsedData = data.toArray(new String[0]);
 	}
 	
-	private void parseInstructions() {
-		
+	private void parseInstructions() throws UnkownLabelException, UnkownInstructionException {
+		parsedInstructions = new Instruction[filteredInstructions.length];
+		for(int i = 0; i < parsedInstructions.length; i++) {
+			String instructionLine = filteredInstructions[i];
+			int spaceIndex = instructionLine.indexOf(' ');
+			if(spaceIndex == -1) {
+				parsedInstructions[i] = InstructionFactory.createInstruction(instructionLine.trim(), new String[0], new int[0]);
+			} else {
+				String name = instructionLine.substring(0, spaceIndex).trim();
+				String rawParams = instructionLine.substring(spaceIndex).trim();
+				int open = rawParams.indexOf("("), close = rawParams.indexOf(")");
+				if(open != -1 && close != -1)
+					rawParams = rawParams.substring(0, open) + ", " + rawParams.substring(open+1, close);
+				
+				String[] params = rawParams.split(",");
+				int[] types = new int[params.length];
+				for(int j = 0; j < params.length; j++) {
+					String trimmedParam = params[j].trim();
+					if(trimmedParam.matches("\\d+")) {
+						types[j] = 8;
+						params[j] = trimmedParam;
+					} else if(!labelManager.containsLabel(trimmedParam)) {
+						throw new UnkownLabelException();
+					} else {
+						types[j] = labelManager.getLabelType(trimmedParam);
+						int value = labelManager.getLabelValue(trimmedParam);
+
+						if(types[j] == 1) {// Data memory label
+							//TODO complete method
+						} else if(types[j] == 2) {// Instruction memory label
+							//TODO complete method
+						} else if(types[j] == 4) {// Register label
+							params[j] = Integer.toBinaryString(value);
+							while(params[j].length() < 5)
+								params[j] = "0" + params[j];
+						}
+					}
+				}
+				parsedInstructions[i] = InstructionFactory.createInstruction(name, params, types);
+			}
+		}
+			
 	}
 	
 	private void assembleData() {
@@ -110,8 +153,10 @@ public class Assembler {
 	
 	private void assembleInstructions() {
 		assembledInstructions = new String[parsedInstructions.length];
-		for(int i = 0; i < assembledInstructions.length; i++)
+		for(int i = 0; i < assembledInstructions.length; i++) {
 			assembledInstructions[i] = parsedInstructions[i].getBits();
+			System.out.println(assembledInstructions[i]);
+		}
 	}
 	
 }
