@@ -45,8 +45,8 @@ public class LabelManager {
 		for(Entry<String, Integer> entry : labelType.entrySet())
 			if(entry.getValue() == type)
 				labels.add(entry.getKey());
-		
-		return labels.toArray(new String[1]);
+
+		return labels.toArray(new String[0]);
 	}
 	
 	public String[] getAllDataLabels() {

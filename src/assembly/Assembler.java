@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 public class Assembler {
 	String[] filteredInstructions, filteredData, assembledInstructions, assembledData, parsedData;
+	Integer[] parsedDataType;
 	Instruction[] parsedInstructions;
 	LabelManager labelManager;
 	
@@ -39,7 +40,7 @@ public class Assembler {
 				filteredData[i] = filteredData[i].substring(idx+1).trim();
 				if(labelManager.containsLabel(label))
 					throw new DuplicateLabelException();
-				labelManager.setLabel(label, i, 1);
+				labelManager.setLabel(label, (1 << 31) + i, 1);
 			}
 		}
 	}
@@ -58,10 +59,12 @@ public class Assembler {
 	}
 	
 	private static String[] divideIntoWords(String line) {
-		int length = line.length()/4;
+		int length = (int) Math.ceil(line.length()/4.0);
 		String[] result = new String[length];
 		for(int i = 0; i < length; i++)
-			result[i] = line.substring(4*i, 4);
+			result[i] = line.substring( 4*i, Math.min(4*i + 4, line.length()) );
+		while( result[ result.length - 1 ].length() < 4 )
+			result[ result.length - 1 ] += '\0';
 		return result;
 	}
 	
@@ -69,6 +72,7 @@ public class Assembler {
 		Hashtable<String, Integer> shiftBuffer = new Hashtable<String, Integer>();
 		String[] dataLabels = labelManager.getAllDataLabels();
 		ArrayList<String> data = new ArrayList<String>();
+		ArrayList<Integer> dataType = new ArrayList<Integer>();
 		
 		for(int i = 0; i < filteredData.length; i++) {
 			for(String dataLabel : dataLabels)
@@ -84,21 +88,30 @@ public class Assembler {
 				else
 					dataLine = dataLine.substring(start, end);
 				String[] rawData = Assembler.divideIntoWords(dataLine);
-				for(String rawLine : rawData)
+				for(String rawLine : rawData) {
 					data.add(rawLine);
+					// TODO Enumerate data types
+					dataType.add(0);
+				}
 			} else if (dataLine.startsWith(".word ")) {
 				int start = dataLine.indexOf(".word") + 5;
 				dataLine = dataLine.substring(start);
 				String[] array = dataLine.split(",");
-				for (i = 0; i < array.length; i++)
+				for (i = 0; i < array.length; i++) {
 					data.add(array[i].trim());
+					// TODO Enumerate data types
+					dataType.add(1);
+				}
+			} else {
+				System.out.println("[Warning] Unkown data ignored: " + dataLine);
 			}
 		}
 		
 		for(Entry<String, Integer> entry : shiftBuffer.entrySet())
-			labelManager.setLabel(entry.getKey(), entry.getValue(), 1);
+			labelManager.setLabel(entry.getKey(), (1<<31) + entry.getValue(), 1);
 		
 		parsedData = data.toArray(new String[0]);
+		parsedDataType = dataType.toArray(new Integer[0]);
 	}
 	
 	private void parseInstructions() throws UnkownLabelException, UnkownInstructionException {
@@ -119,9 +132,10 @@ public class Assembler {
 				int[] types = new int[params.length];
 				for(int j = 0; j < params.length; j++) {
 					String trimmedParam = params[j].trim();
-					if(trimmedParam.matches("\\d+")) {
+					if(trimmedParam.matches("\\d+") || trimmedParam.matches("-\\d+")) {
 						types[j] = 8;
 						params[j] = trimmedParam;
+						
 					} else if(!labelManager.containsLabel(trimmedParam)) {
 						throw new UnkownLabelException();
 					} else {
@@ -145,18 +159,49 @@ public class Assembler {
 			
 	}
 	
+
 	private void assembleData() {
 		assembledData = new String[parsedData.length];
-//		for(int i = 0; i < assembledInstructions.length; i++)
-//			assembledData[i] = parsedData[i].getBits();
+		System.out.println("Data assembly:");
+		for(int i = 0; i < parsedData.length; i++) {
+			String line = "";
+			if(parsedDataType[i] == 0) { // ascii
+				for(int j = 0; j < parsedData[i].length(); j++)
+					line = line + assembleCharacter(parsedData[i].charAt(j), 8);
+			} else if(parsedDataType[i] == 1) { // word
+				line = assembleIntegral(parsedData[i], 32);
+			}
+			
+			assembledData[i] = line;
+			System.out.println(line);
+		}
 	}
 	
 	private void assembleInstructions() {
 		assembledInstructions = new String[parsedInstructions.length];
+		System.out.println("Instruction assembly:");
 		for(int i = 0; i < assembledInstructions.length; i++) {
 			assembledInstructions[i] = parsedInstructions[i].getBits();
 			System.out.println(assembledInstructions[i]);
 		}
 	}
 	
+	public static String assembleIntegral(String integral, int bits) {
+		int numeric = Integer.parseInt(integral);
+		String result = Integer.toBinaryString(numeric);
+		
+		while(result.length() < bits)
+			if(numeric < 0)
+				result = "1" + result;
+			else
+				result = "0" + result;
+		
+		if(result.length() > bits)
+			result = result.substring(result.length() - bits);
+		return result;
+	}
+	
+	public static String assembleCharacter(char character, int bits) {
+		return assembleIntegral(Integer.toString(character), bits);
+	}
 }

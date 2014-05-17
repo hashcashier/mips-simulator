@@ -17,19 +17,31 @@ public class ASMReader {
 		while(inputFileScanner.hasNextLine())
 			inputFileLines.add(inputFileScanner.nextLine());
 		inputFileScanner.close();
-		this.inputFileLines = inputFileLines.toArray(new String[0]); 
+		this.inputFileLines = inputFileLines.toArray(new String[0]);
+//		for(int i = 0; i < this.inputFileLines.length; i++)
+//			System.out.println("Read: " + this.inputFileLines[i]);
 	}
 	
-	private String[] read(String marker) {
+	private String[] read(String marker, String[] safeMarkers) {
 		boolean reading = false;
 		ArrayList<String> filtered = new ArrayList<String>();
 		for(int i = 0; i < inputFileLines.length; i++) {
 			String inputFileLine = inputFileLines[i].trim();
 			
-			boolean marked = inputFileLine.equals("." + marker);
 			if(inputFileLine.charAt(0) == '.') {
-				reading = marked;
-				continue;
+				boolean markerMatch = inputFileLine.equals("." + marker);
+				boolean safeMarker = false;
+				
+				for(String safe : safeMarkers)
+					safeMarker |= inputFileLine.startsWith("." + safe);
+				
+				if(markerMatch) {
+					reading = true;
+					continue;
+				} else if(!safeMarker) {
+					reading = false;
+					continue;
+				}
 			}
 			
 			if(reading)
@@ -41,13 +53,13 @@ public class ASMReader {
 
 	public String[] getInstructions() {
 		if(instructionFile == null)
-			instructionFile = read("text");
+			instructionFile = read("text", new String[0]);
 		return instructionFile;
 	}
 
 	public String[] getData() {
 		if(dataFile == null)
-			dataFile = read("data");
+			dataFile = read("data", new String[] {"ascii", "asciiz", "word"});
 		return dataFile;
 	}
 }

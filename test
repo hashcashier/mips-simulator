@@ -1,5 +1,6 @@
 .text
+addi $t1, $zero, 123
 add $zero, $at, $t1
-lw $t1, 12345($s1)
 .data
 .ascii "heh"
+qwe: .word 5

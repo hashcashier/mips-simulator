@@ -2,6 +2,7 @@ package ui;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import assembly.Assembler;
 import assembly.DuplicateLabelException;
 
 import simulation.Simulator;
