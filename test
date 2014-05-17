@@ -1,6 +1,8 @@
 .text
 addi $t1, $zero, 123
-add $zero, $at, $t1
+lp: add $zero, $at, $t1
+beq $zero, $zero, lp
+j lp
 .data
 .ascii "heh"
 qwe: .word 5

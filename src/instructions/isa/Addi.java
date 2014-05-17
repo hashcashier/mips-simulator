@@ -8,7 +8,7 @@ import instructions.InvalidParameterException;
 public class Addi extends Instruction {
 
 	public Addi(String[] parameters, int[] types) throws InvalidParameterException {
-		super(InstructionType.IFormat, parameters, types, new int[] {4, 4, 8}, 3);
+		super(InstructionType.IFormat, parameters, types, new int[] {4, 4, 8});
 		opcode = "000001";
 		rs = parameters[1];
 		rt = parameters[0];

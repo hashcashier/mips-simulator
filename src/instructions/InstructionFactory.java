@@ -5,7 +5,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public class InstructionFactory {
-	public static Instruction createInstruction(String name, String[] parameters, int[] types) throws UnkownInstructionException {
+	public static Instruction createInstruction(String name, String[] parameters, int[] types) 
+			throws UnkownInstructionException {
 		name = name.substring(0, 1).toUpperCase() + name.substring(1);
 		
 		Class<?> instructionClass = null;

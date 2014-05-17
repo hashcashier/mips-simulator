@@ -10,10 +10,11 @@ public abstract class Instruction {
 	protected InstructionType instructionType;
 	protected String opcode, rs, rt, rd, shamt, funct, immediate, address;
 	
-	protected Instruction(InstructionType type, String[] parameters, int[] types, int[] expectedTypes, int expectedCount) throws InvalidParameterException {
+	protected Instruction(InstructionType type, String[] parameters, int[] types, int[] expectedTypes)
+			throws InvalidParameterException {
 		instructionType = type;
 		
-		if(parameters.length != expectedCount)
+		if(parameters.length != expectedTypes.length)
 			throw new InvalidParameterException("Illegal number of parameters.");
 		
 		params = parameters;

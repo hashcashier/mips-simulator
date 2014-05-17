@@ -14,7 +14,8 @@ public class Assembler {
 	Instruction[] parsedInstructions;
 	LabelManager labelManager;
 	
-	public Assembler(String[] instructions, String[] data) throws DuplicateLabelException, UnkownLabelException, UnkownInstructionException {
+	public Assembler(String[] instructions, String[] data) 
+			throws DuplicateLabelException, UnkownLabelException, UnkownInstructionException {
 		labelManager = new LabelManager();
 		
 		filteredData = data;
@@ -142,14 +143,12 @@ public class Assembler {
 						types[j] = labelManager.getLabelType(trimmedParam);
 						int value = labelManager.getLabelValue(trimmedParam);
 
-						if(types[j] == 1) {// Data memory label
-							//TODO complete method
-						} else if(types[j] == 2) {// Instruction memory label
-							//TODO complete method
+						if(types[j] == 1) {// Data label
+							params[j] = Integer.toString(value);
+						} else if(types[j] == 2) {// Instruction label
+							params[j] = Integer.toString(value) + "," + Integer.toString(i);
 						} else if(types[j] == 4) {// Register label
-							params[j] = Integer.toBinaryString(value);
-							while(params[j].length() < 5)
-								params[j] = "0" + params[j];
+							params[j] = assembleIntegral(Integer.toString(value), 5);
 						}
 					}
 				}
@@ -159,7 +158,6 @@ public class Assembler {
 			
 	}
 	
-
 	private void assembleData() {
 		assembledData = new String[parsedData.length];
 		System.out.println("Data assembly:");
@@ -203,5 +201,13 @@ public class Assembler {
 	
 	public static String assembleCharacter(char character, int bits) {
 		return assembleIntegral(Integer.toString(character), bits);
+	}
+	
+	public String[] getAssembledInstructions() {
+		return assembledInstructions;
+	}
+	
+	public String[] getAssembledData() {
+		return assembledData;
 	}
 }
