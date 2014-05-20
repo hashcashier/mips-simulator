@@ -14,6 +14,7 @@ public class GUI {
 	private JFrame frmOraka;
 	private JTable registerTable;
 	private JTable table;
+	private JTable memoryTable;
 
 	/**
 	 * Launch the application.
@@ -44,7 +45,7 @@ public class GUI {
 	private void initialize() {
 		frmOraka = new JFrame();
 		frmOraka.setTitle("ORAKA MIPS Simulator");
-		frmOraka.setBounds(100, 100, 600, 400);
+		frmOraka.setBounds(100, 100, 750, 400);
 //		frame.setBounds(100, 100, 450, 300);
 		frmOraka.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmOraka.getContentPane().setLayout(null);
@@ -72,11 +73,21 @@ public class GUI {
 		JTextArea editor = new JTextArea();
 		editorScrollPane.setViewportView(editor);
 		
+		TextLineNumber tln = new TextLineNumber(editor);
+		editorScrollPane.setRowHeaderView(tln);
+		
 		JScrollPane registerTableScrollPane = new JScrollPane();
 		registerTableScrollPane.setBounds(453, 47, 141, 310);
 		frmOraka.getContentPane().add(registerTableScrollPane);
 		
 		JTable reigsterTable = new JTable();
 		registerTableScrollPane.setViewportView(registerTable);
+		
+		JScrollPane memoryTableScrollPane = new JScrollPane();
+		memoryTableScrollPane.setBounds(600, 48, 141, 310);
+		frmOraka.getContentPane().add(memoryTableScrollPane);
+		
+		memoryTable = new JTable();
+		memoryTableScrollPane.setViewportView(memoryTable);
 	}
 }
