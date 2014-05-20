@@ -8,6 +8,8 @@ import javax.swing.JTable;
 import javax.swing.JEditorPane;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JTextPane;
 
 public class GUI {
 
@@ -15,6 +17,7 @@ public class GUI {
 	private JTable registerTable;
 	private JTable table;
 	private JTable memoryTable;
+	private JTextPane logTextPane;
 
 	/**
 	 * Launch the application.
@@ -45,7 +48,7 @@ public class GUI {
 	private void initialize() {
 		frmOraka = new JFrame();
 		frmOraka.setTitle("ORAKA MIPS Simulator");
-		frmOraka.setBounds(100, 100, 750, 400);
+		frmOraka.setBounds(100, 100, 750, 550);
 //		frame.setBounds(100, 100, 450, 300);
 		frmOraka.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmOraka.getContentPane().setLayout(null);
@@ -73,8 +76,10 @@ public class GUI {
 		JTextArea editor = new JTextArea();
 		editorScrollPane.setViewportView(editor);
 		
-		TextLineNumber tln = new TextLineNumber(editor);
-		editorScrollPane.setRowHeaderView(tln);
+		
+		// TODO Comment the next 2 lines if you want to use the WindowBuilder
+//		TextLineNumber tln = new TextLineNumber(editor);
+//		editorScrollPane.setRowHeaderView(tln);
 		
 		JScrollPane registerTableScrollPane = new JScrollPane();
 		registerTableScrollPane.setBounds(453, 47, 141, 310);
@@ -89,5 +94,28 @@ public class GUI {
 		
 		memoryTable = new JTable();
 		memoryTableScrollPane.setViewportView(memoryTable);
+		
+		JLabel lblRegisters = new JLabel("Registers");
+		lblRegisters.setBounds(453, 28, 61, 16);
+		frmOraka.getContentPane().add(lblRegisters);
+		
+		JLabel lblMemory = new JLabel("Memory");
+		lblMemory.setBounds(600, 28, 61, 16);
+		frmOraka.getContentPane().add(lblMemory);
+		
+		JScrollPane logScrollPane = new JScrollPane();
+		logScrollPane.setBounds(26, 375, 440, 115);
+		frmOraka.getContentPane().add(logScrollPane);
+		
+		logTextPane = new JTextPane();
+		logScrollPane.setViewportView(logTextPane);
+		logTextPane.setEditable(false);
+		log("-- Simulator just started --");
+//		logTextPane.in
+		
+	}
+	
+	private void log(String s) {
+		logTextPane.setText(logTextPane.getText() + s + "\n");
 	}
 }
