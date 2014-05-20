@@ -15,7 +15,6 @@ public class DataMemory {
 		int lines = dataLines.length;
 		for (int i = 0; i < lines; i++) {
 			String dataLine = dataLines[i].trim();
-			
 		}
 
 	}

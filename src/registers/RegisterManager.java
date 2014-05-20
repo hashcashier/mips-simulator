@@ -92,4 +92,10 @@ public class RegisterManager {
 	public String getRegisterTitle(int regNumber) {
 		return registers[regNumber].getTitle();
 	}
+	
+	public static void main(String...args) {
+		RegisterManager rm = new RegisterManager();
+		
+		rm.displayRegisters();
+	}
 }
