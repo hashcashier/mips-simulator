@@ -1,4 +1,5 @@
 package registers;
+
 public class RegisterManager {
 
 	private Register registers[] = new Register[32];
@@ -10,7 +11,7 @@ public class RegisterManager {
 	public String getRegisterValue(int regNumber) {
 		return registers[regNumber].getValue();
 	}
-	
+
 	public String getRegisterValue(String regTitle) {
 		for (int i = 0; i < 32; i++)
 			if (registers[i].getTitle().equals(regTitle))
@@ -21,7 +22,7 @@ public class RegisterManager {
 	public void setRegisterValue(int regNumber, String regValue) {
 		registers[regNumber].setValue(regValue);
 	}
-	
+
 	public boolean setRegisterValue(String regTitle, String regValue) {
 		for (int i = 0; i < 32; i++)
 			if (registers[i].getTitle().equals(regTitle)) {
@@ -92,10 +93,39 @@ public class RegisterManager {
 	public String getRegisterTitle(int regNumber) {
 		return registers[regNumber].getTitle();
 	}
-	
-	public static void main(String...args) {
+
+	public Register getRegister(int regNumber) {
+		return registers[regNumber];
+	}
+
+	public static void main(String... args) {
 		RegisterManager rm = new RegisterManager();
-		
+
 		rm.displayRegisters();
+	}
+
+	public String binaryToHex(String bin) {
+		return String.format("%X", Integer.parseInt(bin, 2));
+	}
+	
+	public String formatHex(String hex) {
+		switch (hex.length()) {
+		case 1:
+			return "0x0000000" + hex;
+		case 2:
+			return "0x000000" + hex;
+		case 3:
+			return "0x00000" + hex;
+		case 4:
+			return "0x0000" + hex;
+		case 5:
+			return "0x000" + hex;
+		case 6:
+			return "0x00" + hex;
+		case 7: 
+			return "0x0" + hex;
+		default:
+			return hex;
+		}
 	}
 }
