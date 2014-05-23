@@ -17,5 +17,9 @@ public abstract class AbstractPipelineRegister {
 		return null;
 	}
 	
-	
+	public void setInputValue(String inputName, String value) {
+		for(int i = 0; i < inputs.length; i++)
+			if(inputNames[i].equals(inputName))
+				inputs[i] = value;
+	}
 }
