@@ -46,9 +46,10 @@ public class Operation {
 	}
 	
 	public Result nor() {
-		return null;
+		Result or = this.or();
+		return Operation.not(or.getResult());
 	}
-	
+
 	public Result or() {
 		String result = "";
 		boolean zero = true;
@@ -75,20 +76,27 @@ public class Operation {
 	}
 
 	private static String twoComplement(String number) {
-		String result = "";
+		String result = Operation.not(number).getResult();
 		String one = "";
+		for (int i=SIZE-1; i>=0; i--) {
+			if (i == SIZE-1) one = "1" + one;
+			else one = "0" + one;
+		}
+		Operation op = new Operation(result, one);
+		return op.add().getResult();
+	}
+	
+	private static Result not(String number) {
+		String result = "";
+		boolean zero = true;
 		for (int i=SIZE-1; i>=0; i--) {
 			int digit = number.charAt(i) - '0';
 			digit = 1 - digit;
 			result = (digit + '0') + result;
-			if (i == SIZE-1) {
-				one = "1" + one;
-			}
-			else {
-				one = "0" + one;
+			if (digit == 1) {
+				zero = false;
 			}
 		}
-		Operation op = new Operation(result, one);
-		return op.add().getResult();
+		return new Result(result, zero);
 	}
 }
