@@ -12,14 +12,14 @@ public class InstructionMemory {
 			int offset) {
 		this.hardwareMemory = hardwareMemory;
 		for (int i = 0; i < instructions.length; i++) {
-			int address = i + offset;
+			long address = i + offset;
 			hardwareMemory.write(address, instructions[i]);
 		}
 	}
 
-	public Hashtable<Integer, String> getMemoryContents() {
-		Hashtable<Integer, String> result = new Hashtable<Integer, String>();
-		for(Entry<Integer, String> entry : hardwareMemory.getAll().entrySet())
+	public Hashtable<Long, String> getMemoryContents() {
+		Hashtable<Long, String> result = new Hashtable<Long, String>();
+		for(Entry<Long, String> entry : hardwareMemory.getAll().entrySet())
 			if((entry.getKey() & Assembler.DM_OFFSET) == 0)
 				result.put(entry.getKey(), entry.getValue());
 		return result;
