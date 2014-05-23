@@ -4,8 +4,8 @@ import datapath.AbstractDatapath;
 
 public class SingleCycle extends AbstractDatapath {
 
-	public SingleCycle(String[] instructions, String[] data) {
-		super(instructions, data);
+	public SingleCycle(String[] instructions, String[] data, int programOffset) {
+		super(instructions, data, programOffset);
 		// TODO Auto-generated constructor stub
 	}
 
