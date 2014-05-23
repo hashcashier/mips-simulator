@@ -31,7 +31,7 @@ import java.util.Map.Entry;
 import javax.swing.JTextField;
 
 public class GUI {
-	
+
 	private Simulator simulator;
 
 	private JFrame frmOraka;
@@ -244,7 +244,7 @@ public class GUI {
 		frmOraka.getContentPane().add(controlScrollPane);
 
 		Object controlTableColumns[] = { "Title", "Value" };
-//		Object[][] controlData = getControlValues();
+		// Object[][] controlData = getControlValues();
 		Object[][] controlData = getControlSignals();
 
 		controlTable = new JTable(controlData, controlTableColumns);
@@ -279,74 +279,82 @@ public class GUI {
 		});
 		btnSetAddress.setBounds(865, 328, 117, 29);
 		frmOraka.getContentPane().add(btnSetAddress);
-		
+
 		JScrollPane dataMemoryScrollPane = new JScrollPane();
 		dataMemoryScrollPane.setBounds(662, 47, 197, 115);
 		frmOraka.getContentPane().add(dataMemoryScrollPane);
-		
+
 		Object dataMemoryTableCols[] = { "Address", "Value" };
 		Object[][] dataMemoryData = getDataMemoryValues();
 
-		
 		dataMemoryTable = new JTable(dataMemoryData, dataMemoryTableCols);
 		dataMemoryScrollPane.setViewportView(dataMemoryTable);
-		
+
 		JScrollPane programMemoryScrollPane = new JScrollPane();
 		programMemoryScrollPane.setBounds(662, 224, 197, 90);
 		frmOraka.getContentPane().add(programMemoryScrollPane);
-		
-		Object[] programMemoryCols = {"Address", "Value" };
+
+		Object[] programMemoryCols = { "Address", "Value" };
 		Object[][] programMemoryData = getProgramMemoryData();
-		
+
 		programMemoryTable = new JTable(programMemoryData, programMemoryCols);
 		programMemoryScrollPane.setViewportView(programMemoryTable);
-		
+
 		JLabel lblAddress = new JLabel("Address");
 		lblAddress.setBounds(662, 166, 61, 16);
 		frmOraka.getContentPane().add(lblAddress);
-		
+
 		JLabel lblValue = new JLabel("Value");
 		lblValue.setBounds(735, 166, 61, 16);
 		frmOraka.getContentPane().add(lblValue);
-		
+
 		JLabel lblAddress_1 = new JLabel("Address");
 		lblAddress_1.setBounds(662, 318, 61, 16);
 		frmOraka.getContentPane().add(lblAddress_1);
-		
+
 		JLabel lblValue_1 = new JLabel("Value");
 		lblValue_1.setBounds(735, 318, 61, 16);
 		frmOraka.getContentPane().add(lblValue_1);
-		
+
 		dataMemoryAddressTextField = new JTextField();
 		dataMemoryAddressTextField.setBounds(662, 184, 65, 28);
 		frmOraka.getContentPane().add(dataMemoryAddressTextField);
 		dataMemoryAddressTextField.setColumns(10);
-		
+
 		dataMemoryValueTextField = new JTextField();
 		dataMemoryValueTextField.setBounds(730, 184, 65, 28);
 		frmOraka.getContentPane().add(dataMemoryValueTextField);
 		dataMemoryValueTextField.setColumns(10);
-		
+
 		JButton btnSetDataMemory = new JButton("SDM");
 		btnSetDataMemory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				setDataMemory()
+				setDataMemory(
+						Long.parseLong(dataMemoryAddressTextField.getText()),
+						dataMemoryValueTextField.getText());
 			}
 		});
 		btnSetDataMemory.setBounds(792, 183, 65, 29);
 		frmOraka.getContentPane().add(btnSetDataMemory);
-		
+
 		programMemoryAddressTextField = new JTextField();
 		programMemoryAddressTextField.setBounds(662, 346, 61, 28);
 		frmOraka.getContentPane().add(programMemoryAddressTextField);
 		programMemoryAddressTextField.setColumns(10);
-		
+
 		programMemoryValueTextField = new JTextField();
 		programMemoryValueTextField.setBounds(735, 346, 61, 28);
 		frmOraka.getContentPane().add(programMemoryValueTextField);
 		programMemoryValueTextField.setColumns(10);
-		
+
 		JButton btnSpm = new JButton("SPM");
+		btnSpm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setProgramMemory(
+						Long.parseLong(programMemoryAddressTextField.getText()),
+						programMemoryValueTextField.getText());
+			}
+		});
 		btnSpm.setBounds(792, 347, 61, 29);
 		frmOraka.getContentPane().add(btnSpm);
 
@@ -368,48 +376,54 @@ public class GUI {
 		// TODO
 		return true;
 	}
-	
+
 	public Object[][] getControlSignals() {
 		Hashtable<String, String> signals = simulator.getControlSignals();
 		// COME HERE
 		Object[][] values = new Object[signals.size()][2];
-		
+
 		int count = 0;
-		for(Entry<String, String> entry: signals.entrySet()) {
+		for (Entry<String, String> entry : signals.entrySet()) {
 			values[count][0] = entry.getKey();
 			values[count][1] = entry.getValue();
 			count++;
 		}
 		return values;
 	}
-	
+
 	public void setDataMemory(long address, String value) {
 		simulator.setMemoryContent(address, value);
 	}
 	
+	public void setProgramMemory(long address, String value) {
+		setDataMemory(address, value);
+	}
+
 	public Object[][] getProgramMemoryData() {
 		Object[][] values = null;
-		Hashtable<Long, String> programContents = simulator.getInstructionMemoryContents();
-		
+		Hashtable<Long, String> programContents = simulator
+				.getInstructionMemoryContents();
+
 		values = new Object[programContents.size()][2];
 
 		int count = 0;
-		for(Entry<Long, String> entry: programContents.entrySet()) {
+		for (Entry<Long, String> entry : programContents.entrySet()) {
 			values[count][0] = entry.getKey();
 			values[count][1] = entry.getValue();
 			count++;
 		}
 		return values;
 	}
-	
+
 	public Object[][] getDataMemoryValues() {
 		Object[][] values = null;
-		Hashtable<Long, String> memoryContents = simulator.getDataMemoryContents();
-		
+		Hashtable<Long, String> memoryContents = simulator
+				.getDataMemoryContents();
+
 		values = new Object[memoryContents.size()][2];
 
 		int count = 0;
-		for(Entry<Long, String> entry: memoryContents.entrySet()) {
+		for (Entry<Long, String> entry : memoryContents.entrySet()) {
 			values[count][0] = entry.getKey();
 			values[count][1] = entry.getValue();
 			count++;
@@ -430,22 +444,25 @@ public class GUI {
 		}
 		return values;
 	}
-	
+
 	private void setPipelineRegisterValues() {
-		Hashtable<String, String> registers = simulator.getPipelineRegistersContents();
-		
-		for(Entry<String, String> entry: registers.entrySet()) {
-			if(entry.getKey().equals("EX/MEM") || entry.getKey().equals("EXMEM"))
+		Hashtable<String, String> registers = simulator
+				.getPipelineRegistersContents();
+
+		for (Entry<String, String> entry : registers.entrySet()) {
+			if (entry.getKey().equals("EX/MEM")
+					|| entry.getKey().equals("EXMEM"))
 				setEXMEM(entry.getValue());
-			else if (entry.getKey().equals("ID/EX") || entry.getKey().equals("IDEX"))
+			else if (entry.getKey().equals("ID/EX")
+					|| entry.getKey().equals("IDEX"))
 				setIDEX(entry.getValue());
-			else if (entry.getKey().equals("IF/ID") || entry.getKey().equals("IFID"))
+			else if (entry.getKey().equals("IF/ID")
+					|| entry.getKey().equals("IFID"))
 				setIFID(entry.getValue());
 			else
 				setMEMWB(entry.getValue());
 		}
 	}
-
 
 	public void runProgram() {
 		if (currentFilePath.equals("")) {
@@ -572,7 +589,7 @@ public class GUI {
 		}
 		return true;
 	}
-	
+
 	public String getProgramStartAddress() {
 		return programStartAddress;
 	}
