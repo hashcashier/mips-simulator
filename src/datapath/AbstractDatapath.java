@@ -33,6 +33,10 @@ public abstract class AbstractDatapath {
 	public Hashtable<Integer, String> getInstructionMemoryContents() {
 		return instructionMemory.getMemoryContents();
 	}
+	
+	public void setMemoryContent(int address, String value) {
+		hardwareMemory.write(address, value);
+	}
 
 	public abstract Hashtable<String, String> getPipelineRegistersContents();
 }
