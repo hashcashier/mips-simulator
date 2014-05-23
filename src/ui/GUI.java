@@ -564,56 +564,6 @@ public class GUI {
 		memwbVal.setText(val);
 	}
 
-	public void setRegDst(String val) {
-		RegDst = val;
-		controlTable.setValueAt(new String(val), 0, 1);
-	}
-
-	public void setJump(String val) {
-		Jump = val;
-		controlTable.setValueAt(new String(val), 1, 1);
-	}
-
-	public void setBranch(String val) {
-		Branch = val;
-		controlTable.setValueAt(new String(val), 2, 1);
-	}
-
-	public void setMemRead(String val) {
-		MemRead = val;
-		controlTable.setValueAt(new String(val), 3, 1);
-	}
-
-	public void setMemtoReg(String val) {
-		MemToReg = val;
-		controlTable.setValueAt(new String(val), 4, 1);
-	}
-
-	public void setALUOp(String val) {
-		ALUOp = val;
-		controlTable.setValueAt(new String(val), 5, 1);
-	}
-
-	public void setMemWrite(String val) {
-		MemWrite = val;
-		controlTable.setValueAt(new String(val), 6, 1);
-	}
-
-	public void setALUSrc(String val) {
-		ALUSrc = val;
-		controlTable.setValueAt(new String(val), 7, 1);
-	}
-
-	public void setRegWrite(String val) {
-		RegWrite = val;
-		controlTable.setValueAt(new String(val), 8, 1);
-	}
-
-	public void setZero(String val) {
-		Zero = val;
-		controlTable.setValueAt(new String(val), 9, 1);
-	}
-
 	private boolean isNumeric(String str) {
 		try {
 			double d = Double.parseDouble(str);
