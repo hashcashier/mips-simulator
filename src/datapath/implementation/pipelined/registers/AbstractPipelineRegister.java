@@ -1,5 +1,7 @@
 package datapath.implementation.pipelined.registers;
 
+import java.util.Hashtable;
+
 public abstract class AbstractPipelineRegister {
 	String inputs[], outputs[], inputNames[], outputNames[], name;
 	
@@ -22,4 +24,6 @@ public abstract class AbstractPipelineRegister {
 			if(inputNames[i].equals(inputName))
 				inputs[i] = value;
 	}
+
+	public abstract void process(Hashtable<String, String> ht);
 }

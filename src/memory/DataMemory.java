@@ -11,7 +11,7 @@ public class DataMemory {
 	public DataMemory(Memory hardwareMemory, String[] data) {
 		this.hardwareMemory = hardwareMemory;
 		for (int i = 0; i < data.length; i++) {
-			int address = i + Assembler.DM_OFFSET;
+			long address = i + Assembler.DM_OFFSET;
 			hardwareMemory.write(address, data[i]);
 		}
 	}
@@ -21,7 +21,7 @@ public class DataMemory {
 			WriteDataMoreThan32BitsException {
 		int read = Integer.parseInt(memRead, 2);
 		int write = Integer.parseInt(memWrite, 2);
-		int addressKey = Integer.parseInt(address, 2);
+		long addressKey = Long.parseLong(address, 2);
 		if (address.length() > 32)
 			throw new AddressNotFoundException();
 		if (writeData.length() > 32)
@@ -35,9 +35,9 @@ public class DataMemory {
 		return null;
 	}
 
-	public Hashtable<Integer, String> getMemoryContents() {
-		Hashtable<Integer, String> result = new Hashtable<Integer, String>();
-		for (Entry<Integer, String> entry : hardwareMemory.getAll().entrySet())
+	public Hashtable<Long, String> getMemoryContents() {
+		Hashtable<Long, String> result = new Hashtable<Long, String>();
+		for (Entry<Long, String> entry : hardwareMemory.getAll().entrySet())
 			if ((entry.getKey() & Assembler.DM_OFFSET) == Assembler.DM_OFFSET)
 				result.put(entry.getKey(), entry.getValue());
 		return result;

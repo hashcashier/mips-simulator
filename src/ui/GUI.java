@@ -6,7 +6,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.JEditorPane;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -15,17 +14,25 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import registers.Register;
 import registers.RegisterManager;
+import simulation.Simulator;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Map.Entry;
+
 import javax.swing.JTextField;
 
+import alu.InvalidOperationException;
+
 public class GUI {
+
+	private Simulator simulator = new Simulator();
 
 	private JFrame frmOraka;
 	private JTable registerTable;
@@ -49,21 +56,16 @@ public class GUI {
 
 	private RegisterManager rm = new RegisterManager();
 
-	private String RegDst = "0";
-	private String Jump = "0";
-	private String Branch = "0";
-	private String MemRead = "0";
-	private String MemToReg = "0";
-	private String ALUOp = "00";
-	private String MemWrite = "0";
-	private String ALUSrc = "0";
-	private String RegWrite = "0";
-	private String Zero = "0";
-
 	private JTable controlTable;
 
 	private String programStartAddress = "400";
 	private JTextField programStartAddressTextField;
+	private JTable dataMemoryTable;
+	private JTable programMemoryTable;
+	private JTextField dataMemoryAddressTextField;
+	private JTextField dataMemoryValueTextField;
+	private JTextField programMemoryAddressTextField;
+	private JTextField programMemoryValueTextField;
 
 	// private String filePath;
 
@@ -193,20 +195,9 @@ public class GUI {
 		registerTable.getColumnModel().getColumn(1).setPreferredWidth(75);
 		registerTable.getColumnModel().getColumn(2).setPreferredWidth(200);
 
-		JScrollPane memoryTableScrollPane = new JScrollPane();
-		memoryTableScrollPane.setBounds(656, 48, 197, 310);
-		frmOraka.getContentPane().add(memoryTableScrollPane);
-
 		Object rowData[][] = { { "$s1", "32", "0x2222" },
 				{ "$v1", "1", "0x1234" } };
 		Object columnNames[] = { "Title", "#", "Value" };
-		JTable table = new JTable(rowData, columnNames);
-
-		// memoryTable = new JTable();
-		memoryTableScrollPane.setViewportView(table);
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setPreferredWidth(75);
-		table.getColumnModel().getColumn(2).setPreferredWidth(160);
 
 		JScrollPane logScrollPane = new JScrollPane();
 		logScrollPane.setBounds(16, 389, 440, 115);
@@ -253,7 +244,8 @@ public class GUI {
 		frmOraka.getContentPane().add(controlScrollPane);
 
 		Object controlTableColumns[] = { "Title", "Value" };
-		Object[][] controlData = getControlValues();
+		// Object[][] controlData = getControlValues();
+		Object[][] controlData = getControlSignals();
 
 		controlTable = new JTable(controlData, controlTableColumns);
 		controlScrollPane.setViewportView(controlTable);
@@ -288,6 +280,84 @@ public class GUI {
 		btnSetAddress.setBounds(865, 328, 117, 29);
 		frmOraka.getContentPane().add(btnSetAddress);
 
+		JScrollPane dataMemoryScrollPane = new JScrollPane();
+		dataMemoryScrollPane.setBounds(662, 47, 197, 115);
+		frmOraka.getContentPane().add(dataMemoryScrollPane);
+
+		Object dataMemoryTableCols[] = { "Address", "Value" };
+		Object[][] dataMemoryData = getDataMemoryValues();
+
+		dataMemoryTable = new JTable(dataMemoryData, dataMemoryTableCols);
+		dataMemoryScrollPane.setViewportView(dataMemoryTable);
+
+		JScrollPane programMemoryScrollPane = new JScrollPane();
+		programMemoryScrollPane.setBounds(662, 224, 197, 90);
+		frmOraka.getContentPane().add(programMemoryScrollPane);
+
+		Object[] programMemoryCols = { "Address", "Value" };
+		Object[][] programMemoryData = getProgramMemoryData();
+
+		programMemoryTable = new JTable(programMemoryData, programMemoryCols);
+		programMemoryScrollPane.setViewportView(programMemoryTable);
+
+		JLabel lblAddress = new JLabel("Address");
+		lblAddress.setBounds(662, 166, 61, 16);
+		frmOraka.getContentPane().add(lblAddress);
+
+		JLabel lblValue = new JLabel("Value");
+		lblValue.setBounds(735, 166, 61, 16);
+		frmOraka.getContentPane().add(lblValue);
+
+		JLabel lblAddress_1 = new JLabel("Address");
+		lblAddress_1.setBounds(662, 318, 61, 16);
+		frmOraka.getContentPane().add(lblAddress_1);
+
+		JLabel lblValue_1 = new JLabel("Value");
+		lblValue_1.setBounds(735, 318, 61, 16);
+		frmOraka.getContentPane().add(lblValue_1);
+
+		dataMemoryAddressTextField = new JTextField();
+		dataMemoryAddressTextField.setBounds(662, 184, 65, 28);
+		frmOraka.getContentPane().add(dataMemoryAddressTextField);
+		dataMemoryAddressTextField.setColumns(10);
+
+		dataMemoryValueTextField = new JTextField();
+		dataMemoryValueTextField.setBounds(730, 184, 65, 28);
+		frmOraka.getContentPane().add(dataMemoryValueTextField);
+		dataMemoryValueTextField.setColumns(10);
+
+		JButton btnSetDataMemory = new JButton("SDM");
+		btnSetDataMemory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setDataMemory(
+						Long.parseLong(dataMemoryAddressTextField.getText()),
+						dataMemoryValueTextField.getText());
+			}
+		});
+		btnSetDataMemory.setBounds(792, 183, 65, 29);
+		frmOraka.getContentPane().add(btnSetDataMemory);
+
+		programMemoryAddressTextField = new JTextField();
+		programMemoryAddressTextField.setBounds(662, 346, 61, 28);
+		frmOraka.getContentPane().add(programMemoryAddressTextField);
+		programMemoryAddressTextField.setColumns(10);
+
+		programMemoryValueTextField = new JTextField();
+		programMemoryValueTextField.setBounds(735, 346, 61, 28);
+		frmOraka.getContentPane().add(programMemoryValueTextField);
+		programMemoryValueTextField.setColumns(10);
+
+		JButton btnSpm = new JButton("SPM");
+		btnSpm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setProgramMemory(
+						Long.parseLong(programMemoryAddressTextField.getText()),
+						programMemoryValueTextField.getText());
+			}
+		});
+		btnSpm.setBounds(792, 347, 61, 29);
+		frmOraka.getContentPane().add(btnSpm);
+
 		setEXMEM("/\\/\\/\\/\\/\\");
 		setIDEX("/\\/\\/\\/\\/\\");
 		setIFID("/\\/\\/\\/\\/\\");
@@ -307,6 +377,60 @@ public class GUI {
 		return true;
 	}
 
+	public Object[][] getControlSignals() {
+		Hashtable<String, String> signals = simulator.getControlSignals();
+		// COME HERE
+		Object[][] values = new Object[signals.size()][2];
+
+		int count = 0;
+		for (Entry<String, String> entry : signals.entrySet()) {
+			values[count][0] = entry.getKey();
+			values[count][1] = entry.getValue();
+			count++;
+		}
+		return values;
+	}
+
+	public void setDataMemory(long address, String value) {
+		simulator.setMemoryContent(address, value);
+	}
+
+	public void setProgramMemory(long address, String value) {
+		setDataMemory(address, value);
+	}
+
+	public Object[][] getProgramMemoryData() {
+		Object[][] values = null;
+		Hashtable<Long, String> programContents = simulator
+				.getInstructionMemoryContents();
+
+		values = new Object[programContents.size()][2];
+
+		int count = 0;
+		for (Entry<Long, String> entry : programContents.entrySet()) {
+			values[count][0] = entry.getKey();
+			values[count][1] = entry.getValue();
+			count++;
+		}
+		return values;
+	}
+
+	public Object[][] getDataMemoryValues() {
+		Object[][] values = null;
+		Hashtable<Long, String> memoryContents = simulator
+				.getDataMemoryContents();
+
+		values = new Object[memoryContents.size()][2];
+
+		int count = 0;
+		for (Entry<Long, String> entry : memoryContents.entrySet()) {
+			values[count][0] = entry.getKey();
+			values[count][1] = entry.getValue();
+			count++;
+		}
+		return values;
+	}
+
 	private Object[][] getRegisterValues() {
 		Object[][] values = new Object[32][3];
 		for (int i = 0; i < 32; i++) {
@@ -318,58 +442,65 @@ public class GUI {
 			values[i][1] = regNumber;
 			values[i][2] = regValue;
 		}
-		// TODO
 		return values;
 	}
 
-	private Object[][] getControlValues() {
-		Object[][] values = new Object[10][2];
-		values[0][0] = "RegDst";
-		values[1][0] = "Jump";
-		values[2][0] = "Branch";
-		values[3][0] = "MemRead";
-		values[4][0] = "MemToReg";
-		values[5][0] = "ALUOp";
-		values[6][0] = "MemWrite";
-		values[7][0] = "ALUSrc";
-		values[8][0] = "RegWrite";
-		values[9][0] = "Zero";
+	private void setPipelineRegisterValues() {
+		Hashtable<String, String> registers = simulator
+				.getPipelineRegistersContents();
 
-		values[0][1] = "0";
-		values[1][1] = "0";
-		values[2][1] = "0";
-		values[3][1] = "0";
-		values[4][1] = "0";
-		values[5][1] = "00";
-		values[6][1] = "0";
-		values[7][1] = "0";
-		values[8][1] = "0";
-		values[9][1] = "0";
-
-		return values;
+		for (Entry<String, String> entry : registers.entrySet()) {
+			if (entry.getKey().equals("EX/MEM")
+					|| entry.getKey().equals("EXMEM"))
+				setEXMEM(entry.getValue());
+			else if (entry.getKey().equals("ID/EX")
+					|| entry.getKey().equals("IDEX"))
+				setIDEX(entry.getValue());
+			else if (entry.getKey().equals("IF/ID")
+					|| entry.getKey().equals("IFID"))
+				setIFID(entry.getValue());
+			else
+				setMEMWB(entry.getValue());
+		}
 	}
 
 	public void runProgram() {
 		if (currentFilePath.equals("")) {
 			log("There seems to be no file currently open");
 			log("Make sure you have saved the currently open file before running");
-
 			return;
+		} else {
+			log("Running [" + currentFilePath + "]");
+			try {
+				simulator.run();
+				log("Program ran succesfully.");
+			} catch (InvalidOperationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				log("And Error occured stopping the program from running in (GUI:runProgram)");
+			}
+			update();
 		}
-
 		// TODO ELSE perform run.
 	}
 
 	public void assembleProgram() {
 		log("Assembling program upto latest save performed");
+		// TODO 
 	}
 
 	public void performStep() {
 		// TODO
+		update();
 	}
 
 	public void resetAll() {
+		// TODO
+		update();
+	}
 
+	public void update() {
+		// TODO
 	}
 
 	private void clearFile() {
@@ -466,56 +597,6 @@ public class GUI {
 		memwbVal.setText(val);
 	}
 
-	public void setRegDst(String val) {
-		RegDst = val;
-		controlTable.setValueAt(new String(val), 0, 1);
-	}
-
-	public void setJump(String val) {
-		Jump = val;
-		controlTable.setValueAt(new String(val), 1, 1);
-	}
-
-	public void setBranch(String val) {
-		Branch = val;
-		controlTable.setValueAt(new String(val), 2, 1);
-	}
-
-	public void setMemRead(String val) {
-		MemRead = val;
-		controlTable.setValueAt(new String(val), 3, 1);
-	}
-
-	public void setMemtoReg(String val) {
-		MemToReg = val;
-		controlTable.setValueAt(new String(val), 4, 1);
-	}
-
-	public void setALUOp(String val) {
-		ALUOp = val;
-		controlTable.setValueAt(new String(val), 5, 1);
-	}
-
-	public void setMemWrite(String val) {
-		MemWrite = val;
-		controlTable.setValueAt(new String(val), 6, 1);
-	}
-
-	public void setALUSrc(String val) {
-		ALUSrc = val;
-		controlTable.setValueAt(new String(val), 7, 1);
-	}
-
-	public void setRegWrite(String val) {
-		RegWrite = val;
-		controlTable.setValueAt(new String(val), 8, 1);
-	}
-
-	public void setZero(String val) {
-		Zero = val;
-		controlTable.setValueAt(new String(val), 9, 1);
-	}
-
 	private boolean isNumeric(String str) {
 		try {
 			double d = Double.parseDouble(str);
@@ -524,7 +605,7 @@ public class GUI {
 		}
 		return true;
 	}
-	
+
 	public String getProgramStartAddress() {
 		return programStartAddress;
 	}

@@ -3,10 +3,10 @@ package datapath;
 import java.util.Hashtable;
 
 import peripherals.ProgramCounter;
-
 import memory.*;
 import registers.RegisterManager;
 import alu.ALU;
+import alu.InvalidOperationException;
 
 public abstract class AbstractDatapath {
 	Memory hardwareMemory;
@@ -28,15 +28,15 @@ public abstract class AbstractDatapath {
 		return registerManager.getRegisterContents();
 	}
 
-	public Hashtable<Integer, String> getDataMemoryContents() {
+	public Hashtable<Long, String> getDataMemoryContents() {
 		return dataMemory.getMemoryContents();
 	}
 
-	public Hashtable<Integer, String> getInstructionMemoryContents() {
+	public Hashtable<Long, String> getInstructionMemoryContents() {
 		return instructionMemory.getMemoryContents();
 	}
 	
-	public void setMemoryContent(int address, String value) {
+	public void setMemoryContent(long address, String value) {
 		hardwareMemory.write(address, value);
 	}
 	
@@ -45,6 +45,6 @@ public abstract class AbstractDatapath {
 	}
 
 	public abstract Hashtable<String, String> getPipelineRegistersContents();
-	public abstract void nextStep();
-	public abstract void previousStep();	
+	public abstract boolean nextStep() throws InvalidOperationException;
+	public abstract boolean previousStep();	
 }

@@ -2,6 +2,10 @@ package datapath.implementation;
 
 import java.util.Hashtable;
 
+import alu.ALU;
+import alu.ALUControl;
+import alu.InvalidOperationException;
+import alu.Result;
 import datapath.AbstractDatapath;
 import datapath.implementation.pipelined.registers.*;
 
@@ -18,15 +22,31 @@ public class Pipelined extends AbstractDatapath {
 	}
 
 	@Override
-	public void nextStep() {
-		// TODO Auto-generated method stub
+	public boolean nextStep() throws InvalidOperationException {
+		int currentPC = this.getProgramCounterValue();
+		String currentInstruction = this.getInstructionMemoryContents()
+				.get(currentPC);
+		String incrementedPC = Pipelined.incrementPC(currentPC);
+		Hashtable<String, String> ht = new Hashtable<String, String>();
+		ht.put("PC", incrementedPC);
+		ht.put("Instruction", currentInstruction);
+		pipelineRegisters[0].process(ht);
+		return false;
+	}
 		
+	private static String incrementPC(int currentInstructionCounter) throws InvalidOperationException {
+		String four = "100";
+		for (int i=0; i<29; i++) four = "0" + four;
+		ALUControl control = new ALUControl("10", "100000");
+		ALU alu = new ALU(currentInstructionCounter+"", four, control);
+		Result result = alu.execute();
+		return result.getResult();
 	}
 
 	@Override
-	public void previousStep() {
+	public boolean previousStep() {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override
