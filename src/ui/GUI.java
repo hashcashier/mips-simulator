@@ -34,7 +34,7 @@ import alu.InvalidOperationException;
 
 public class GUI {
 
-	private Simulator simulator;
+	private Simulator simulator = new Simulator();
 
 	private JFrame frmOraka;
 	private JTable registerTable;
