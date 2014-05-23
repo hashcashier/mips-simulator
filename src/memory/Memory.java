@@ -16,5 +16,9 @@ public class Memory {
 	public String write(Integer address, String contents) {
 		return memory.put(address, contents);
 	}
+	
+	public Hashtable<Integer, String> getAll() {
+		return memory;
+	}
 
 }

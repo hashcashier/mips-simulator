@@ -14,6 +14,7 @@ public class Assembler {
 	Instruction[] parsedInstructions;
 	LabelManager labelManager;
 	int programOffset;
+	public static final int DM_OFFSET = (1<<31);
 	
 	public Assembler(String[] instructions, String[] data, int offset) 
 			throws DuplicateLabelException, UnkownLabelException, UnkownInstructionException {
@@ -43,7 +44,7 @@ public class Assembler {
 				filteredData[i] = filteredData[i].substring(idx+1).trim();
 				if(labelManager.containsLabel(label))
 					throw new DuplicateLabelException();
-				labelManager.setLabel(label, (1 << 31) + i, 1);
+				labelManager.setLabel(label, DM_OFFSET + i, 1);
 			}
 		}
 	}
@@ -111,7 +112,7 @@ public class Assembler {
 		}
 		
 		for(Entry<String, Integer> entry : shiftBuffer.entrySet())
-			labelManager.setLabel(entry.getKey(), (1<<31) + entry.getValue(), 1);
+			labelManager.setLabel(entry.getKey(), DM_OFFSET + entry.getValue(), 1);
 		
 		parsedData = data.toArray(new String[0]);
 		parsedDataType = dataType.toArray(new Integer[0]);
