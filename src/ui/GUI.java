@@ -15,6 +15,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import registers.Register;
 import registers.RegisterManager;
+import simulation.Simulator;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -23,9 +25,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Map.Entry;
+
 import javax.swing.JTextField;
 
 public class GUI {
+	
+	private Simulator simulator;
 
 	private JFrame frmOraka;
 	private JTable registerTable;
@@ -64,6 +71,12 @@ public class GUI {
 
 	private String programStartAddress = "400";
 	private JTextField programStartAddressTextField;
+	private JTable dataMemoryTable;
+	private JTable programMemoryTable;
+	private JTextField dataMemoryAddressTextField;
+	private JTextField dataMemoryValueTextField;
+	private JTextField programMemoryAddressTextField;
+	private JTextField programMemoryValueTextField;
 
 	// private String filePath;
 
@@ -193,20 +206,9 @@ public class GUI {
 		registerTable.getColumnModel().getColumn(1).setPreferredWidth(75);
 		registerTable.getColumnModel().getColumn(2).setPreferredWidth(200);
 
-		JScrollPane memoryTableScrollPane = new JScrollPane();
-		memoryTableScrollPane.setBounds(656, 48, 197, 310);
-		frmOraka.getContentPane().add(memoryTableScrollPane);
-
 		Object rowData[][] = { { "$s1", "32", "0x2222" },
 				{ "$v1", "1", "0x1234" } };
 		Object columnNames[] = { "Title", "#", "Value" };
-		JTable table = new JTable(rowData, columnNames);
-
-		// memoryTable = new JTable();
-		memoryTableScrollPane.setViewportView(table);
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setPreferredWidth(75);
-		table.getColumnModel().getColumn(2).setPreferredWidth(160);
 
 		JScrollPane logScrollPane = new JScrollPane();
 		logScrollPane.setBounds(16, 389, 440, 115);
@@ -287,6 +289,75 @@ public class GUI {
 		});
 		btnSetAddress.setBounds(865, 328, 117, 29);
 		frmOraka.getContentPane().add(btnSetAddress);
+		
+		JScrollPane dataMemoryScrollPane = new JScrollPane();
+		dataMemoryScrollPane.setBounds(662, 47, 197, 115);
+		frmOraka.getContentPane().add(dataMemoryScrollPane);
+		
+		Object dataMemoryTableCols[] = { "Address", "Value" };
+		Object[][] dataMemoryData = getDataMemoryValues();
+
+		
+		dataMemoryTable = new JTable(dataMemoryData, dataMemoryTableCols);
+		dataMemoryScrollPane.setViewportView(dataMemoryTable);
+		
+		JScrollPane programMemoryScrollPane = new JScrollPane();
+		programMemoryScrollPane.setBounds(662, 224, 197, 90);
+		frmOraka.getContentPane().add(programMemoryScrollPane);
+		
+		Object[] programMemoryCols = {"Address", "Value" };
+		Object[][] programMemoryData = getProgramMemoryData();
+		
+		programMemoryTable = new JTable(programMemoryData, programMemoryCols);
+		programMemoryScrollPane.setViewportView(programMemoryTable);
+		
+		JLabel lblAddress = new JLabel("Address");
+		lblAddress.setBounds(662, 166, 61, 16);
+		frmOraka.getContentPane().add(lblAddress);
+		
+		JLabel lblValue = new JLabel("Value");
+		lblValue.setBounds(735, 166, 61, 16);
+		frmOraka.getContentPane().add(lblValue);
+		
+		JLabel lblAddress_1 = new JLabel("Address");
+		lblAddress_1.setBounds(662, 318, 61, 16);
+		frmOraka.getContentPane().add(lblAddress_1);
+		
+		JLabel lblValue_1 = new JLabel("Value");
+		lblValue_1.setBounds(735, 318, 61, 16);
+		frmOraka.getContentPane().add(lblValue_1);
+		
+		dataMemoryAddressTextField = new JTextField();
+		dataMemoryAddressTextField.setBounds(662, 184, 65, 28);
+		frmOraka.getContentPane().add(dataMemoryAddressTextField);
+		dataMemoryAddressTextField.setColumns(10);
+		
+		dataMemoryValueTextField = new JTextField();
+		dataMemoryValueTextField.setBounds(730, 184, 65, 28);
+		frmOraka.getContentPane().add(dataMemoryValueTextField);
+		dataMemoryValueTextField.setColumns(10);
+		
+		JButton btnSetDataMemory = new JButton("SDM");
+		btnSetDataMemory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSetDataMemory.setBounds(792, 183, 65, 29);
+		frmOraka.getContentPane().add(btnSetDataMemory);
+		
+		programMemoryAddressTextField = new JTextField();
+		programMemoryAddressTextField.setBounds(662, 346, 61, 28);
+		frmOraka.getContentPane().add(programMemoryAddressTextField);
+		programMemoryAddressTextField.setColumns(10);
+		
+		programMemoryValueTextField = new JTextField();
+		programMemoryValueTextField.setBounds(735, 346, 61, 28);
+		frmOraka.getContentPane().add(programMemoryValueTextField);
+		programMemoryValueTextField.setColumns(10);
+		
+		JButton btnSpm = new JButton("SPM");
+		btnSpm.setBounds(792, 347, 61, 29);
+		frmOraka.getContentPane().add(btnSpm);
 
 		setEXMEM("/\\/\\/\\/\\/\\");
 		setIDEX("/\\/\\/\\/\\/\\");
@@ -306,6 +377,36 @@ public class GUI {
 		// TODO
 		return true;
 	}
+	
+	public Object[][] getProgramMemoryData() {
+		Object[][] values = null;
+		Hashtable<Integer, String> programContents = simulator.getInstructionMemoryContents();
+		
+		values = new Object[programContents.size()][2];
+
+		int count = 0;
+		for(Entry<Integer, String> entry: programContents.entrySet()) {
+			values[count][0] = entry.getKey();
+			values[count][1] = entry.getValue();
+			count++;
+		}
+		return values;
+	}
+	
+	public Object[][] getDataMemoryValues() {
+		Object[][] values = null;
+		Hashtable<Integer, String> memoryContents = simulator.getDataMemoryContents();
+		
+		values = new Object[memoryContents.size()][2];
+
+		int count = 0;
+		for(Entry<Integer, String> entry: memoryContents.entrySet()) {
+			values[count][0] = entry.getKey();
+			values[count][1] = entry.getValue();
+			count++;
+		}
+		return values;
+	}
 
 	private Object[][] getRegisterValues() {
 		Object[][] values = new Object[32][3];
@@ -318,7 +419,6 @@ public class GUI {
 			values[i][1] = regNumber;
 			values[i][2] = regValue;
 		}
-		// TODO
 		return values;
 	}
 

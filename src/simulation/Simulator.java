@@ -5,6 +5,7 @@ import instructions.UnkownInstructionException;
 import java.io.FileNotFoundException;
 import java.util.Hashtable;
 
+import alu.InvalidOperationException;
 import assembly.ASMReader;
 import assembly.Assembler;
 import assembly.DuplicateLabelException;
@@ -39,7 +40,20 @@ public class Simulator {
 		}
 
 	}
-
+	
+	public void step() throws InvalidOperationException {
+		datapath.nextStep();
+	}
+	
+	public void run() throws InvalidOperationException {
+		while(datapath.nextStep());
+	}
+	
+	public Hashtable<String, String> getControlSignals() {
+		return null;
+		
+	}
+	
 	public Hashtable<String, String> getRegisterMemoryContents() {
 		return datapath.getRegisterContents();
 	}
