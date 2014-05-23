@@ -45,7 +45,7 @@ public class Simulator {
 	}
 	
 	public void step() {
-		
+		datapath.nextStep();
 	}
 	
 	public void run() {
