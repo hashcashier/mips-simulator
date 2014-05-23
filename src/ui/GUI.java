@@ -340,6 +340,7 @@ public class GUI {
 		JButton btnSetDataMemory = new JButton("SDM");
 		btnSetDataMemory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				setDataMemory()
 			}
 		});
 		btnSetDataMemory.setBounds(792, 183, 65, 29);
