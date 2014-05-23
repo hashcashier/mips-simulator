@@ -8,7 +8,7 @@ import instructions.isa.Slt;
 
 public class Blt extends PseudoInstruction {
 
-	protected Blt(String[] parameters, int[] types)
+	public Blt(String[] parameters, int[] types)
 			throws InvalidParameterException {
 		super(parameters, types, new int[] { 4, 4, 2});
 		instructionReplacement = new Instruction[2];

@@ -176,7 +176,7 @@ public class Assembler {
 					for(Instruction step : replacement)
 						parsedInstructions.add(step);
 				}
-				parsedInstructions.add(InstructionFactory.createInstruction(name, params, types));
+//				parsedInstructions.add(InstructionFactory.createInstruction(name, params, types));
 			}
 		}
 		this.parsedInstructions = parsedInstructions.toArray(new Instruction[0]);

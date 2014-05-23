@@ -7,8 +7,7 @@ import instructions.isa.Add;
 
 public class Move extends PseudoInstruction {
 
-	protected Move(String[] parameters, int[] types)
-			throws InvalidParameterException {
+	public Move(String[] parameters, int[] types) throws InvalidParameterException {
 		super(parameters, types, new int[] { 4, 4 });
 		instructionReplacement = new Instruction[1];
 		instructionReplacement[0] = new Add(new String[] { parameters[0],
