@@ -25,5 +25,5 @@ public abstract class AbstractPipelineRegister {
 				inputs[i] = value;
 	}
 
-	public abstract void process(Hashtable<String, String> ht);
+	public abstract Hashtable<String, String> process(Hashtable<String, String> ht);
 }
