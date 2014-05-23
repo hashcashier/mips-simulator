@@ -22,6 +22,14 @@ public class ASMReader {
 //			System.out.println("Read: " + this.inputFileLines[i]);
 	}
 	
+	public ASMReader(String[] lines) {
+		ArrayList<String> inputFileLines = new ArrayList<String>();
+		for(int i = 0; i < lines.length; i++)
+			if(lines[i].length() != 0)
+				inputFileLines.add(lines[i]);
+		this.inputFileLines = inputFileLines.toArray(new String[0]);
+	}
+	
 	private String[] read(String marker, String[] safeMarkers) {
 		boolean reading = false;
 		ArrayList<String> filtered = new ArrayList<String>();

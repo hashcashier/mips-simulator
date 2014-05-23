@@ -39,7 +39,7 @@ public class Simulator {
 		}
 
 	}
-
+	
 	public void assemble() {
 		
 	}
@@ -49,7 +49,7 @@ public class Simulator {
 	}
 	
 	public void run() {
-		
+		while(datapath.nextStep());
 	}
 	
 	public void setProgramStartAddress(int startAddress) {
