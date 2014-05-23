@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.EventQueue;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -13,6 +14,11 @@ import javax.swing.JTextPane;
 
 import registers.Register;
 import registers.RegisterManager;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 
 public class GUI {
 
@@ -22,8 +28,12 @@ public class GUI {
 	private JTable memoryTable;
 	private JTextPane logTextPane;
 	private JTable reigsterTable;
+	private JTextArea editor;
+	
+//	private File file;
 
 	private RegisterManager rm = new RegisterManager();
+//	private String filePath;
 
 	/**
 	 * Launch the application.
@@ -56,32 +66,52 @@ public class GUI {
 	private void initialize() {
 		frmOraka = new JFrame();
 		frmOraka.setTitle("ORAKA MIPS Simulator");
-		frmOraka.setBounds(100, 100, 850, 550);
+		frmOraka.setBounds(100, 100, 860, 550);
 		// frame.setBounds(100, 100, 450, 300);
 		frmOraka.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmOraka.getContentPane().setLayout(null);
 
 		JButton btnNewButton = new JButton("Assemble");
-		btnNewButton.setBounds(264, 6, 105, 29);
+		btnNewButton.setBounds(341, 6, 105, 29);
 		frmOraka.getContentPane().add(btnNewButton);
 
 		JButton btnCompile = new JButton("Run");
-		btnCompile.setBounds(381, 6, 65, 29);
+		btnCompile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCompile.setBounds(439, 6, 65, 29);
 		frmOraka.getContentPane().add(btnCompile);
 
 		JButton btnOpenFile = new JButton("Open File");
-		btnOpenFile.setBounds(6, 6, 117, 29);
+		btnOpenFile.setBounds(119, 6, 117, 29);
 		frmOraka.getContentPane().add(btnOpenFile);
 
 		JButton btnSaveFile = new JButton("Save File");
-		btnSaveFile.setBounds(135, 6, 117, 29);
+		btnSaveFile.setBounds(230, 6, 117, 29);
 		frmOraka.getContentPane().add(btnSaveFile);
+		
+		JButton btnStep = new JButton("Step");
+		btnStep.setBounds(497, 6, 75, 29);
+		frmOraka.getContentPane().add(btnStep);
+		
+		JButton btnStop = new JButton("Stop");
+		btnStop.setBounds(568, 6, 65, 29);
+		frmOraka.getContentPane().add(btnStop);
+		
+		JButton btnNewFile = new JButton("Clear/New File");
+		btnNewFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewFile.setBounds(6, 6, 117, 29);
+		frmOraka.getContentPane().add(btnNewFile);
 
 		JScrollPane editorScrollPane = new JScrollPane();
 		editorScrollPane.setBounds(16, 47, 430, 310);
 		frmOraka.getContentPane().add(editorScrollPane);
 
-		JTextArea editor = new JTextArea();
+		editor = new JTextArea();
 		editorScrollPane.setViewportView(editor);
 
 		// TODO Comment the next 2 lines if you want to use the WindowBuilder
@@ -102,7 +132,7 @@ public class GUI {
 		registerTable.getColumnModel().getColumn(2).setPreferredWidth(200);
 
 		JScrollPane memoryTableScrollPane = new JScrollPane();
-		memoryTableScrollPane.setBounds(656, 48, 141, 310);
+		memoryTableScrollPane.setBounds(656, 48, 197, 310);
 		frmOraka.getContentPane().add(memoryTableScrollPane);
 
 		Object rowData[][] = { { "$s1", "32", "0x2222" },
@@ -116,28 +146,47 @@ public class GUI {
 		table.getColumnModel().getColumn(1).setPreferredWidth(75);
 		table.getColumnModel().getColumn(2).setPreferredWidth(160);
 
-		// memoryTableScrollPane.setViewportView(memoryTable);
-		// memoryTable.setValueAt(aValue, row, column)
-
-		JLabel lblRegisters = new JLabel("Registers");
-		lblRegisters.setBounds(453, 28, 61, 16);
-		frmOraka.getContentPane().add(lblRegisters);
-
-		JLabel lblMemory = new JLabel("Memory");
-		lblMemory.setBounds(656, 28, 61, 16);
-		frmOraka.getContentPane().add(lblMemory);
-
 		JScrollPane logScrollPane = new JScrollPane();
-		logScrollPane.setBounds(16, 370, 440, 115);
+		logScrollPane.setBounds(16, 389, 440, 115);
 		frmOraka.getContentPane().add(logScrollPane);
 
 		logTextPane = new JTextPane();
 		logScrollPane.setColumnHeaderView(logTextPane);
 		logTextPane.setEditable(false);
+
 		log("-- Simulator just started --");
 		System.out.println(rm.binaryToHex("0000000000001111"));
 		// logTextPane.in
 
+		
+		/* START OF ACTION LISTENERS */
+		
+		btnOpenFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+				File file = fileChooser.getSelectedFile();
+				String filePath = file.getAbsolutePath();
+				
+				try {
+					FileReader reader = new FileReader(filePath);
+					BufferedReader br = new BufferedReader(reader);
+					
+					editor.read(reader, null);
+					br.close();
+					
+					editor.requestFocus();
+					
+					log("Opening file: " + filePath);
+					log("Don't forget to save file if you make any changes.");
+					log("To run perform: Assemble > Run");
+				} catch (Exception e) {
+					// TODO: handle exception
+					log("An error occured trying to read the file.");
+				}
+			}
+		});
+		
+		/* END OF ACTION LISTENERS */
 	}
 
 	private void log(String s) {
