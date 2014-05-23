@@ -50,19 +50,19 @@ public class Simulator {
 	}
 	
 	public Hashtable<String, String> getControlSignals() {
-		return null;
-		
+		//TODO Wait for Azazy..
+		return new Hashtable<String, String>();
 	}
 	
 	public Hashtable<String, String> getRegisterMemoryContents() {
 		return datapath.getRegisterContents();
 	}
 
-	public Hashtable<Integer, String> getDataMemoryContents() {
+	public Hashtable<Long, String> getDataMemoryContents() {
 		return datapath.getDataMemoryContents();
 	}
 
-	public Hashtable<Integer, String> getInstructionMemoryContents() {
+	public Hashtable<Long, String> getInstructionMemoryContents() {
 		return datapath.getInstructionMemoryContents();
 	}
 	
@@ -74,7 +74,7 @@ public class Simulator {
 		return datapath.getProgramCounterValue();
 	}
 	
-	public void setMemoryContent(int address, String value) {
+	public void setMemoryContent(long address, String value) {
 		datapath.setMemoryContent(address, value);
 	}
 }

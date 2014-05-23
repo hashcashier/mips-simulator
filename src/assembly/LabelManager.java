@@ -7,11 +7,12 @@ import java.util.Map.Entry;
 import registers.RegisterManager;
 
 public class LabelManager {
-	private Hashtable<String, Integer> labelType, labelValue;
+	private Hashtable<String, Integer> labelType;
+	private Hashtable<String, Long> labelValue;
 	
 	public LabelManager() {
 		labelType = new Hashtable<String, Integer>();
-		labelValue = new Hashtable<String, Integer>();
+		labelValue = new Hashtable<String, Long>();
 		addPredefinedLabels();
 	}
 	
@@ -19,11 +20,11 @@ public class LabelManager {
 		RegisterManager tempRegisterManager = new RegisterManager();
 		for(int i = 0; i < 32; i++) {
 			String label = tempRegisterManager.getRegisterTitle(i);
-			setLabel(label, i, 4);
+			setLabel(label, (long)i, 4);
 		}
 	}
 	
-	public Integer getLabelValue(String label) {
+	public Long getLabelValue(String label) {
 		return labelValue.get(label);
 	}
 	
@@ -31,7 +32,7 @@ public class LabelManager {
 		return labelType.get(label);
 	}
 	
-	public void setLabel(String key, Integer value, Integer type) {
+	public void setLabel(String key, Long value, Integer type) {
 		labelValue.put(key, value);
 		labelType.put(key, type);
 	}

@@ -13,8 +13,8 @@ public class Assembler {
 	Integer[] parsedDataType;
 	Instruction[] parsedInstructions;
 	LabelManager labelManager;
-	int programOffset;
-	public static final int DM_OFFSET = (1<<31);
+	long programOffset;
+	public static final long DM_OFFSET = (1<<31);
 	
 	public Assembler(String[] instructions, String[] data, int offset) 
 			throws DuplicateLabelException, UnkownLabelException, UnkownInstructionException {
@@ -73,7 +73,7 @@ public class Assembler {
 	}
 	
 	private void parseData() {
-		Hashtable<String, Integer> shiftBuffer = new Hashtable<String, Integer>();
+		Hashtable<String, Long> shiftBuffer = new Hashtable<String, Long>();
 		String[] dataLabels = labelManager.getAllDataLabels();
 		ArrayList<String> data = new ArrayList<String>();
 		ArrayList<Integer> dataType = new ArrayList<Integer>();
@@ -81,7 +81,7 @@ public class Assembler {
 		for(int i = 0; i < filteredData.length; i++) {
 			for(String dataLabel : dataLabels)
 				if(labelManager.getLabelValue(dataLabel) == i)
-					shiftBuffer.put(dataLabel, data.size());
+					shiftBuffer.put(dataLabel, (long)data.size());
 
 			String dataLine = filteredData[i].trim();
 			if (dataLine.startsWith(".asciiz ") || dataLine.startsWith(".ascii ")) {
@@ -111,7 +111,7 @@ public class Assembler {
 			}
 		}
 		
-		for(Entry<String, Integer> entry : shiftBuffer.entrySet())
+		for(Entry<String, Long> entry : shiftBuffer.entrySet())
 			labelManager.setLabel(entry.getKey(), DM_OFFSET + entry.getValue(), 1);
 		
 		parsedData = data.toArray(new String[0]);
@@ -144,14 +144,14 @@ public class Assembler {
 						throw new UnkownLabelException();
 					} else {
 						types[j] = labelManager.getLabelType(trimmedParam);
-						int value = labelManager.getLabelValue(trimmedParam);
+						long value = labelManager.getLabelValue(trimmedParam);
 
 						if(types[j] == 1) {// Data label
-							params[j] = Integer.toString(value);
+							params[j] = Long.toString(value);
 						} else if(types[j] == 2) {// Instruction label
-							params[j] = Integer.toString(value) + "," + Integer.toString(i);
+							params[j] = Long.toString(value) + "," + Integer.toString(i);
 						} else if(types[j] == 4) {// Register label
-							params[j] = assembleIntegral(Integer.toString(value), 5);
+							params[j] = assembleIntegral(Long.toString(value), 5);
 						}
 					}
 				}
