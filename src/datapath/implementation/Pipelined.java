@@ -25,6 +25,7 @@ public class Pipelined extends AbstractDatapath {
 
 	@Override
 	public boolean nextStep() throws InvalidOperationException {
+		// DON'T FORGET TERMINATION
 		int currentPC = this.getProgramCounterValue();
 		String currentInstruction = this.getInstructionMemoryContents()
 				.get(currentPC);
