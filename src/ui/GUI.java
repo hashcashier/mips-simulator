@@ -35,6 +35,15 @@ public class GUI {
 	private JTextArea editor;
 	private String currentFilePath = "";
 
+	private JLabel lblExMem;
+	private JLabel lblIdex;
+	private JLabel lblIfid;
+	private JLabel lblMemwb;
+	private JLabel exmemVal;
+	private JLabel idexVal;
+	private JLabel ifidVal;
+	private JLabel memwbVal;
+
 	// private File file;
 
 	private RegisterManager rm = new RegisterManager();
@@ -109,7 +118,7 @@ public class GUI {
 			public void actionPerformed(ActionEvent e) {
 				if (currentFilePath.equals(""))
 					saveAs();
-				else 
+				else
 					save();
 			}
 		});
@@ -190,6 +199,43 @@ public class GUI {
 		logScrollPane.setColumnHeaderView(logTextPane);
 		logTextPane.setEditable(false);
 
+		lblExMem = new JLabel("EX/MEM");
+		lblExMem.setBounds(468, 389, 61, 16);
+		frmOraka.getContentPane().add(lblExMem);
+
+		lblIdex = new JLabel("ID/EX");
+		lblIdex.setBounds(468, 417, 61, 16);
+		frmOraka.getContentPane().add(lblIdex);
+
+		lblIfid = new JLabel("IF/ID");
+		lblIfid.setBounds(468, 445, 61, 16);
+		frmOraka.getContentPane().add(lblIfid);
+
+		lblMemwb = new JLabel("MEM/WB");
+		lblMemwb.setBounds(468, 473, 61, 16);
+		frmOraka.getContentPane().add(lblMemwb);
+
+		exmemVal = new JLabel("-----");
+		exmemVal.setBounds(541, 389, 312, 16);
+		frmOraka.getContentPane().add(exmemVal);
+
+		idexVal = new JLabel("-----");
+		idexVal.setBounds(541, 417, 312, 16);
+		frmOraka.getContentPane().add(idexVal);
+
+		ifidVal = new JLabel("-----");
+		ifidVal.setBounds(541, 445, 312, 16);
+		frmOraka.getContentPane().add(ifidVal);
+
+		memwbVal = new JLabel("-----");
+		memwbVal.setBounds(541, 473, 312, 16);
+		frmOraka.getContentPane().add(memwbVal);
+		
+		setEXMEM("/\\/\\/\\/\\/\\");
+		setIDEX("/\\/\\/\\/\\/\\");
+		setIFID("/\\/\\/\\/\\/\\");
+		setMEMWB("/\\/\\/\\/\\/\\");
+
 		log("-- Simulator just started --");
 		// logTextPane.in
 
@@ -250,10 +296,10 @@ public class GUI {
 
 	private void save() {
 		File f = new File(currentFilePath);
-		
+
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(f));
-			
+
 			editor.write(out);
 			log("File changes succesfully saved [" + currentFilePath + "]");
 		} catch (IOException e) {
@@ -261,9 +307,9 @@ public class GUI {
 			log("Error occured while trying to save file.");
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private void saveAs() {
 		FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter(
 				"ASM", "mips");
@@ -301,23 +347,39 @@ public class GUI {
 			}
 		}
 	}
-	
+
 	private void openFile() {
 		JFileChooser fileChooser = new JFileChooser();
-	    int returnVal = fileChooser.showOpenDialog(frmOraka);
-	    if (returnVal == JFileChooser.APPROVE_OPTION) {
-	        File file = fileChooser.getSelectedFile();
-	        try {
-	          // What to do with the file, e.g. display it in a TextArea
-	          editor.read( new FileReader( file.getAbsolutePath() ), null );
-	          currentFilePath = file.getAbsolutePath();
-	          log("Opened [" + currentFilePath + "]");
-	        } catch (IOException ex) {
-	        	log("An error occured trying to open [" + currentFilePath + "]");
-	        }
-	    } else {
-	        log("File access not permitted by system");
-	    }
+		int returnVal = fileChooser.showOpenDialog(frmOraka);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			try {
+				// What to do with the file, e.g. display it in a TextArea
+				editor.read(new FileReader(file.getAbsolutePath()), null);
+				currentFilePath = file.getAbsolutePath();
+				log("Opened [" + currentFilePath + "]");
+			} catch (IOException ex) {
+				log("An error occured trying to open [" + currentFilePath + "]");
+			}
+		} else {
+			log("File access not permitted by system");
+		}
+	}
+
+	public void setEXMEM(String val) {
+		exmemVal.setText(val);
+	}
+
+	public void setIDEX(String val) {
+		idexVal.setText(val);
+	}
+
+	public void setIFID(String val) {
+		ifidVal.setText(val);
+	}
+	
+	public void setMEMWB(String val) {
+		memwbVal.setText(val);
 	}
 
 }
