@@ -1,8 +1,11 @@
 package registers;
 
+import java.util.Hashtable;
+
 public class RegisterManager {
 
-	private Register registers[] = new Register[32];
+	public static final int REGISTER_COUNT = 32;
+	private Register registers[] = new Register[REGISTER_COUNT];
 
 	public RegisterManager() {
 		init();
@@ -13,7 +16,7 @@ public class RegisterManager {
 	}
 
 	public String getRegisterValue(String regTitle) {
-		for (int i = 0; i < 32; i++)
+		for (int i = 0; i < REGISTER_COUNT; i++)
 			if (registers[i].getTitle().equals(regTitle))
 				return registers[i].getValue();
 		return "Register Not Found.";
@@ -24,7 +27,7 @@ public class RegisterManager {
 	}
 
 	public boolean setRegisterValue(String regTitle, String regValue) {
-		for (int i = 0; i < 32; i++)
+		for (int i = 0; i < REGISTER_COUNT; i++)
 			if (registers[i].getTitle().equals(regTitle)) {
 				registers[i].setValue(regValue);
 				return true;
@@ -79,7 +82,7 @@ public class RegisterManager {
 	}
 
 	public void displayRegisters() {
-		for (int i = 0; i < 32; i++) {
+		for (int i = 0; i < REGISTER_COUNT; i++) {
 			if (registers[i] != null) {
 				System.out.println(i + ". " + registers[i]);
 			}
@@ -127,5 +130,12 @@ public class RegisterManager {
 		default:
 			return hex;
 		}
+	}
+	
+	public Hashtable<String, String> getRegisterContents() {
+		Hashtable<String, String> result = new Hashtable<String, String>();
+		for (int i = 0; i < REGISTER_COUNT; i++)
+			result.put(getRegisterTitle(i), getRegisterValue(i));
+		return result;
 	}
 }

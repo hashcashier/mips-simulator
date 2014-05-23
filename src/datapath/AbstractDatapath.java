@@ -23,8 +23,7 @@ public abstract class AbstractDatapath {
 	public abstract void previousStep();
 	
 	public Hashtable<String, String> getRegisterContents() {
-		Hashtable<String, String> result = new Hashtable<String, String>();
-		return result;
+		return registerManager.getRegisterContents();
 	}
 
 	public Hashtable<Integer, String> getDataMemoryContents() {
