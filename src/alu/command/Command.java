@@ -1,7 +1,7 @@
 package alu.command;
 
-import java.util.HashMap;
+import alu.Result;
 
 public interface Command {
-	HashMap<String, String> execute();
+	Result execute();
 }

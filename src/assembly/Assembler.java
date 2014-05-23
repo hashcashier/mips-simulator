@@ -13,13 +13,15 @@ public class Assembler {
 	Integer[] parsedDataType;
 	Instruction[] parsedInstructions;
 	LabelManager labelManager;
+	int programOffset;
 	
-	public Assembler(String[] instructions, String[] data) 
+	public Assembler(String[] instructions, String[] data, int offset) 
 			throws DuplicateLabelException, UnkownLabelException, UnkownInstructionException {
 		labelManager = new LabelManager();
 		
 		filteredData = data;
 		filteredInstructions = instructions;
+		this.programOffset = offset;
 		
 		filterData();
 		filterInstructions();
@@ -54,7 +56,7 @@ public class Assembler {
 				filteredInstructions[i] = filteredInstructions[i].substring(idx+1).trim();
 				if(labelManager.containsLabel(label))
 					throw new DuplicateLabelException();
-				labelManager.setLabel(label, i, 2);
+				labelManager.setLabel(label, i + programOffset, 2);
 			}
 		}
 	}
@@ -209,5 +211,9 @@ public class Assembler {
 	
 	public String[] getAssembledData() {
 		return assembledData;
+	}
+
+	public LabelManager getLabelManager() {
+		return labelManager;
 	}
 }

@@ -2,10 +2,8 @@ package ui;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import assembly.Assembler;
-import assembly.DuplicateLabelException;
-
 import simulation.Simulator;
+import assembly.DuplicateLabelException;
 
 public class CLI {
 
@@ -21,7 +19,7 @@ public class CLI {
 		}
 		
 		try {
-			Simulator mipsSimulator = new Simulator(filePath);
+			Simulator mipsSimulator = new Simulator(filePath, "Pipelined", 0);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -10,12 +10,4 @@ public class DataMemory {
 		this.address = address;
 		this.writeData = writeData;
 	}
-
-	public void dotdataLines(String[] dataLines) {
-		int lines = dataLines.length;
-		for (int i = 0; i < lines; i++) {
-			String dataLine = dataLines[i].trim();
-		}
-
-	}
 }

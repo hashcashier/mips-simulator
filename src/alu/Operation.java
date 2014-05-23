@@ -1,7 +1,5 @@
 package alu;
 
-import java.util.HashMap;
-
 public class Operation {
 	public String inputA, inputB;
 	
@@ -10,7 +8,27 @@ public class Operation {
 		this.inputB = inputB;
 	}
 	
-	public HashMap<String, String> add() {
+	public Result add() {
+		return null;
+	}
+	
+	public Result and() {
+		return null;
+	}
+	
+	public Result nor() {
+		return null;
+	}
+	
+	public Result or() {
+		return null;
+	}
+	
+	public Result slt() {
+		return null;
+	}
+	
+	public Result sub() {
 		return null;
 	}
 }
