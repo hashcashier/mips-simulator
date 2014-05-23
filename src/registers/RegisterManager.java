@@ -19,11 +19,15 @@ public class RegisterManager {
 		return "Register Not Found.";
 	}
 
-	public void setRegisterValue(int regNumber, String regValue) {
+	public void setRegisterValue(int regNumber, String regValue) throws RegisterOperationNotAllowedException {
+		if (regNumber == 0)
+			throw new RegisterOperationNotAllowedException("Cannot change value of register $zero");
 		registers[regNumber].setValue(regValue);
 	}
 
-	public boolean setRegisterValue(String regTitle, String regValue) {
+	public boolean setRegisterValue(String regTitle, String regValue) throws RegisterOperationNotAllowedException {
+		if (regTitle.equals("$zero"))
+			throw new RegisterOperationNotAllowedException("Cannot change value of register $zero");
 		for (int i = 0; i < 32; i++)
 			if (registers[i].getTitle().equals(regTitle)) {
 				registers[i].setValue(regValue);

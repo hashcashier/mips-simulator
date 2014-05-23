@@ -29,6 +29,7 @@ public class GUI {
 	private JTextPane logTextPane;
 	private JTable reigsterTable;
 	private JTextArea editor;
+	private String currentFilePath = "";
 	
 //	private File file;
 
@@ -72,12 +73,18 @@ public class GUI {
 		frmOraka.getContentPane().setLayout(null);
 
 		JButton btnNewButton = new JButton("Assemble");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				assembleProgram();
+			}
+		});
 		btnNewButton.setBounds(341, 6, 105, 29);
 		frmOraka.getContentPane().add(btnNewButton);
 
 		JButton btnCompile = new JButton("Run");
 		btnCompile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				runProgram();
 			}
 		});
 		btnCompile.setBounds(439, 6, 65, 29);
@@ -92,16 +99,27 @@ public class GUI {
 		frmOraka.getContentPane().add(btnSaveFile);
 		
 		JButton btnStep = new JButton("Step");
+		btnStep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				performStep();
+			}
+		});
 		btnStep.setBounds(497, 6, 75, 29);
 		frmOraka.getContentPane().add(btnStep);
 		
-		JButton btnStop = new JButton("Stop");
-		btnStop.setBounds(568, 6, 65, 29);
+		JButton btnStop = new JButton("Stop/Reset");
+		btnStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				resetAll();
+			}
+		});
+		btnStop.setBounds(568, 6, 105, 29);
 		frmOraka.getContentPane().add(btnStop);
 		
 		JButton btnNewFile = new JButton("Clear/New File");
 		btnNewFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clearFile();
 			}
 		});
 		btnNewFile.setBounds(6, 6, 117, 29);
@@ -163,37 +181,39 @@ public class GUI {
 		
 		btnOpenFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fileChooser = new JFileChooser();
-				File file = fileChooser.getSelectedFile();
-				String filePath = file.getAbsolutePath();
+//				JFileChooser fileChooser = new JFileChooser();
+//				File file = fileChooser.getSelectedFile();
+//				String filePath = file.getAbsolutePath();
+//				
+//				try {
+//					FileReader reader = new FileReader(filePath);
+//					BufferedReader br = new BufferedReader(reader);
+//					
+//					editor.read(reader, null);
+//					br.close();
+//					
+//					editor.requestFocus();
+//					
+//					log("Opening file: " + filePath);
+//					log("Don't forget to save file if you make any changes.");
+//					log("To run perform: Assemble > Run");
+//				} catch (Exception e) {
+//					// TODO: handle exception
+//					log("An error occured trying to read the file.");
+//				}
 				
-				try {
-					FileReader reader = new FileReader(filePath);
-					BufferedReader br = new BufferedReader(reader);
-					
-					editor.read(reader, null);
-					br.close();
-					
-					editor.requestFocus();
-					
-					log("Opening file: " + filePath);
-					log("Don't forget to save file if you make any changes.");
-					log("To run perform: Assemble > Run");
-				} catch (Exception e) {
-					// TODO: handle exception
-					log("An error occured trying to read the file.");
-				}
+				System.out.println("Inside Action performed?");
 			}
 		});
 		
 		/* END OF ACTION LISTENERS */
 	}
 
-	private void log(String s) {
+	public void log(String s) {
 		logTextPane.setText(logTextPane.getText() + s + "\n");
 	}
 
-	private boolean setRegisterValue() {
+	public boolean setRegisterValue() {
 		// TODO
 		return true;
 	}
@@ -211,5 +231,34 @@ public class GUI {
 		}
 		// TODO
 		return values;
+	}
+	
+	public void runProgram() {
+		if(currentFilePath.equals("")) {
+			log("There seems to be no file currently open");
+			log("Make sure you have saved the currently open file before running");
+			
+			return;
+		}
+		
+		// TODO ELSE perform run.
+	}
+	
+	public void assembleProgram() {
+		log("Assembling program upto latest save performed");
+	}
+	
+	public void performStep() {
+		// TODO
+	}
+	
+	public void resetAll() {
+		
+	}
+	
+	private void clearFile() {
+		currentFilePath = "";
+		editor.setText("");
+		log("Cleared editor and file path.");
 	}
 }
