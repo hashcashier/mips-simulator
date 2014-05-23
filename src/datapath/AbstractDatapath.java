@@ -3,10 +3,10 @@ package datapath;
 import java.util.Hashtable;
 
 import peripherals.ProgramCounter;
-
 import memory.*;
 import registers.RegisterManager;
 import alu.ALU;
+import alu.InvalidOperationException;
 
 public abstract class AbstractDatapath {
 	Memory hardwareMemory;
@@ -45,6 +45,6 @@ public abstract class AbstractDatapath {
 	}
 
 	public abstract Hashtable<String, String> getPipelineRegistersContents();
-	public abstract boolean nextStep();
+	public abstract boolean nextStep() throws InvalidOperationException;
 	public abstract boolean previousStep();	
 }
