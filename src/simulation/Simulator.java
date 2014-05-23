@@ -3,6 +3,7 @@ package simulation;
 import instructions.UnkownInstructionException;
 
 import java.io.FileNotFoundException;
+import java.util.Hashtable;
 
 import assembly.ASMReader;
 import assembly.Assembler;
@@ -13,12 +14,19 @@ import datapath.DatapathFactory;
 import datapath.UnkownDatapathException;
 
 public class Simulator {
-	public Simulator(String filePath, String dataPath, int programOffset) throws FileNotFoundException, DuplicateLabelException {
+	AbstractDatapath datapath;
+
+	public Simulator(String filePath, String dataPath, int programOffset)
+			throws FileNotFoundException, DuplicateLabelException {
 		ASMReader assemblyFileReader = new ASMReader(filePath);
-		String[] rawInstructions = assemblyFileReader.getInstructions(), rawData = assemblyFileReader.getData();
+		String[] rawInstructions = assemblyFileReader.getInstructions(), rawData = assemblyFileReader
+				.getData();
 		try {
-			Assembler assembler = new Assembler(rawInstructions, rawData, programOffset);
-			AbstractDatapath datapath = DatapathFactory.createDatapath(dataPath, assembler.getAssembledInstructions(), assembler.getAssembledData(), programOffset);
+			Assembler assembler = new Assembler(rawInstructions, rawData,
+					programOffset);
+			datapath = DatapathFactory.createDatapath(dataPath,
+					assembler.getAssembledInstructions(),
+					assembler.getAssembledData(), programOffset);
 		} catch (UnkownLabelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,6 +37,18 @@ public class Simulator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	public Hashtable<String, String> getRegisterMemoryContents() {
+		return datapath.getRegisterContents();
+	}
+
+	public Hashtable<Integer, String> getDataMemoryContents() {
+		return datapath.getDataMemoryContents();
+	}
+
+	public Hashtable<Integer, String> getInstructionMemoryContents() {
+		return datapath.getInstructionMemoryContents();
 	}
 }
