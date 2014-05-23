@@ -4,7 +4,7 @@ public class Register {
 	private String value;
 	private String title;
 
-	private boolean type[] = new boolean[12];
+	private boolean type[] = new boolean[11];
 
 	static int TYPE_ZERO = 0;
 	static int TYPE_ARGUMENT = 1;
@@ -17,7 +17,6 @@ public class Register {
 	static int TYPE_RETURN_ADDRESS = 8;
 	static int TYPE_KERNEL = 9;
 	static int TYPE_ASSEMBLER_TEMPORARY = 10;
-	static int TYPE_PIPELINE = 11;
 
 	/*
 	 * e.g. new Register("1010101010...", "$s0", Register.TYPE_TEMPORARY)
