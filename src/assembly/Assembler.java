@@ -210,4 +210,8 @@ public class Assembler {
 	public String[] getAssembledData() {
 		return assembledData;
 	}
+
+	public LabelManager getLabelManager() {
+		return labelManager;
+	}
 }
