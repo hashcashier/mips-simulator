@@ -19,7 +19,7 @@ public class CLI {
 		}
 		
 		try {
-			Simulator mipsSimulator = new Simulator(filePath, "Pipelined");
+			Simulator mipsSimulator = new Simulator(filePath, "Pipelined", 0);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
