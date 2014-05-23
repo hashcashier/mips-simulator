@@ -191,7 +191,6 @@ public class GUI {
 		logTextPane.setEditable(false);
 
 		log("-- Simulator just started --");
-		System.out.println(rm.binaryToHex("0000000000001111"));
 		// logTextPane.in
 
 	}
