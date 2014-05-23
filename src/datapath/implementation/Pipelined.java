@@ -1,5 +1,7 @@
 package datapath.implementation;
 
+import instructions.Instruction;
+
 import java.util.Hashtable;
 
 import datapath.AbstractDatapath;
@@ -19,14 +21,16 @@ public class Pipelined extends AbstractDatapath {
 
 	@Override
 	public void nextStep() {
-		// TODO Auto-generated method stub
+		int currentInstructionCounter = this.getProgramCounterValue();
+		String currentInstruction = this.getInstructionMemoryContents()
+				.get(currentInstructionCounter);
 		
 	}
 
 	@Override
 	public void previousStep() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
