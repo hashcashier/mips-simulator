@@ -1,5 +1,7 @@
 package datapath.implementation.pipelined.registers;
 
+import java.util.Hashtable;
+
 public class IDEX extends AbstractPipelineRegister {
 
 	private static final String[] inputs = { "PC", "RegWrite", "RegDst",
@@ -12,6 +14,12 @@ public class IDEX extends AbstractPipelineRegister {
 	public IDEX() {
 		super(inputs, outputs, "ID/EX");
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void process(Hashtable<String, String> ht) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
