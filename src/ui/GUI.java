@@ -56,17 +56,6 @@ public class GUI {
 
 	private RegisterManager rm = new RegisterManager();
 
-	private String RegDst = "0";
-	private String Jump = "0";
-	private String Branch = "0";
-	private String MemRead = "0";
-	private String MemToReg = "0";
-	private String ALUOp = "00";
-	private String MemWrite = "0";
-	private String ALUSrc = "0";
-	private String RegWrite = "0";
-	private String Zero = "0";
-
 	private JTable controlTable;
 
 	private String programStartAddress = "400";
@@ -255,7 +244,8 @@ public class GUI {
 		frmOraka.getContentPane().add(controlScrollPane);
 
 		Object controlTableColumns[] = { "Title", "Value" };
-		Object[][] controlData = getControlValues();
+//		Object[][] controlData = getControlValues();
+		Object[][] controlData = getControlSignals();
 
 		controlTable = new JTable(controlData, controlTableColumns);
 		controlScrollPane.setViewportView(controlTable);
@@ -379,6 +369,24 @@ public class GUI {
 		return true;
 	}
 	
+	public Object[][] getControlSignals() {
+		Hashtable<String, String> signals = simulator.getControlSignals();
+		// COME HERE
+		Object[][] values = new Object[signals.size()][2];
+		
+		int count = 0;
+		for(Entry<String, String> entry: signals.entrySet()) {
+			values[count][0] = entry.getKey();
+			values[count][1] = entry.getValue();
+			count++;
+		}
+		return values;
+	}
+	
+	public void setDataMemory(long address, String value) {
+		simulator.setMemoryContent(address, value);
+	}
+	
 	public Object[][] getProgramMemoryData() {
 		Object[][] values = null;
 		Hashtable<Long, String> programContents = simulator.getInstructionMemoryContents();
@@ -438,32 +446,6 @@ public class GUI {
 		}
 	}
 
-	private Object[][] getControlValues() {
-		Object[][] values = new Object[10][2];
-		values[0][0] = "RegDst";
-		values[1][0] = "Jump";
-		values[2][0] = "Branch";
-		values[3][0] = "MemRead";
-		values[4][0] = "MemToReg";
-		values[5][0] = "ALUOp";
-		values[6][0] = "MemWrite";
-		values[7][0] = "ALUSrc";
-		values[8][0] = "RegWrite";
-		values[9][0] = "Zero";
-
-		values[0][1] = "0";
-		values[1][1] = "0";
-		values[2][1] = "0";
-		values[3][1] = "0";
-		values[4][1] = "0";
-		values[5][1] = "00";
-		values[6][1] = "0";
-		values[7][1] = "0";
-		values[8][1] = "0";
-		values[9][1] = "0";
-
-		return values;
-	}
 
 	public void runProgram() {
 		if (currentFilePath.equals("")) {
