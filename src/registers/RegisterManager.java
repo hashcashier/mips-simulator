@@ -22,11 +22,17 @@ public class RegisterManager {
 		return "Register Not Found.";
 	}
 
-	public void setRegisterValue(int regNumber, String regValue) {
+	public void setRegisterValue(int regNumber, String regValue)
+			throws RegisterOperationNotAllowedException {
+		if (regNumber == 0)
+			throw new RegisterOperationNotAllowedException(
+					"Cannot change value of register $zero");
 		registers[regNumber].setValue(regValue);
 	}
 
 	public boolean setRegisterValue(String regTitle, String regValue) {
+		if (regTitle.equals("$zero"))
+			return true;
 		for (int i = 0; i < REGISTER_COUNT; i++)
 			if (registers[i].getTitle().equals(regTitle)) {
 				registers[i].setValue(regValue);
@@ -110,7 +116,7 @@ public class RegisterManager {
 	public String binaryToHex(String bin) {
 		return String.format("%X", Integer.parseInt(bin, 2));
 	}
-	
+
 	public String formatHex(String hex) {
 		switch (hex.length()) {
 		case 1:
@@ -125,13 +131,13 @@ public class RegisterManager {
 			return "0x000" + hex;
 		case 6:
 			return "0x00" + hex;
-		case 7: 
+		case 7:
 			return "0x0" + hex;
 		default:
 			return hex;
 		}
 	}
-	
+
 	public Hashtable<String, String> getRegisterContents() {
 		Hashtable<String, String> result = new Hashtable<String, String>();
 		for (int i = 0; i < REGISTER_COUNT; i++)
