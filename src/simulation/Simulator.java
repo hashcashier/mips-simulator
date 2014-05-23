@@ -55,4 +55,12 @@ public class Simulator {
 	public Hashtable<String, String> getPipelineRegistersContents() {
 		return datapath.getPipelineRegistersContents();
 	}
+	
+	public int getProgramCounterValue() {
+		return datapath.getProgramCounterValue();
+	}
+	
+	public void setMemoryContent(int address, String value) {
+		datapath.setMemoryContent(address, value);
+	}
 }
