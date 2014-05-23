@@ -47,6 +47,26 @@ public class Operation {
 	}
 	
 	public Result sub() {
-		return null;
+		String newInputB = Operation.twoComplement(inputB);
+		Operation op = new Operation(inputA, newInputB);
+		return op.add();
+	}
+
+	private static String twoComplement(String number) {
+		String result = "";
+		String one = "";
+		for (int i=SIZE-1; i>=0; i--) {
+			int digit = number.charAt(i) - '0';
+			digit = 1 - digit;
+			result = (digit + '0') + result;
+			if (i == SIZE-1) {
+				one = "1" + one;
+			}
+			else {
+				one = "0" + one;
+			}
+		}
+		Operation op = new Operation(result, one);
+		return op.add().getResult();
 	}
 }
