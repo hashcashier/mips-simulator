@@ -380,12 +380,12 @@ public class GUI {
 	
 	public Object[][] getProgramMemoryData() {
 		Object[][] values = null;
-		Hashtable<Integer, String> programContents = simulator.getInstructionMemoryContents();
+		Hashtable<Long, String> programContents = simulator.getInstructionMemoryContents();
 		
 		values = new Object[programContents.size()][2];
 
 		int count = 0;
-		for(Entry<Integer, String> entry: programContents.entrySet()) {
+		for(Entry<Long, String> entry: programContents.entrySet()) {
 			values[count][0] = entry.getKey();
 			values[count][1] = entry.getValue();
 			count++;
@@ -395,12 +395,12 @@ public class GUI {
 	
 	public Object[][] getDataMemoryValues() {
 		Object[][] values = null;
-		Hashtable<Integer, String> memoryContents = simulator.getDataMemoryContents();
+		Hashtable<Long, String> memoryContents = simulator.getDataMemoryContents();
 		
 		values = new Object[memoryContents.size()][2];
 
 		int count = 0;
-		for(Entry<Integer, String> entry: memoryContents.entrySet()) {
+		for(Entry<Long, String> entry: memoryContents.entrySet()) {
 			values[count][0] = entry.getKey();
 			values[count][1] = entry.getValue();
 			count++;

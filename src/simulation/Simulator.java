@@ -49,7 +49,8 @@ public class Simulator {
 	}
 	
 	public Hashtable<String, String> getControlSignals() {
-		
+		//TODO Wait for Azazy..
+		return new Hashtable<String, String>();
 	}
 	
 	public Hashtable<String, String> getRegisterMemoryContents() {
