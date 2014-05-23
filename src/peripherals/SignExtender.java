@@ -1,8 +1,7 @@
-package registers;
+package peripherals;
 
 public class SignExtender {
-	
-	public String signExtend(String input) {
+	public static String signExtend(String input) {
 		if(input.charAt(0) == '0')
 			return "0000000000000000" + input;
 		else
