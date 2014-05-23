@@ -17,20 +17,20 @@ public class DataMemory {
 	}
 
 	public String memoryAction(String memWrite, String memRead, String address,
-			String writeData) throws AddressMoreThan32BitsException,
+			String writeData) throws AddressNotFoundException,
 			WriteDataMoreThan32BitsException {
 		int read = Integer.parseInt(memRead, 2);
 		int write = Integer.parseInt(memWrite, 2);
 		long addressKey = Long.parseLong(address, 2);
 		if (address.length() > 32)
-			throw new AddressMoreThan32BitsException();
+			throw new AddressNotFoundException();
 		if (writeData.length() > 32)
 			throw new WriteDataMoreThan32BitsException();
-		if (read == 1 && write == 0) {
-			return hardwareMemory.read(addressKey);
-		}
-		if (write == 1 && read == 0) {
+		if (write == 1) {
 			hardwareMemory.write(addressKey, writeData);
+		}
+		if (read == 1) {
+			return hardwareMemory.read(addressKey);
 		}
 		return null;
 	}
