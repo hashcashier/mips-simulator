@@ -40,28 +40,12 @@ public class Simulator {
 
 	}
 	
-	public void assemble() {
-		
-	}
-	
 	public void step() {
 		datapath.nextStep();
 	}
 	
 	public void run() {
 		while(datapath.nextStep());
-	}
-	
-	public void setProgramStartAddress(int startAddress) {
-		
-	}
-	
-	public void stop() {
-		
-	}
-	
-	public void setFilePath(String path) {
-		
 	}
 	
 	public Hashtable<String, String> getRegisterMemoryContents() {
