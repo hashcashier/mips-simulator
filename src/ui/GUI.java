@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 import registers.Register;
 import registers.RegisterManager;
@@ -478,14 +479,14 @@ public class GUI {
 			try {
 				simulator.run();
 				log("Program ran succesfully.");
+				update();
 			} catch (InvalidOperationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				log("And Error occured stopping the program from running in (GUI:runProgram)");
 			}
-			update();
 		}
-		// TODO ELSE perform run.
+
 	}
 
 	public void assembleProgram() {
@@ -521,14 +522,19 @@ public class GUI {
 	}
 
 	public void performStep() {
-		// TODO
+		if (currentFilePath.equals("")) {
+			log("Please save the file before you proceed.");
+			log("Save > Assemble > Step");
+			return;
+		}
+
 		try {
 			simulator.step();
+			update();
 		} catch (InvalidOperationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		update();
 	}
 
 	public void resetAll() {
@@ -538,6 +544,57 @@ public class GUI {
 
 	public void update() {
 		// TODO
+		updateDataMemoryTable();
+		updateProgramMemoryTable();
+		updateRegistersTable();
+		updateControlSignalsTable();
+		updatePipelineRegistersData();
+		log("PC: " + simulator.getProgramCounterValue());
+	}
+
+	public void updatePipelineRegistersData() {
+		setPipelineRegisterValues();
+	}
+
+	public void updateControlSignalsTable() {
+		Object controlTableColumns[] = { "Title", "Value" };
+		Object[][] controlData = getControlSignals();
+
+		DefaultTableModel model = new DefaultTableModel(controlData,
+				controlTableColumns);
+		controlTable.setModel(model);
+		model.fireTableDataChanged();
+	}
+
+	public void updateRegistersTable() {
+		Object registerTableColumnNames[] = { "Title", "#", "Value" };
+		Object[][] registerData = getRegisterValues();
+
+		DefaultTableModel model = new DefaultTableModel(registerData,
+				registerTableColumnNames);
+
+		registerTable.setModel(model);
+		model.fireTableDataChanged();
+	}
+
+	public void updateDataMemoryTable() {
+		Object dataMemoryTableCols[] = { "Address", "Value" };
+		Object[][] dataMemoryData = getDataMemoryValues();
+
+		DefaultTableModel model = new DefaultTableModel(dataMemoryData,
+				dataMemoryTableCols);
+		dataMemoryTable.setModel(model);
+		model.fireTableDataChanged();
+	}
+
+	public void updateProgramMemoryTable() {
+		Object programMemoryTableCols[] = { "Address", "Value" };
+		Object[][] programMemoryData = getProgramMemoryData();
+
+		DefaultTableModel model = new DefaultTableModel(programMemoryData,
+				programMemoryTableCols);
+		dataMemoryTable.setModel(model);
+		model.fireTableDataChanged();
 	}
 
 	private void clearFile() {
