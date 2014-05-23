@@ -51,4 +51,8 @@ public class Simulator {
 	public Hashtable<Integer, String> getInstructionMemoryContents() {
 		return datapath.getInstructionMemoryContents();
 	}
+	
+	public Hashtable<String, String> getPipelineRegistersContents() {
+		return datapath.getPipelineRegistersContents();
+	}
 }

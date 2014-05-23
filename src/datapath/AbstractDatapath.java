@@ -33,4 +33,6 @@ public abstract class AbstractDatapath {
 	public Hashtable<Integer, String> getInstructionMemoryContents() {
 		return instructionMemory.getMemoryContents();
 	}
+
+	public abstract Hashtable<String, String> getPipelineRegistersContents();
 }
