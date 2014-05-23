@@ -1,5 +1,6 @@
 .text
 addi $t1, $zero, 123
+move $t2, $t1
 lp: add $zero, $at, $t1
 beq $zero, $zero, lp
 j lp

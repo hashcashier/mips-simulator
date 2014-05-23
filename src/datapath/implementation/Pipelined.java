@@ -1,8 +1,8 @@
 package datapath.implementation;
 
-import instructions.Instruction;
-
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 import alu.ALU;
 import alu.ALUControl;
@@ -13,6 +13,7 @@ import datapath.implementation.pipelined.registers.*;
 
 public class Pipelined extends AbstractDatapath {
 	AbstractPipelineRegister[] pipelineRegisters;
+	LinkedList<Hashtable<String, String>> processes;
 
 	Pipelined(String[] instructions, String[] data, int programOffset) {
 		super(instructions, data, programOffset);
@@ -25,12 +26,22 @@ public class Pipelined extends AbstractDatapath {
 
 	@Override
 	public boolean nextStep() throws InvalidOperationException {
+		// DON'T FORGET TERMINATION
 		int currentPC = this.getProgramCounterValue();
 		String currentInstruction = this.getInstructionMemoryContents()
 				.get(currentPC);
 		String incrementedPC = Pipelined.incrementPC(currentPC);
-		pipelineRegisters[0].setInputValue("PC", incrementedPC);
-		pipelineRegisters[0].setInputValue("Instruction", currentInstruction);
+		
+		Hashtable<String, String> inputIFID = new Hashtable<String, String>();
+		Hashtable<String, String> inputIDEX = new Hashtable<String, String>();
+		Hashtable<String, String> inputEXMEM = new Hashtable<String, String>();
+		Hashtable<String, String> inputMEMWB = new Hashtable<String, String>();
+		
+		inputIFID.put("PC", incrementedPC);
+		inputIFID.put("Instruction", currentInstruction);
+		Hashtable<String, String> outputIFID = pipelineRegisters[0].process(inputIFID);
+		
+		
 		return false;
 	}
 		

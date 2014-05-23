@@ -17,10 +17,19 @@ public class InstructionMemory {
 		}
 	}
 
+	public String instructionRead(String address)
+			throws AddressNotFoundException {
+		long addressKey = Long.parseLong(address, 2);
+		if (address.length() > 32)
+			throw new AddressNotFoundException();
+		return hardwareMemory.read(addressKey);
+
+	}
+
 	public Hashtable<Long, String> getMemoryContents() {
 		Hashtable<Long, String> result = new Hashtable<Long, String>();
-		for(Entry<Long, String> entry : hardwareMemory.getAll().entrySet())
-			if((entry.getKey() & Assembler.DM_OFFSET) == 0)
+		for (Entry<Long, String> entry : hardwareMemory.getAll().entrySet())
+			if ((entry.getKey() & Assembler.DM_OFFSET) == 0)
 				result.put(entry.getKey(), entry.getValue());
 		return result;
 	}
