@@ -2,20 +2,21 @@ package datapath;
 
 import java.util.Hashtable;
 
-import alu.ALU;
+import memory.*;
 import registers.RegisterManager;
-import instructions.InstructionMemory;
-import data.DataMemory;
+import alu.ALU;
 
 public abstract class AbstractDatapath {
+	Memory hardwareMemory;
 	DataMemory dataMemory;
 	InstructionMemory instructionMemory;
 	RegisterManager registerManager;
 	ALU alu;
 	
 	public AbstractDatapath(String[] instructions, String[] data, int programOffset) {
-		instructionMemory = new InstructionMemory(instructions, programOffset);
-		dataMemory = new DataMemory(data);
+		hardwareMemory = new Memory();
+		instructionMemory = new InstructionMemory(hardwareMemory, instructions, programOffset);
+		dataMemory = new DataMemory(hardwareMemory, data);
 	}
 	
 	public abstract void nextStep();
