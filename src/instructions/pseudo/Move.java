@@ -12,7 +12,7 @@ public class Move extends PseudoInstruction {
 		super(parameters, types, new int[] { 4, 4 });
 		instructionReplacement = new Instruction[1];
 		instructionReplacement[0] = new Add(new String[] { parameters[0],
-				parameters[1], "00000" }, new int[] { types[0], types[1], 4 });
+				parameters[1], "00000" }, new int[] { 4, 4, 4 });
 	}
 
 }
