@@ -30,6 +30,8 @@ import java.util.Map.Entry;
 
 import javax.swing.JTextField;
 
+import alu.InvalidOperationException;
+
 public class GUI {
 
 	private Simulator simulator;
@@ -394,7 +396,7 @@ public class GUI {
 	public void setDataMemory(long address, String value) {
 		simulator.setMemoryContent(address, value);
 	}
-	
+
 	public void setProgramMemory(long address, String value) {
 		setDataMemory(address, value);
 	}
@@ -468,23 +470,39 @@ public class GUI {
 		if (currentFilePath.equals("")) {
 			log("There seems to be no file currently open");
 			log("Make sure you have saved the currently open file before running");
-
 			return;
+		} else {
+			log("Running [" + currentFilePath + "]");
+			try {
+				simulator.run();
+				log("Program ran succesfully.");
+			} catch (InvalidOperationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				log("And Error occured stopping the program from running in (GUI:runProgram)");
+			}
+			update();
 		}
-
 		// TODO ELSE perform run.
 	}
 
 	public void assembleProgram() {
 		log("Assembling program upto latest save performed");
+		// TODO 
 	}
 
 	public void performStep() {
 		// TODO
+		update();
 	}
 
 	public void resetAll() {
+		// TODO
+		update();
+	}
 
+	public void update() {
+		// TODO
 	}
 
 	private void clearFile() {
