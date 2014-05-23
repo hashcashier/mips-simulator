@@ -1,5 +1,7 @@
 package ui;
 
+import instructions.UnkownInstructionException;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFileChooser;
@@ -20,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,6 +32,7 @@ import java.util.Map.Entry;
 import javax.swing.JTextField;
 
 import alu.InvalidOperationException;
+import assembly.DuplicateLabelException;
 
 public class GUI {
 
@@ -485,17 +489,50 @@ public class GUI {
 	}
 
 	public void assembleProgram() {
-		log("Assembling program upto latest save performed");
-		// TODO 
-	}
+		if (currentFilePath.equals("")) {
+			log("Please save the file before assembling the program");
+			return;
+		}
 
-	public void performStep() {
+		log("Assembling program upto latest save performed");
+
+		try {
+			simulator.assemble(currentFilePath, "Pipelined",
+					Integer.parseInt(programStartAddress));
+		} catch (NumberFormatException e) {
+			log("An error occured while assembling the program");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			log("An error occured while assembling the program");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DuplicateLabelException e) {
+			log("An error occured while assembling the program");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnkownInstructionException e) {
+			log("An error occured while assembling the program");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// TODO
 		update();
 	}
 
-	public void resetAll() {
+	public void performStep() {
 		// TODO
+		try {
+			simulator.step();
+		} catch (InvalidOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		update();
+	}
+
+	public void resetAll() {
+		simulator = new Simulator();
 		update();
 	}
 
