@@ -96,6 +96,11 @@ public class GUI {
 		frmOraka.getContentPane().add(btnCompile);
 
 		JButton btnOpenFile = new JButton("Open File");
+		btnOpenFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openFile();
+			}
+		});
 		btnOpenFile.setBounds(119, 6, 117, 29);
 		frmOraka.getContentPane().add(btnOpenFile);
 
@@ -189,36 +194,6 @@ public class GUI {
 		System.out.println(rm.binaryToHex("0000000000001111"));
 		// logTextPane.in
 
-		/* START OF ACTION LISTENERS */
-
-		btnOpenFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// JFileChooser fileChooser = new JFileChooser();
-				// File file = fileChooser.getSelectedFile();
-				// String filePath = file.getAbsolutePath();
-				//
-				// try {
-				// FileReader reader = new FileReader(filePath);
-				// BufferedReader br = new BufferedReader(reader);
-				//
-				// editor.read(reader, null);
-				// br.close();
-				//
-				// editor.requestFocus();
-				//
-				// log("Opening file: " + filePath);
-				// log("Don't forget to save file if you make any changes.");
-				// log("To run perform: Assemble > Run");
-				// } catch (Exception e) {
-				// // TODO: handle exception
-				// log("An error occured trying to read the file.");
-				// }
-
-				System.out.println("Inside Action performed?");
-			}
-		});
-
-		/* END OF ACTION LISTENERS */
 	}
 
 	public void log(String s) {
@@ -326,6 +301,24 @@ public class GUI {
 				}
 			}
 		}
+	}
+	
+	private void openFile() {
+		JFileChooser fileChooser = new JFileChooser();
+	    int returnVal = fileChooser.showOpenDialog(frmOraka);
+	    if (returnVal == JFileChooser.APPROVE_OPTION) {
+	        File file = fileChooser.getSelectedFile();
+	        try {
+	          // What to do with the file, e.g. display it in a TextArea
+	          editor.read( new FileReader( file.getAbsolutePath() ), null );
+	          currentFilePath = file.getAbsolutePath();
+	          log("Opened [" + currentFilePath + "]");
+	        } catch (IOException ex) {
+	        	log("An error occured trying to open [" + currentFilePath + "]");
+	        }
+	    } else {
+	        log("File access not permitted by system");
+	    }
 	}
 
 }
