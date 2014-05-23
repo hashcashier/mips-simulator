@@ -2,6 +2,8 @@ package datapath;
 
 import java.util.Hashtable;
 
+import peripherals.ProgramCounter;
+
 import memory.*;
 import registers.RegisterManager;
 import alu.ALU;
@@ -12,15 +14,15 @@ public abstract class AbstractDatapath {
 	InstructionMemory instructionMemory;
 	RegisterManager registerManager;
 	ALU alu;
+	ProgramCounter pc;
 	
 	public AbstractDatapath(String[] instructions, String[] data, int programOffset) {
 		hardwareMemory = new Memory();
 		instructionMemory = new InstructionMemory(hardwareMemory, instructions, programOffset);
 		dataMemory = new DataMemory(hardwareMemory, data);
+		pc = new ProgramCounter();
+		pc.setCounter(programOffset);
 	}
-	
-	public abstract void nextStep();
-	public abstract void previousStep();
 	
 	public Hashtable<String, String> getRegisterContents() {
 		return registerManager.getRegisterContents();
@@ -37,6 +39,12 @@ public abstract class AbstractDatapath {
 	public void setMemoryContent(int address, String value) {
 		hardwareMemory.write(address, value);
 	}
+	
+	public int getProgramCounterValue() {
+		return pc.getCounter();
+	}
 
 	public abstract Hashtable<String, String> getPipelineRegistersContents();
+	public abstract void nextStep();
+	public abstract void previousStep();	
 }

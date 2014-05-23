@@ -25,7 +25,6 @@ public class SingleCycle extends AbstractDatapath {
 
 	@Override
 	public Hashtable<String, String> getPipelineRegistersContents() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
