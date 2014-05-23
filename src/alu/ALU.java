@@ -1,6 +1,7 @@
 package alu;
 
 import java.lang.reflect.Constructor;
+
 import alu.command.Command;
 
 public class ALU {
@@ -38,10 +39,9 @@ public class ALU {
 		this.control = control;
 	}
 
-	public Result execute() {
+	public Result execute() throws InvalidOperationException {
 		Operation op = new Operation(inputA, inputB);
-		// It is assumed that the operator will be in words, i.e: Add
-		String operator = control.getOperation();
+		String operator = control.decodeOperation();
 		String className = "alu.command."
 				+ operator.substring(0, 0).toUpperCase()
 				+ operator.substring(1).toLowerCase() + "Command";
