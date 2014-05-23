@@ -52,11 +52,11 @@ public class Simulator {
 		return datapath.getRegisterContents();
 	}
 
-	public Hashtable<Integer, String> getDataMemoryContents() {
+	public Hashtable<Long, String> getDataMemoryContents() {
 		return datapath.getDataMemoryContents();
 	}
 
-	public Hashtable<Integer, String> getInstructionMemoryContents() {
+	public Hashtable<Long, String> getInstructionMemoryContents() {
 		return datapath.getInstructionMemoryContents();
 	}
 	

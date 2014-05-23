@@ -28,15 +28,15 @@ public abstract class AbstractDatapath {
 		return registerManager.getRegisterContents();
 	}
 
-	public Hashtable<Integer, String> getDataMemoryContents() {
+	public Hashtable<Long, String> getDataMemoryContents() {
 		return dataMemory.getMemoryContents();
 	}
 
-	public Hashtable<Integer, String> getInstructionMemoryContents() {
+	public Hashtable<Long, String> getInstructionMemoryContents() {
 		return instructionMemory.getMemoryContents();
 	}
 	
-	public void setMemoryContent(int address, String value) {
+	public void setMemoryContent(long address, String value) {
 		hardwareMemory.write(address, value);
 	}
 	
