@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JTextField;
 
 public class GUI {
 
@@ -47,6 +48,7 @@ public class GUI {
 	// private File file;
 
 	private RegisterManager rm = new RegisterManager();
+
 	private String RegDst = "0";
 	private String Jump = "0";
 	private String Branch = "0";
@@ -57,7 +59,11 @@ public class GUI {
 	private String ALUSrc = "0";
 	private String RegWrite = "0";
 	private String Zero = "0";
+
 	private JTable controlTable;
+
+	private String programStartAddress = "400";
+	private JTextField programStartAddressTextField;
 
 	// private String filePath;
 
@@ -241,17 +247,47 @@ public class GUI {
 		memwbVal = new JLabel("-----");
 		memwbVal.setBounds(541, 473, 312, 16);
 		frmOraka.getContentPane().add(memwbVal);
-		
+
 		JScrollPane controlScrollPane = new JScrollPane();
 		controlScrollPane.setBounds(865, 47, 129, 203);
 		frmOraka.getContentPane().add(controlScrollPane);
-		
+
 		Object controlTableColumns[] = { "Title", "Value" };
 		Object[][] controlData = getControlValues();
-		
+
 		controlTable = new JTable(controlData, controlTableColumns);
 		controlScrollPane.setViewportView(controlTable);
-		
+
+		JLabel lblProgramStartAddress = new JLabel("Program Start Adr.");
+		lblProgramStartAddress.setBounds(865, 262, 129, 16);
+		frmOraka.getContentPane().add(lblProgramStartAddress);
+
+		programStartAddressTextField = new JTextField();
+		programStartAddressTextField.setBounds(860, 283, 134, 28);
+		frmOraka.getContentPane().add(programStartAddressTextField);
+		programStartAddressTextField.setColumns(10);
+
+		JButton btnSetAddress = new JButton("Set Address");
+		btnSetAddress.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String addr = programStartAddressTextField.getText().trim();
+				if (!isNumeric(addr)) {
+					log("Please enter a valid program start address and make sure it is greater than 400");
+				} else {
+					int addrVal = Integer.parseInt(addr);
+					if (addrVal < 400)
+						log("Please enter a value greater than 400");
+					else {
+						programStartAddress = (new Integer(addrVal)).toString();
+						log("Program Start Address has been set to "
+								+ programStartAddress);
+					}
+				}
+			}
+		});
+		btnSetAddress.setBounds(865, 328, 117, 29);
+		frmOraka.getContentPane().add(btnSetAddress);
+
 		setEXMEM("/\\/\\/\\/\\/\\");
 		setIDEX("/\\/\\/\\/\\/\\");
 		setIFID("/\\/\\/\\/\\/\\");
@@ -285,7 +321,7 @@ public class GUI {
 		// TODO
 		return values;
 	}
-	
+
 	private Object[][] getControlValues() {
 		Object[][] values = new Object[10][2];
 		values[0][0] = "RegDst";
@@ -298,7 +334,7 @@ public class GUI {
 		values[7][0] = "ALUSrc";
 		values[8][0] = "RegWrite";
 		values[9][0] = "Zero";
-		
+
 		values[0][1] = "0";
 		values[1][1] = "0";
 		values[2][1] = "0";
@@ -309,7 +345,7 @@ public class GUI {
 		values[7][1] = "0";
 		values[8][1] = "0";
 		values[9][1] = "0";
-		
+
 		return values;
 	}
 
@@ -425,58 +461,71 @@ public class GUI {
 	public void setIFID(String val) {
 		ifidVal.setText(val);
 	}
-	
+
 	public void setMEMWB(String val) {
 		memwbVal.setText(val);
 	}
-	
+
 	public void setRegDst(String val) {
 		RegDst = val;
 		controlTable.setValueAt(new String(val), 0, 1);
 	}
-	
+
 	public void setJump(String val) {
 		Jump = val;
 		controlTable.setValueAt(new String(val), 1, 1);
 	}
-	
+
 	public void setBranch(String val) {
 		Branch = val;
 		controlTable.setValueAt(new String(val), 2, 1);
 	}
-	
+
 	public void setMemRead(String val) {
 		MemRead = val;
 		controlTable.setValueAt(new String(val), 3, 1);
 	}
-	
+
 	public void setMemtoReg(String val) {
 		MemToReg = val;
 		controlTable.setValueAt(new String(val), 4, 1);
 	}
-	
+
 	public void setALUOp(String val) {
 		ALUOp = val;
 		controlTable.setValueAt(new String(val), 5, 1);
 	}
-	
+
 	public void setMemWrite(String val) {
 		MemWrite = val;
 		controlTable.setValueAt(new String(val), 6, 1);
 	}
-	
+
 	public void setALUSrc(String val) {
 		ALUSrc = val;
 		controlTable.setValueAt(new String(val), 7, 1);
 	}
-	
+
 	public void setRegWrite(String val) {
 		RegWrite = val;
 		controlTable.setValueAt(new String(val), 8, 1);
 	}
-	
+
 	public void setZero(String val) {
 		Zero = val;
 		controlTable.setValueAt(new String(val), 9, 1);
+	}
+
+	private boolean isNumeric(String str) {
+		try {
+			double d = Double.parseDouble(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+	
+	public String getProgramStartAddress() {
+		return programStartAddress;
 	}
 }
