@@ -48,6 +48,10 @@ public class Simulator {
 		while(datapath.nextStep());
 	}
 	
+	public Hashtable<String, String> getControlSignals() {
+		
+	}
+	
 	public Hashtable<String, String> getRegisterMemoryContents() {
 		return datapath.getRegisterContents();
 	}

@@ -419,7 +419,6 @@ public class GUI {
 			values[i][1] = regNumber;
 			values[i][2] = regValue;
 		}
-		// TODO
 		return values;
 	}
 
