@@ -16,4 +16,6 @@ public abstract class AbstractPipelineRegister {
 				return outputs[i];
 		return null;
 	}
+	
+	
 }
