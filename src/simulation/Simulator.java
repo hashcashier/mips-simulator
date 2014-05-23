@@ -73,7 +73,7 @@ public class Simulator {
 		return datapath.getProgramCounterValue();
 	}
 	
-	public void setMemoryContent(int address, String value) {
+	public void setMemoryContent(long address, String value) {
 		datapath.setMemoryContent(address, value);
 	}
 }
