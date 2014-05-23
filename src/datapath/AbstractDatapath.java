@@ -28,12 +28,10 @@ public abstract class AbstractDatapath {
 	}
 
 	public Hashtable<Integer, String> getDataMemoryContents() {
-		Hashtable<Integer, String> result = new Hashtable<Integer, String>();
-		return result;
+		return dataMemory.getMemoryContents();
 	}
 
 	public Hashtable<Integer, String> getInstructionMemoryContents() {
-		Hashtable<Integer, String> result = new Hashtable<Integer, String>();
-		return result;
+		return instructionMemory.getMemoryContents();
 	}
 }

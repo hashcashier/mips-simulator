@@ -25,8 +25,7 @@ exit:	li $v0, 10
 	syscall
 
 
-fib:
-	addi $sp, $sp, -8	# Move stack
+fib:	addi $sp, $sp, -8	# Move stack
 	sw $ra, 0($sp)		# Save return
 	sw $a0, 4($sp)		# Save parameter
 	
