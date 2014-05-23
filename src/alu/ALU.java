@@ -40,9 +40,9 @@ public class ALU {
 		this.control = control;
 	}
 
-	public HashMap<String, String> execute(String inputA, String inputB,
-			ALUControl control) {
+	public HashMap<String, String> execute() {
 		Operation op = new Operation(inputA, inputB);
+		// It is assumed that the operator will be in words, i.e: Add
 		String operator = control.getOperation();
 		String className = "alu.command."
 				+ operator.substring(0, 0).toUpperCase()
