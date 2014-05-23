@@ -18,15 +18,15 @@ public class Pipelined extends AbstractDatapath {
 	}
 
 	@Override
-	public void nextStep() {
+	public boolean nextStep() {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override
-	public void previousStep() {
+	public boolean previousStep() {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override

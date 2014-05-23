@@ -45,6 +45,6 @@ public abstract class AbstractDatapath {
 	}
 
 	public abstract Hashtable<String, String> getPipelineRegistersContents();
-	public abstract void nextStep();
-	public abstract void previousStep();	
+	public abstract boolean nextStep();
+	public abstract boolean previousStep();	
 }
