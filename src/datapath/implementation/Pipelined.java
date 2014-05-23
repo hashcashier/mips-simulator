@@ -4,8 +4,8 @@ import datapath.AbstractDatapath;
 
 public class Pipelined extends AbstractDatapath {
 
-	Pipelined(String[] instructions, String[] data) {
-		super(instructions, data);
+	Pipelined(String[] instructions, String[] data, int programOffset) {
+		super(instructions, data, programOffset);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -18,7 +18,7 @@ public class Simulator {
 		String[] rawInstructions = assemblyFileReader.getInstructions(), rawData = assemblyFileReader.getData();
 		try {
 			Assembler assembler = new Assembler(rawInstructions, rawData, programOffset);
-			AbstractDatapath datapath = DatapathFactory.createDatapath(dataPath, assembler.getAssembledInstructions(), assembler.getAssembledData());
+			AbstractDatapath datapath = DatapathFactory.createDatapath(dataPath, assembler.getAssembledInstructions(), assembler.getAssembledData(), programOffset);
 		} catch (UnkownLabelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

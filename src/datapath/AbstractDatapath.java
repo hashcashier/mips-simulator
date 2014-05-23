@@ -13,8 +13,9 @@ public abstract class AbstractDatapath {
 	RegisterManager registerManager;
 	ALU alu;
 	
-	public AbstractDatapath(String[] instructions, String[] data) {
-		
+	public AbstractDatapath(String[] instructions, String[] data, int programOffset) {
+		instructionMemory = new InstructionMemory(instructions, programOffset);
+		dataMemory = new DataMemory(data);
 	}
 	
 	public abstract void nextStep();
@@ -25,13 +26,13 @@ public abstract class AbstractDatapath {
 		return result;
 	}
 
-	public Hashtable<String, String> getDataMemoryContents() {
-		Hashtable<String, String> result = new Hashtable<String, String>();
+	public Hashtable<Integer, String> getDataMemoryContents() {
+		Hashtable<Integer, String> result = new Hashtable<Integer, String>();
 		return result;
 	}
 
-	public Hashtable<String, String> getInstructionMemoryContents() {
-		Hashtable<String, String> result = new Hashtable<String, String>();
+	public Hashtable<Integer, String> getInstructionMemoryContents() {
+		Hashtable<Integer, String> result = new Hashtable<Integer, String>();
 		return result;
 	}
 }

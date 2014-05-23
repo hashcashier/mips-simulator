@@ -1,23 +1,15 @@
 package instructions;
 
+import java.util.Hashtable;
+
 
 public class InstructionMemory {
-	private Instruction[] instructions;
-	private int instructionCount;
-	
-	public InstructionMemory(String[] instructionLines) {
-		int lines = instructionLines.length;
-		instructions = new Instruction[lines];
-		instructionCount = 0;
-		
+	Hashtable<Integer, String> memory;
+	public InstructionMemory(String[] instructions, int offset) {
+		memory = new Hashtable<Integer, String>();
+		for(int i = 0; i < instructions.length; i++) {
+			int address = i + offset;
+			memory.put(address, instructions[i]);
+		}
 	}
-	
-	public int getInstructionCount() {
-		return instructionCount;
-	}
-	
-	public Instruction getInstruction(int number) {
-		return instructions[number];
-	}
-	
 }
