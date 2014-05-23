@@ -29,6 +29,8 @@ public class Pipelined extends AbstractDatapath {
 		String currentInstruction = this.getInstructionMemoryContents()
 				.get(currentPC);
 		String incrementedPC = Pipelined.incrementPC(currentPC);
+		pipelineRegisters[0].setInputValue("PC", incrementedPC);
+		pipelineRegisters[0].setInputValue("Instruction", currentInstruction);
 		return false;
 	}
 		
