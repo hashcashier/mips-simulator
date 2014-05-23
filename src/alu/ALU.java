@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 
 import alu.command.Command;
 
+/* The ALU is INCOMPLETE */
 public class ALU {
 
 	private String inputA, inputB;
