@@ -2,6 +2,8 @@ package assembly;
 
 import instructions.Instruction;
 import instructions.InstructionFactory;
+import instructions.PseudoInstruction;
+import instructions.PseudoInstructionFactory;
 import instructions.UnkownInstructionException;
 
 import java.util.ArrayList;
@@ -119,12 +121,19 @@ public class Assembler {
 	}
 	
 	private void parseInstructions() throws UnkownLabelException, UnkownInstructionException {
-		parsedInstructions = new Instruction[filteredInstructions.length];
-		for(int i = 0; i < parsedInstructions.length; i++) {
+		ArrayList<Instruction> parsedInstructions = new ArrayList<Instruction>();
+		for(int i = 0; i < filteredInstructions.length; i++) {
 			String instructionLine = filteredInstructions[i];
 			int spaceIndex = instructionLine.indexOf(' ');
 			if(spaceIndex == -1) {
-				parsedInstructions[i] = InstructionFactory.createInstruction(instructionLine.trim(), new String[0], new int[0]);
+				try {
+					parsedInstructions.add(InstructionFactory.createInstruction(instructionLine.trim(), new String[0], new int[0]));
+				} catch (UnkownInstructionException e) {
+					PseudoInstruction temp = PseudoInstructionFactory.createInstruction(instructionLine.trim(), new String[0], new int[0]);
+					Instruction[] replacement = temp.getReplacement();
+					for(Instruction step : replacement)
+						parsedInstructions.add(step);
+				}
 			} else {
 				String name = instructionLine.substring(0, spaceIndex).trim();
 				String rawParams = instructionLine.substring(spaceIndex).trim();
@@ -148,17 +157,29 @@ public class Assembler {
 
 						if(types[j] == 1) {// Data label
 							params[j] = Long.toString(value);
-						} else if(types[j] == 2) {// Instruction label
-							params[j] = Long.toString(value) + "," + Integer.toString(i);
+						} else if(types[j] == 2) {// Instruction label: Target,Current
+							params[j] = Long.toString(value)
+									+ ","
+									+ Integer.toString(parsedInstructions
+											.size());
 						} else if(types[j] == 4) {// Register label
 							params[j] = assembleIntegral(Long.toString(value), 5);
 						}
 					}
 				}
-				parsedInstructions[i] = InstructionFactory.createInstruction(name, params, types);
+				
+				try {
+					parsedInstructions.add(InstructionFactory.createInstruction(name, params, types));
+				} catch (UnkownInstructionException e) {
+					PseudoInstruction temp = PseudoInstructionFactory.createInstruction(name, params, types);
+					Instruction[] replacement = temp.getReplacement();
+					for(Instruction step : replacement)
+						parsedInstructions.add(step);
+				}
+				parsedInstructions.add(InstructionFactory.createInstruction(name, params, types));
 			}
 		}
-			
+		this.parsedInstructions = parsedInstructions.toArray(new Instruction[0]);
 	}
 	
 	private void assembleData() {
