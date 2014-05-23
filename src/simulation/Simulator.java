@@ -18,7 +18,7 @@ public class Simulator {
 	AbstractDatapath datapath;
 
 	public Simulator(String filePath, String dataPath, int programOffset)
-			throws FileNotFoundException, DuplicateLabelException {
+			throws FileNotFoundException, DuplicateLabelException, UnkownInstructionException {
 		ASMReader assemblyFileReader = new ASMReader(filePath);
 		String[] rawInstructions = assemblyFileReader.getInstructions(), rawData = assemblyFileReader
 				.getData();
@@ -31,10 +31,7 @@ public class Simulator {
 		} catch (UnkownLabelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (UnkownInstructionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnkownDatapathException e) {
+		}catch (UnkownDatapathException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

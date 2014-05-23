@@ -1,4 +1,6 @@
 package ui;
+import instructions.UnkownInstructionException;
+
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -24,6 +26,9 @@ public class CLI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (DuplicateLabelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnkownInstructionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
