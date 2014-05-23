@@ -11,14 +11,18 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import registers.Register;
 import registers.RegisterManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GUI {
 
@@ -30,11 +34,12 @@ public class GUI {
 	private JTable reigsterTable;
 	private JTextArea editor;
 	private String currentFilePath = "";
-	
-//	private File file;
+
+	// private File file;
 
 	private RegisterManager rm = new RegisterManager();
-//	private String filePath;
+
+	// private String filePath;
 
 	/**
 	 * Launch the application.
@@ -95,9 +100,17 @@ public class GUI {
 		frmOraka.getContentPane().add(btnOpenFile);
 
 		JButton btnSaveFile = new JButton("Save File");
+		btnSaveFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (currentFilePath.equals(""))
+					saveAs();
+				else 
+					save();
+			}
+		});
 		btnSaveFile.setBounds(230, 6, 117, 29);
 		frmOraka.getContentPane().add(btnSaveFile);
-		
+
 		JButton btnStep = new JButton("Step");
 		btnStep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -106,7 +119,7 @@ public class GUI {
 		});
 		btnStep.setBounds(497, 6, 75, 29);
 		frmOraka.getContentPane().add(btnStep);
-		
+
 		JButton btnStop = new JButton("Stop/Reset");
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,7 +128,7 @@ public class GUI {
 		});
 		btnStop.setBounds(568, 6, 105, 29);
 		frmOraka.getContentPane().add(btnStop);
-		
+
 		JButton btnNewFile = new JButton("Clear/New File");
 		btnNewFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -133,8 +146,8 @@ public class GUI {
 		editorScrollPane.setViewportView(editor);
 
 		// TODO Comment the next 2 lines if you want to use the WindowBuilder
-//		 TextLineNumber tln = new TextLineNumber(editor);
-//		 editorScrollPane.setRowHeaderView(tln);
+		// TextLineNumber tln = new TextLineNumber(editor);
+		// editorScrollPane.setRowHeaderView(tln);
 
 		JScrollPane registerTableScrollPane = new JScrollPane();
 		registerTableScrollPane.setBounds(453, 47, 197, 310);
@@ -176,36 +189,35 @@ public class GUI {
 		System.out.println(rm.binaryToHex("0000000000001111"));
 		// logTextPane.in
 
-		
 		/* START OF ACTION LISTENERS */
-		
+
 		btnOpenFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				JFileChooser fileChooser = new JFileChooser();
-//				File file = fileChooser.getSelectedFile();
-//				String filePath = file.getAbsolutePath();
-//				
-//				try {
-//					FileReader reader = new FileReader(filePath);
-//					BufferedReader br = new BufferedReader(reader);
-//					
-//					editor.read(reader, null);
-//					br.close();
-//					
-//					editor.requestFocus();
-//					
-//					log("Opening file: " + filePath);
-//					log("Don't forget to save file if you make any changes.");
-//					log("To run perform: Assemble > Run");
-//				} catch (Exception e) {
-//					// TODO: handle exception
-//					log("An error occured trying to read the file.");
-//				}
-				
+				// JFileChooser fileChooser = new JFileChooser();
+				// File file = fileChooser.getSelectedFile();
+				// String filePath = file.getAbsolutePath();
+				//
+				// try {
+				// FileReader reader = new FileReader(filePath);
+				// BufferedReader br = new BufferedReader(reader);
+				//
+				// editor.read(reader, null);
+				// br.close();
+				//
+				// editor.requestFocus();
+				//
+				// log("Opening file: " + filePath);
+				// log("Don't forget to save file if you make any changes.");
+				// log("To run perform: Assemble > Run");
+				// } catch (Exception e) {
+				// // TODO: handle exception
+				// log("An error occured trying to read the file.");
+				// }
+
 				System.out.println("Inside Action performed?");
 			}
 		});
-		
+
 		/* END OF ACTION LISTENERS */
 	}
 
@@ -232,33 +244,88 @@ public class GUI {
 		// TODO
 		return values;
 	}
-	
+
 	public void runProgram() {
-		if(currentFilePath.equals("")) {
+		if (currentFilePath.equals("")) {
 			log("There seems to be no file currently open");
 			log("Make sure you have saved the currently open file before running");
-			
+
 			return;
 		}
-		
+
 		// TODO ELSE perform run.
 	}
-	
+
 	public void assembleProgram() {
 		log("Assembling program upto latest save performed");
 	}
-	
+
 	public void performStep() {
 		// TODO
 	}
-	
+
 	public void resetAll() {
-		
+
 	}
-	
+
 	private void clearFile() {
 		currentFilePath = "";
 		editor.setText("");
 		log("Cleared editor and file path.");
 	}
+
+	private void save() {
+		File f = new File(currentFilePath);
+		
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(f));
+			
+			editor.write(out);
+			log("File changes succesfully saved [" + currentFilePath + "]");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			log("Error occured while trying to save file.");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void saveAs() {
+		FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter(
+				"ASM", "mips");
+		final JFileChooser saveAsFileChooser = new JFileChooser();
+		saveAsFileChooser.setApproveButtonText("Save");
+		saveAsFileChooser.setFileFilter(extensionFilter);
+		int actionDialog = saveAsFileChooser.showSaveDialog(frmOraka);
+		if (actionDialog != JFileChooser.APPROVE_OPTION) {
+			return;
+		}
+
+		File file = saveAsFileChooser.getSelectedFile();
+		if (!file.getName().endsWith(".asm")) {
+			file = new File(file.getAbsolutePath() + ".asm");
+			currentFilePath = file.getAbsolutePath();
+			System.out.println(currentFilePath);
+		}
+
+		BufferedWriter outFile = null;
+		try {
+			outFile = new BufferedWriter(new FileWriter(file));
+
+			editor.write(outFile);
+			log("File succesfully saved [" + currentFilePath + "]");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			log("Error occured while trying to save file.");
+		} finally {
+			if (outFile != null) {
+				try {
+					outFile.close();
+				} catch (IOException e) {
+					log("Error occured while trying to save file.");
+				}
+			}
+		}
+	}
+
 }
