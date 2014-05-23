@@ -15,9 +15,9 @@ public class MEMWB extends AbstractPipelineRegister {
 	}
 
 	@Override
-	public void process(Hashtable<String, String> ht) {
+	public Hashtable<String, String> process(Hashtable<String, String> ht) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }
