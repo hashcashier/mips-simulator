@@ -2,9 +2,9 @@ package datapath.implementation;
 
 import datapath.AbstractDatapath;
 
-public class SingleCycle extends AbstractDatapath {
+public class Pipelined extends AbstractDatapath {
 
-	public SingleCycle(String[] instructions, String[] data) {
+	Pipelined(String[] instructions, String[] data) {
 		super(instructions, data);
 		// TODO Auto-generated constructor stub
 	}
