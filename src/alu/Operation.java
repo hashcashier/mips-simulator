@@ -66,7 +66,22 @@ public class Operation {
 	}
 	
 	public Result slt() {
-		return null;
+		String result = Operation.getZero();
+		boolean zero = true;
+		for (int i=0; i<SIZE; i++) {
+			int firstBit = inputA.charAt(i) - '0';
+			int secondBit = inputB.charAt(i) - '0';
+			if (firstBit == secondBit) continue;
+			else if (firstBit < secondBit) {
+				result = Operation.getOne();
+				zero = false;
+				return new Result(result, zero);
+			}
+			else {
+				return new Result(result, zero);
+			}
+		}
+		return new Result(result, zero);
 	}
 	
 	public Result sub() {
@@ -77,15 +92,11 @@ public class Operation {
 
 	private static String twoComplement(String number) {
 		String result = Operation.not(number).getResult();
-		String one = "";
-		for (int i=SIZE-1; i>=0; i--) {
-			if (i == SIZE-1) one = "1" + one;
-			else one = "0" + one;
-		}
+		String one = Operation.getOne();
 		Operation op = new Operation(result, one);
 		return op.add().getResult();
 	}
-	
+
 	private static Result not(String number) {
 		String result = "";
 		boolean zero = true;
@@ -98,5 +109,22 @@ public class Operation {
 			}
 		}
 		return new Result(result, zero);
+	}
+	
+	private static String getOne() {
+		String one = "";
+		for (int i=SIZE-1; i>=0; i--) {
+			if (i == SIZE-1) one = "1" + one;
+			else one = "0" + one;
+		}
+		return one;
+	}
+	
+	private static String getZero() {
+		String zero = "";
+		for (int i=SIZE-1; i>=0; i--) {
+			zero = "0" + zero;
+		}
+		return zero;
 	}
 }
