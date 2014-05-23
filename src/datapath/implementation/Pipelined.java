@@ -29,8 +29,10 @@ public class Pipelined extends AbstractDatapath {
 		String currentInstruction = this.getInstructionMemoryContents()
 				.get(currentPC);
 		String incrementedPC = Pipelined.incrementPC(currentPC);
-		pipelineRegisters[0].setInputValue("PC", incrementedPC);
-		pipelineRegisters[0].setInputValue("Instruction", currentInstruction);
+		Hashtable<String, String> ht = new Hashtable<String, String>();
+		ht.put("PC", incrementedPC);
+		ht.put("Instruction", currentInstruction);
+		pipelineRegisters[0].process(ht);
 		return false;
 	}
 		
