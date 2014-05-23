@@ -421,6 +421,21 @@ public class GUI {
 		}
 		return values;
 	}
+	
+	private void setPipelineRegisterValues() {
+		Hashtable<String, String> registers = simulator.getPipelineRegistersContents();
+		
+		for(Entry<String, String> entry: registers.entrySet()) {
+			if(entry.getKey().equals("EX/MEM") || entry.getKey().equals("EXMEM"))
+				setEXMEM(entry.getValue());
+			else if (entry.getKey().equals("ID/EX") || entry.getKey().equals("IDEX"))
+				setIDEX(entry.getValue());
+			else if (entry.getKey().equals("IF/ID") || entry.getKey().equals("IFID"))
+				setIFID(entry.getValue());
+			else
+				setMEMWB(entry.getValue());
+		}
+	}
 
 	private Object[][] getControlValues() {
 		Object[][] values = new Object[10][2];
