@@ -1,5 +1,7 @@
 package datapath.implementation;
 
+import java.util.Hashtable;
+
 import datapath.AbstractDatapath;
 
 public class Pipelined extends AbstractDatapath {
@@ -19,6 +21,12 @@ public class Pipelined extends AbstractDatapath {
 	public void previousStep() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Hashtable<String, String> getPipelineRegistersContents() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

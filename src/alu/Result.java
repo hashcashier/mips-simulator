@@ -7,6 +7,11 @@ public class Result {
 	public Result() {
 		
 	}
+	
+	public Result(String result, boolean zero) {
+		this.result = result;
+		this.zero = zero;
+	}
 
 	public String getResult() {
 		return result;
