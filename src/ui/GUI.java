@@ -25,11 +25,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Map.Entry;
+
 import javax.swing.JTextField;
 
 public class GUI {
 	
-	private Simulator simulator = new Simulator();
+	private Simulator simulator;
 
 	private JFrame frmOraka;
 	private JTable registerTable;
@@ -291,18 +294,21 @@ public class GUI {
 		dataMemoryScrollPane.setBounds(662, 47, 197, 115);
 		frmOraka.getContentPane().add(dataMemoryScrollPane);
 		
-		Object dateMemoryTableCols[] = { "Address", "Value" };
+		Object dataMemoryTableCols[] = { "Address", "Value" };
 		Object[][] dataMemoryData = getDataMemoryValues();
 
 		
-		dataMemoryTable = new JTable();
+		dataMemoryTable = new JTable(dataMemoryData, dataMemoryTableCols);
 		dataMemoryScrollPane.setViewportView(dataMemoryTable);
 		
 		JScrollPane programMemoryScrollPane = new JScrollPane();
 		programMemoryScrollPane.setBounds(662, 224, 197, 90);
 		frmOraka.getContentPane().add(programMemoryScrollPane);
 		
-		programMemoryTable = new JTable();
+		Object[] programMemoryCols = {"Address", "Value" };
+		Object[][] programMemoryData = getProgramMemoryData();
+		
+		programMemoryTable = new JTable(programMemoryData, programMemoryCols);
 		programMemoryScrollPane.setViewportView(programMemoryTable);
 		
 		JLabel lblAddress = new JLabel("Address");
@@ -372,9 +378,33 @@ public class GUI {
 		return true;
 	}
 	
+	public Object[][] getProgramMemoryData() {
+		Object[][] values = null;
+		Hashtable<Integer, String> programContents = simulator.getInstructionMemoryContents();
+		
+		values = new Object[programContents.size()][2];
+
+		int count = 0;
+		for(Entry<Integer, String> entry: programContents.entrySet()) {
+			values[count][0] = entry.getKey();
+			values[count][1] = entry.getValue();
+			count++;
+		}
+		return values;
+	}
+	
 	public Object[][] getDataMemoryValues() {
 		Object[][] values = null;
+		Hashtable<Integer, String> memoryContents = simulator.getDataMemoryContents();
 		
+		values = new Object[memoryContents.size()][2];
+
+		int count = 0;
+		for(Entry<Integer, String> entry: memoryContents.entrySet()) {
+			values[count][0] = entry.getKey();
+			values[count][1] = entry.getValue();
+			count++;
+		}
 		return values;
 	}
 
