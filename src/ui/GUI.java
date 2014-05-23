@@ -1,12 +1,13 @@
 package ui;
 
+import instructions.UnkownInstructionException;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.JEditorPane;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -19,9 +20,9 @@ import simulation.Simulator;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,9 +31,12 @@ import java.util.Map.Entry;
 
 import javax.swing.JTextField;
 
+import alu.InvalidOperationException;
+import assembly.DuplicateLabelException;
+
 public class GUI {
 
-	private Simulator simulator;
+	private Simulator simulator = new Simulator();
 
 	private JFrame frmOraka;
 	private JTable registerTable;
@@ -394,7 +398,7 @@ public class GUI {
 	public void setDataMemory(long address, String value) {
 		simulator.setMemoryContent(address, value);
 	}
-	
+
 	public void setProgramMemory(long address, String value) {
 		setDataMemory(address, value);
 	}
@@ -468,23 +472,72 @@ public class GUI {
 		if (currentFilePath.equals("")) {
 			log("There seems to be no file currently open");
 			log("Make sure you have saved the currently open file before running");
-
 			return;
+		} else {
+			log("Running [" + currentFilePath + "]");
+			try {
+				simulator.run();
+				log("Program ran succesfully.");
+			} catch (InvalidOperationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				log("And Error occured stopping the program from running in (GUI:runProgram)");
+			}
+			update();
 		}
-
 		// TODO ELSE perform run.
 	}
 
 	public void assembleProgram() {
+		if (currentFilePath.equals("")) {
+			log("Please save the file before assembling the program");
+			return;
+		}
+
 		log("Assembling program upto latest save performed");
+
+		try {
+			simulator.assemble(currentFilePath, "Pipelined",
+					Integer.parseInt(programStartAddress));
+		} catch (NumberFormatException e) {
+			log("An error occured while assembling the program");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			log("An error occured while assembling the program");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DuplicateLabelException e) {
+			log("An error occured while assembling the program");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnkownInstructionException e) {
+			log("An error occured while assembling the program");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// TODO
+		update();
 	}
 
 	public void performStep() {
 		// TODO
+		try {
+			simulator.step();
+		} catch (InvalidOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		update();
 	}
 
 	public void resetAll() {
+		simulator = new Simulator();
+		update();
+	}
 
+	public void update() {
+		// TODO
 	}
 
 	private void clearFile() {

@@ -1,7 +1,5 @@
 package datapath.implementation;
 
-import instructions.Instruction;
-
 import java.util.Hashtable;
 
 import alu.ALU;
