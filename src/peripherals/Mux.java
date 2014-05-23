@@ -1,7 +1,5 @@
 package peripherals;
 
-import java.util.ArrayList;
-
 public class Mux {
 	String select;
 	String [] input;
