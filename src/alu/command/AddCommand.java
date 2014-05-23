@@ -1,8 +1,7 @@
 package alu.command;
 
-import java.util.HashMap;
-
 import alu.Operation;
+import alu.Result;
 
 public class AddCommand implements Command {
 
@@ -12,7 +11,7 @@ public class AddCommand implements Command {
 		this.o = o;
 	}
 	
-	public HashMap<String, String> execute() {
+	public Result execute() {
 		return o.add();
 	}	
 }

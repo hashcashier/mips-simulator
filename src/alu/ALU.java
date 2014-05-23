@@ -1,8 +1,6 @@
 package alu;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-
 import alu.command.Command;
 
 public class ALU {
@@ -40,7 +38,7 @@ public class ALU {
 		this.control = control;
 	}
 
-	public HashMap<String, String> execute() {
+	public Result execute() {
 		Operation op = new Operation(inputA, inputB);
 		// It is assumed that the operator will be in words, i.e: Add
 		String operator = control.getOperation();
