@@ -12,6 +12,6 @@ public class SllCommand implements Command {
 	}
 	
 	public Result execute() {
-		return o.slt();
+		return o.sll();
 	}	
 }
