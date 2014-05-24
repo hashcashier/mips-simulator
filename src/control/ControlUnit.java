@@ -35,7 +35,7 @@ public class ControlUnit {
 			ALUSrc = "1";
 			RegWrite = "1";
 			if(opcode == "001000")
-				ALUOp = "010";
+				ALUOp = "000";
 			else if(opcode == "001100")
 				ALUOp = "011";
 			else if(opcode == "001101")
