@@ -28,12 +28,11 @@ public class ControlUnit {
 		} else if(opcode.equals("101011")) {//sw
 			ALUSrc = "1";
 			MemWrite = "1";
-		} else if(opcode.equals("000100")) {//beq
+		} else if(opcode.equals("000100") || opcode.equals("000101")) {//beq,bne
 			Branch = "1";
 			ALUOp = "001";
 		} else if(opcode.equals("001000") || opcode.equals("001100") || opcode.equals("001101")) {
 			// addi, andi, ori q
-			System.out.println("MATCHED");
 			ALUSrc = "1";
 			RegWrite = "1";
 			if(opcode.equals("001000"))
