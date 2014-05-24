@@ -19,6 +19,7 @@ public class ID extends Stage {
 		IDEX.setInputValue("PC", PC);
 		// Set Control Signals "RegWrite", "RegDst", "ALUOp", "ALUSrc", "Branch", "MemWrite", "MemRead", "MemToReg", "JumpReg"
 		cu.setInput(Instruction);
+		System.out.println("REGWWRITE:: " + cu.getRegWrite());
 		IDEX.setInputValue("RegWrite", cu.getRegWrite());
 		IDEX.setInputValue("RegDst", cu.getRegDst());
 		IDEX.setInputValue("ALUOp", cu.getALUOp());
