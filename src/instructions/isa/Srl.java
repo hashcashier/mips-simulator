@@ -13,7 +13,7 @@ public class Srl extends Instruction {
 		rt = parameters[2];
 		rd = parameters[0];
 		shamt = "00000";
-		funct = "000000";
+		funct = "000010";
 	}
 
 }

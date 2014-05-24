@@ -13,7 +13,7 @@ public class Jr extends Instruction {
 		rt = parameters[2];
 		rd = parameters[0];
 		shamt = "00000";
-		funct = "000001";
+		funct = "001000";
 	}
 
 }
