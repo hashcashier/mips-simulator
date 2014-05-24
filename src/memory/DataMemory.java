@@ -11,7 +11,7 @@ public class DataMemory {
 	public DataMemory(Memory hardwareMemory, String[] data) {
 		this.hardwareMemory = hardwareMemory;
 		for (int i = 0; i < data.length; i++) {
-			long address = i + Assembler.DM_OFFSET;
+			long address = 4*i + Assembler.DM_OFFSET;
 			hardwareMemory.write(address, data[i]);
 		}
 	}

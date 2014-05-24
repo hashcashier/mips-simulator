@@ -12,7 +12,7 @@ public class InstructionMemory {
 			int offset) {
 		this.hardwareMemory = hardwareMemory;
 		for (int i = 0; i < instructions.length; i++) {
-			long address = i + offset;
+			long address = 4*i + offset;
 			hardwareMemory.write(address, instructions[i]);
 		}
 	}

@@ -48,6 +48,7 @@ public class Pipelined extends AbstractDatapath {
 					pc, pipelineRegisters, cu);
 		for (int i = 0; i < pipelineRegisters.length; i++)
 			pipelineRegisters[i].transferValues();
+		System.out.println(pc.getCounter() + "::" + instructionMemory.getLastInstructionAddress());
 		return pc.getCounter() <= instructionMemory.getLastInstructionAddress();
 	}
 
