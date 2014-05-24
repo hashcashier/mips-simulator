@@ -16,7 +16,7 @@ public class Assembler {
 	Instruction[] parsedInstructions;
 	LabelManager labelManager;
 	long programOffset;
-	public static final long DM_OFFSET = (1<<31);
+	public static final long DM_OFFSET = (1<<29);
 	
 	public Assembler(String[] instructions, String[] data, int offset) 
 			throws DuplicateLabelException, UnkownLabelException, UnkownInstructionException {

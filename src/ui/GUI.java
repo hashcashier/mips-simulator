@@ -593,7 +593,7 @@ public class GUI {
 
 		DefaultTableModel model = new DefaultTableModel(programMemoryData,
 				programMemoryTableCols);
-		dataMemoryTable.setModel(model);
+		programMemoryTable.setModel(model);
 		model.fireTableDataChanged();
 	}
 
@@ -634,7 +634,7 @@ public class GUI {
 		if (!file.getName().endsWith(".asm")) {
 			file = new File(file.getAbsolutePath() + ".asm");
 			currentFilePath = file.getAbsolutePath();
-			System.out.println(currentFilePath);
+//			System.out.println(currentFilePath);
 		}
 
 		BufferedWriter outFile = null;

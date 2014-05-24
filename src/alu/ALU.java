@@ -11,6 +11,12 @@ public class ALU {
 	private ALUControl control;
 
 	public ALU(String inputA, String inputB, ALUControl control) {
+		try {
+			System.out.println("ALU: " + inputA + ' ' + inputB + ' ' + control.decodeOperation());
+		} catch (InvalidOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.inputA = inputA;
 		this.inputB = inputB;
 		this.control = control;

@@ -15,7 +15,7 @@ public class MEM extends Stage {
 	public void execute(DataMemory dm, InstructionMemory im,
 			RegisterManager rm, ProgramCounter pc, AbstractPipelineRegister[] pr, ControlUnit cu) {
 		AbstractPipelineRegister MEMWB = pr[3], EXMEM = pr[2], IDEX = pr[1], IFID = pr[0];
-		// Forward control signals "MemWrite", "MemRead", "MemToReg", "RegWrite"
+		// Forward control signals "MemToReg", "RegWrite"
 		MEMWB.setInputValue("MemToReg", EXMEM.getOutputValue("MemToReg"));
 		MEMWB.setInputValue("RegWrite", EXMEM.getOutputValue("RegWrite"));
 		// Set RegisterRd

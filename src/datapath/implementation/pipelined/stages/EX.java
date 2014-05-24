@@ -33,6 +33,7 @@ public class EX extends Stage {
 			ALU alu = new ALU(input1, input2, ac);
 			Result res = alu.execute();
 			EXMEM.setInputValue("Zero", res.isZero() ? "0" : "1");
+//			System.out.println("RES: " + res.getResult());
 			EXMEM.setInputValue("Address", res.getResult());
 		} catch (InvalidOperationException e) {
 			// TODO Auto-generated catch block

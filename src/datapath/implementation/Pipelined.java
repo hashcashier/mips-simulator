@@ -64,10 +64,10 @@ public class Pipelined extends AbstractDatapath {
 			String[] outputs = pipelineRegisters[i].getOutputNames();
 			String name = pipelineRegisters[i].getName();
 			for (int j = 0; j < outputs.length; j++) {
-				System.out.println(name);
-				System.out.println(i);
-				System.out.println(outputs[j]);
-				System.out.println(pipelineRegisters[i].getOutputValue(outputs[j]));
+//				System.out.println(name);
+//				System.out.println(i);
+//				System.out.println(outputs[j]);
+//				System.out.println(pipelineRegisters[i].getOutputValue(outputs[j]));
 				result.put(name + "." + outputs[j],
 						pipelineRegisters[i].getOutputValue(outputs[j]));
 			}
