@@ -9,7 +9,7 @@ public class ControlUnit {
 	}
 	
 	public void setInput(String input) {
-		String opcode = input.substring(0, 5), funct = input.substring(26, 31);
+		String opcode = input.substring(0, 6), funct = input.substring(26, 32);
 		reset();
 		if(opcode == "000000") {//rtype
 			if(funct == "001000") {

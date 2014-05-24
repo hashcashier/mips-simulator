@@ -29,12 +29,12 @@ public class ID extends Stage {
 		IDEX.setInputValue("MemToReg", cu.getMemToReg());
 		IDEX.setInputValue("JumpReg", cu.getJumpReg());
 		// Read Registers
-		String RS = Instruction.substring(6, 10), RT = Instruction.substring(11, 15), RD = Instruction.substring(16, 20);
+		String RS = Instruction.substring(6, 11), RT = Instruction.substring(11, 16), RD = Instruction.substring(16, 21);
 		String read1 = rm.getRegisterValue(Integer.parseInt(RS, 2)), read2 = rm.getRegisterValue(Integer.parseInt(RT, 2));
 		IDEX.setInputValue("Rs", read1);
 		IDEX.setInputValue("Rt", read2);
 		// Immediate Operand
-		String Immediate = Instruction.substring(16, 31);
+		String Immediate = Instruction.substring(16, 32);
 		Immediate = SignExtender.signExtend(Immediate);
 		IDEX.setInputValue("Immediate", Immediate);
 		// RS/RT

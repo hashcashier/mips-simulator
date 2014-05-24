@@ -8,6 +8,6 @@ public class Adder {
 		String result = ai.add(bi).toString(2);
 		while(result.length() < Math.max(a.length(), b.length()))
 			result = result.charAt(0) + result;
-		return result.substring(0, Math.min(32, result.length()) - 1);
+		return result.substring(0, Math.min(32, result.length()));
 	}
 }

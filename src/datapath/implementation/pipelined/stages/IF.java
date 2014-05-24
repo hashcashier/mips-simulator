@@ -23,7 +23,7 @@ public class IF extends Stage {
 		String PCBranchResult = Mux.multiplex(new String[] {PC4, EXMEM.getOutputValue("BranchAddress")}, branch);
 		// Calculate Jump
 		String jump = IDEX.getOutputValue("JumpReg") + cu.getJump();
-		String jumpTarget = PC4.substring(0, 3) + IFID.getOutputValue("Instruction").substring(6, 31) + "00"; 
+		String jumpTarget = PC4.substring(0, 4) + IFID.getOutputValue("Instruction").substring(6, 32) + "00"; 
 		String PCJumpResult = Mux.multiplex(new String [] {PCBranchResult, jumpTarget, IDEX.getOutputValue("Rs")}, jump);
 		// Fetch Instruction
 		try {

@@ -25,6 +25,7 @@ public abstract class AbstractDatapath {
 		pc = new ProgramCounter();
 		pc.setCounter(programOffset);
 		cu = new ControlUnit();
+		registerManager = new RegisterManager();
 	}
 	
 	public Hashtable<String, String> getRegisterContents() {

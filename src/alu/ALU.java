@@ -44,11 +44,11 @@ public class ALU {
 		Operation op = new Operation(inputA, inputB);
 		String operator = control.decodeOperation();
 		String className = "alu.command."
-				+ operator.substring(0, 0).toUpperCase()
+				+ operator.substring(0, 1).toUpperCase()
 				+ operator.substring(1).toLowerCase() + "Command";
 		try {
 			Class<?> commandClass = Class.forName(className);
-			Constructor<?> constructor = commandClass.getConstructor(String.class);
+			Constructor<?> constructor = commandClass.getConstructor(Operation.class);
 			Command result = (Command) constructor.newInstance(op);
 			return result.execute();
 		} catch (Exception e) {

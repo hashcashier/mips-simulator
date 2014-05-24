@@ -26,7 +26,7 @@ public class EX extends Stage {
 		EXMEM.setInputValue("BranchAddress", BranchTarget);
 		try {
 			// Set ALU Control
-			ALUControl ac = new ALUControl(IDEX.getOutputValue("ALUOp"), IDEX.getOutputValue("Immediate").substring(26, 31));
+			ALUControl ac = new ALUControl(IDEX.getOutputValue("ALUOp"), IDEX.getOutputValue("Immediate").substring(26, 32));
 			// Calculate ALU Result
 			String input2 = Mux.multiplex(new String[] {IDEX.getOutputValue("Rt"), IDEX.getOutputValue("Immediate")}, IDEX.getOutputValue("ALUSrc"));
 			String input1 = IDEX.getOutputValue("Rs");
