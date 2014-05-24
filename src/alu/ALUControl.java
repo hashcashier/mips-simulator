@@ -4,9 +4,14 @@ public class ALUControl {
 	private String operation;
 	
 	public ALUControl(String op, String funct) throws InvalidOperationException {
-		if (op == "00") this.operation = "0010";
-		else if (op == "01") this.operation = "0110";
-		else if (op == "10") {
+		// lw, sw, addi => 000
+		// beq => 001
+		// R-format => 010
+		// andi => 100
+		// ori => 101
+		if (op == "000") this.operation = "0010";
+		else if (op == "001") this.operation = "0110";
+		else if (op == "010") {
 			if (funct == "100000") this.operation = "0010";
 			else if (funct == "100010") this.operation = "0110";
 			else if (funct == "100100") this.operation = "0000";
@@ -14,6 +19,8 @@ public class ALUControl {
 			else if (funct == "101010") this.operation = "0111";
 			else throw new InvalidOperationException();
 		}
+		else if (op == "100") this.operation = "0000";
+		else if (op == "101") this.operation = "0001";
 		else throw new InvalidOperationException();
 	}
 
