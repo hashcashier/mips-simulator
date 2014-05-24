@@ -87,7 +87,7 @@ public class Simulator {
 		return datapath.getPipelineRegistersContents();
 	}
 
-	public int getProgramCounterValue() {
+	public long getProgramCounterValue() {
 		if(datapath == null)
 			return 0;
 		return datapath.getProgramCounterValue();

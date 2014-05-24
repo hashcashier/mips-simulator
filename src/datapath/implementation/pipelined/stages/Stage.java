@@ -1,7 +1,12 @@
 package datapath.implementation.pipelined.stages;
 
-import java.util.Hashtable;
+import control.ControlUnit;
+import memory.DataMemory;
+import memory.InstructionMemory;
+import peripherals.ProgramCounter;
+import registers.RegisterManager;
+import datapath.implementation.pipelined.registers.AbstractPipelineRegister;
 
-public interface Stage {
-	public Hashtable<String, String> process(Hashtable<String, String> input);
+public abstract class Stage {
+	public abstract void execute(DataMemory dm, InstructionMemory im, RegisterManager rm, ProgramCounter pc, AbstractPipelineRegister[] pr, ControlUnit cu);
 }

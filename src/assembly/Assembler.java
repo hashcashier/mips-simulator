@@ -209,8 +209,8 @@ public class Assembler {
 	}
 	
 	public static String assembleIntegral(String integral, int bits) {
-		int numeric = Integer.parseInt(integral);
-		String result = Integer.toBinaryString(numeric);
+		long numeric = Long.parseLong(integral);
+		String result = Long.toBinaryString(numeric);
 		
 		while(result.length() < bits)
 			if(numeric < 0)

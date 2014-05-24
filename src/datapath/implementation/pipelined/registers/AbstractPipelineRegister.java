@@ -8,6 +8,8 @@ public abstract class AbstractPipelineRegister {
 		inputs = new String[inputCount];
 		outputs = new String[outputCount];
 		name = registerName;
+		this.inputNames = inputNames;
+		this.outputNames = outputNames;
 	}
 	
 	public String getOutputValue(String outputName) {

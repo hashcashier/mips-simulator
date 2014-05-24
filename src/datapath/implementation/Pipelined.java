@@ -25,28 +25,32 @@ public class Pipelined extends AbstractDatapath {
 	Stage[] stages;
 	LinkedList<Hashtable<String, String>> processes;
 
-	Pipelined(String[] instructions, String[] data, int programOffset) {
+	public Pipelined(String[] instructions, String[] data, int programOffset) {
 		super(instructions, data, programOffset);
 		pipelineRegisters = new AbstractPipelineRegister[4];
-		stages = new Stage[5];
 		pipelineRegisters[0] = new IFID();
 		pipelineRegisters[1] = new IDEX();
 		pipelineRegisters[2] = new EXMEM();
 		pipelineRegisters[3] = new MEMWB();
-//		stages[0] = new IF(dataMemory, instructionMemory, registerManager);
-		stages[1] = new ID();
+		stages = new Stage[5];
+		stages[4] = new IF();
+		stages[3] = new ID();
 		stages[2] = new EX();
-		stages[3] = new MEM();
-		stages[4] = new WB();
+		stages[1] = new MEM();
+		stages[0] = new WB();
 	}
 
 	@Override
 	public boolean nextStep() {
 		// DON'T FORGET TERMINATION
-		
-		return false;
+		for (int i = 0; i < stages.length; i++)
+			stages[i].execute(dataMemory, instructionMemory, registerManager,
+					pc, pipelineRegisters, cu);
+		for (int i = 0; i < pipelineRegisters.length; i++)
+			pipelineRegisters[i].transferValues();
+		return pc.getCounter() <= instructionMemory.getLastInstructionAddress();
 	}
-		
+
 	@Override
 	public boolean previousStep() {
 		// TODO Auto-generated method stub
@@ -56,11 +60,17 @@ public class Pipelined extends AbstractDatapath {
 	@Override
 	public Hashtable<String, String> getPipelineRegistersContents() {
 		Hashtable<String, String> result = new Hashtable<String, String>();
-		for(int i = 0; i < pipelineRegisters.length; i++) {
+		for (int i = 0; i < pipelineRegisters.length; i++) {
 			String[] outputs = pipelineRegisters[i].getOutputNames();
 			String name = pipelineRegisters[i].getName();
-			for(int j = 0; j < outputs.length; j++)
-				result.put(name + "." + outputs[j], pipelineRegisters[i].getOutputValue(outputs[j]));
+			for (int j = 0; j < outputs.length; j++) {
+				System.out.println(name);
+				System.out.println(i);
+				System.out.println(outputs[j]);
+				System.out.println(pipelineRegisters[i].getOutputValue(outputs[j]));
+				result.put(name + "." + outputs[j],
+						pipelineRegisters[i].getOutputValue(outputs[j]));
+			}
 		}
 		return result;
 	}

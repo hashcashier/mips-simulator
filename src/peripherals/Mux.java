@@ -1,5 +1,7 @@
 package peripherals;
 
+import java.math.BigInteger;
+
 public class Mux {
 	String select;
 	String [] input;
@@ -22,5 +24,9 @@ public class Mux {
 
 	public void setSelect(String newSelect) {
 		select = newSelect;
+	}
+	
+	public static String multiplex(String[] inputs, String select) {
+		return inputs[ (new BigInteger(select, 2).intValue()) ];
 	}
 }

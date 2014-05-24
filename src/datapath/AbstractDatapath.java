@@ -2,19 +2,21 @@ package datapath;
 
 import java.util.Hashtable;
 
+import memory.DataMemory;
+import memory.InstructionMemory;
+import memory.Memory;
 import peripherals.ProgramCounter;
-import memory.*;
 import registers.RegisterManager;
-import alu.ALU;
 import alu.InvalidOperationException;
+import control.ControlUnit;
 
 public abstract class AbstractDatapath {
-	Memory hardwareMemory;
-	DataMemory dataMemory;
-	InstructionMemory instructionMemory;
-	RegisterManager registerManager;
-	ALU alu;
-	ProgramCounter pc;
+	protected Memory hardwareMemory;
+	protected DataMemory dataMemory;
+	protected InstructionMemory instructionMemory;
+	protected RegisterManager registerManager;
+	protected ProgramCounter pc;
+	protected ControlUnit cu;
 	
 	public AbstractDatapath(String[] instructions, String[] data, int programOffset) {
 		hardwareMemory = new Memory();
@@ -22,6 +24,7 @@ public abstract class AbstractDatapath {
 		dataMemory = new DataMemory(hardwareMemory, data);
 		pc = new ProgramCounter();
 		pc.setCounter(programOffset);
+		cu = new ControlUnit();
 	}
 	
 	public Hashtable<String, String> getRegisterContents() {
@@ -40,7 +43,7 @@ public abstract class AbstractDatapath {
 		hardwareMemory.write(address, value);
 	}
 	
-	public int getProgramCounterValue() {
+	public long getProgramCounterValue() {
 		return pc.getCounter();
 	}
 

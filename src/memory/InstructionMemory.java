@@ -33,4 +33,12 @@ public class InstructionMemory {
 				result.put(entry.getKey(), entry.getValue());
 		return result;
 	}
+	
+	public Long getLastInstructionAddress() {
+		Hashtable<Long, String> instructions = getMemoryContents();
+		Long res = (long) 0;
+		for(Entry<Long, String> entry : instructions.entrySet())
+			res = Math.max(res, entry.getKey());
+		return res;
+	}
 }
