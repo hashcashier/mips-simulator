@@ -1,7 +1,5 @@
 package datapath.implementation.pipelined.registers;
 
-import java.util.Hashtable;
-
 public abstract class AbstractPipelineRegister {
 	String inputs[], outputs[], inputNames[], outputNames[], name;
 	
@@ -10,6 +8,8 @@ public abstract class AbstractPipelineRegister {
 		inputs = new String[inputCount];
 		outputs = new String[outputCount];
 		name = registerName;
+		this.inputNames = inputNames;
+		this.outputNames = outputNames;
 	}
 	
 	public String getOutputValue(String outputName) {
@@ -18,12 +18,30 @@ public abstract class AbstractPipelineRegister {
 				return outputs[i];
 		return null;
 	}
+
+	public String getInputValue(String inputName) {
+		for(int i = 0; i < inputs.length; i++)
+			if(inputNames[i].equals(inputName))
+				return inputs[i];
+		return null;
+	}
 	
 	public void setInputValue(String inputName, String value) {
 		for(int i = 0; i < inputs.length; i++)
 			if(inputNames[i].equals(inputName))
 				inputs[i] = value;
 	}
+	
+	public String[] getOutputNames() {
+		return outputNames;
+	}
+	
+	public String getName() {
+		return name;
+	}
 
-	public abstract Hashtable<String, String> process(Hashtable<String, String> ht);
+	public void transferValues() {
+		for(int i = 0; i < outputNames.length; i++)
+			outputs[i] = getInputValue(outputNames[i]);
+	}
 }

@@ -19,8 +19,8 @@ public class DataMemory {
 	public String memoryAction(String memWrite, String memRead, String address,
 			String writeData) throws AddressNotFoundException,
 			WriteDataMoreThan32BitsException {
-		int read = Integer.parseInt(memRead, 2);
-		int write = Integer.parseInt(memWrite, 2);
+		int read = memRead == "" ? 0 : Integer.parseInt(memRead, 2);
+		int write = memWrite == "" ? 0 : Integer.parseInt(memWrite, 2);
 		long addressKey = Long.parseLong(address, 2);
 		if (address.length() > 32)
 			throw new AddressNotFoundException();

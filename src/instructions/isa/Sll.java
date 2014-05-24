@@ -13,7 +13,7 @@ public class Sll extends Instruction {
 		rt = parameters[2];
 		rd = parameters[0];
 		shamt = "00000";
-		funct = "000010";
+		funct = "000000";
 	}
 
 }

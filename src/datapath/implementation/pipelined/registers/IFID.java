@@ -1,27 +1,20 @@
 package datapath.implementation.pipelined.registers;
 
-import java.util.Hashtable;
+import registers.RegisterManager;
+
 
 public class IFID extends AbstractPipelineRegister {
 
 	private static final String[] inputs 	= {"PC", "Instruction"};
 	private static final String[] outputs 	= {"PC", "Instruction"};
+	private static final String[] initial	= {RegisterManager.zeros32(),RegisterManager.zeros32()}; 
 	
 	public IFID() {
 		super(inputs, outputs, "IF/ID");
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public Hashtable<String, String> process(Hashtable<String, String> ht) {
-		Hashtable<String, String> result = new Hashtable<String, String>();
-		for (int i=0; i<inputs.length; i++) {
-			this.setInputValue(inputs[i], ht.get(inputs[i]));
+		for(int i = 0; i < initial.length; i++) {
+			super.inputs[i] = initial[i];
+			super.outputs[i] = initial[i];
 		}
-		for (int i=0; i<outputs.length; i++) {
-			result.put(outputs[i], this.getOutputValue(outputs[i]));
-		}
-		return result;
 	}
 
 }

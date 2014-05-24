@@ -1,6 +1,5 @@
 package datapath.implementation;
 
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -9,85 +8,47 @@ import alu.ALUControl;
 import alu.InvalidOperationException;
 import alu.Result;
 import datapath.AbstractDatapath;
-import datapath.implementation.pipelined.registers.*;
-import datapath.implementation.pipelined.stages.*;
+import datapath.implementation.pipelined.registers.AbstractPipelineRegister;
+import datapath.implementation.pipelined.registers.EXMEM;
+import datapath.implementation.pipelined.registers.IDEX;
+import datapath.implementation.pipelined.registers.IFID;
+import datapath.implementation.pipelined.registers.MEMWB;
+import datapath.implementation.pipelined.stages.EX;
+import datapath.implementation.pipelined.stages.ID;
+import datapath.implementation.pipelined.stages.IF;
+import datapath.implementation.pipelined.stages.MEM;
+import datapath.implementation.pipelined.stages.Stage;
+import datapath.implementation.pipelined.stages.WB;
 
 public class Pipelined extends AbstractDatapath {
 	AbstractPipelineRegister[] pipelineRegisters;
 	Stage[] stages;
 	LinkedList<Hashtable<String, String>> processes;
 
-	Pipelined(String[] instructions, String[] data, int programOffset) {
+	public Pipelined(String[] instructions, String[] data, int programOffset) {
 		super(instructions, data, programOffset);
 		pipelineRegisters = new AbstractPipelineRegister[4];
-		stages = new Stage[5];
 		pipelineRegisters[0] = new IFID();
 		pipelineRegisters[1] = new IDEX();
 		pipelineRegisters[2] = new EXMEM();
 		pipelineRegisters[3] = new MEMWB();
-		stages[0] = new IF();
-		stages[1] = new ID();
+		stages = new Stage[5];
+		stages[4] = new IF();
+		stages[3] = new ID();
 		stages[2] = new EX();
-		stages[3] = new MEM();
-		stages[4] = new WB();
+		stages[1] = new MEM();
+		stages[0] = new WB();
 	}
 
 	@Override
-	public boolean nextStep() throws InvalidOperationException {
+	public boolean nextStep() {
 		// DON'T FORGET TERMINATION
-		LinkedList<Hashtable<String, String>> newProcesses = new LinkedList<Hashtable<String,String>>();
-		int currentPC = this.getProgramCounterValue();
-		String currentInstruction = this.getInstructionMemoryContents()
-				.get(currentPC);
-		String incrementedPC = Pipelined.incrementPC(currentPC);
-		
-		Hashtable<String, String> inputIFID = new Hashtable<String, String>();
-		Hashtable<String, String> inputIDEX = new Hashtable<String, String>();
-		Hashtable<String, String> inputEXMEM = new Hashtable<String, String>();
-		Hashtable<String, String> inputMEMWB = new Hashtable<String, String>();
-		
-		Hashtable<String, String> outputIFID = new Hashtable<String, String>();
-		Hashtable<String, String> outputIDEX = new Hashtable<String, String>();
-		Hashtable<String, String> outputEXMEM = new Hashtable<String, String>();
-		Hashtable<String, String> outputMEMWB = new Hashtable<String, String>();
-		
-		inputIFID.put("PC", incrementedPC);
-		inputIFID.put("Instruction", currentInstruction);
-		outputIFID = pipelineRegisters[0].process(inputIFID);
-		newProcesses.add(outputIFID);
-		if (processes.size() > 0) {
-			inputIDEX = stages[1].process(processes.removeFirst());
-			outputIDEX = pipelineRegisters[1].process(inputIDEX);
-			newProcesses.add(outputIDEX);
-		}
-		if (processes.size() > 0) {
-			inputEXMEM = stages[2].process(processes.removeFirst());
-			outputEXMEM = pipelineRegisters[2].process(inputEXMEM);
-			newProcesses.add(outputEXMEM);
-		}
-		if (processes.size() > 0) {
-			inputMEMWB = stages[3].process(processes.removeFirst());
-			outputMEMWB = pipelineRegisters[3].process(inputMEMWB);
-			newProcesses.add(outputMEMWB);
-		}
-		if (processes.size() > 0) {
-			inputMEMWB = stages[3].process(processes.removeFirst());
-			outputMEMWB = pipelineRegisters[3].process(inputMEMWB);
-			newProcesses.add(outputMEMWB);
-		}
-		
-		processes = newProcesses;
-		newProcesses.clear();
-		return false;
-	}
-		
-	private static String incrementPC(int currentInstructionCounter) throws InvalidOperationException {
-		String four = "100";
-		for (int i=0; i<29; i++) four = "0" + four;
-		ALUControl control = new ALUControl("10", "100000");
-		ALU alu = new ALU(currentInstructionCounter+"", four, control);
-		Result result = alu.execute();
-		return result.getResult();
+		for (int i = 0; i < stages.length; i++)
+			stages[i].execute(dataMemory, instructionMemory, registerManager,
+					pc, pipelineRegisters, cu);
+		for (int i = 0; i < pipelineRegisters.length; i++)
+			pipelineRegisters[i].transferValues();
+		return pc.getCounter() <= instructionMemory.getLastInstructionAddress();
 	}
 
 	@Override
@@ -98,8 +59,20 @@ public class Pipelined extends AbstractDatapath {
 
 	@Override
 	public Hashtable<String, String> getPipelineRegistersContents() {
-		// TODO Auto-generated method stub
-		return null;
+		Hashtable<String, String> result = new Hashtable<String, String>();
+		for (int i = 0; i < pipelineRegisters.length; i++) {
+			String[] outputs = pipelineRegisters[i].getOutputNames();
+			String name = pipelineRegisters[i].getName();
+			for (int j = 0; j < outputs.length; j++) {
+				System.out.println(name);
+				System.out.println(i);
+				System.out.println(outputs[j]);
+				System.out.println(pipelineRegisters[i].getOutputValue(outputs[j]));
+				result.put(name + "." + outputs[j],
+						pipelineRegisters[i].getOutputValue(outputs[j]));
+			}
+		}
+		return result;
 	}
 
 }

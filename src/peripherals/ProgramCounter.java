@@ -1,17 +1,23 @@
 package peripherals;
 
+import assembly.Assembler;
+
 public class ProgramCounter {
-	private int counter;
+	private long counter;
 	
 	public ProgramCounter() {
 		counter = 0;
 	}
 	
-	public void setCounter(int count) {
+	public void setCounter(long count) {
 		counter = count;
 	}
 	
-	public int getCounter() {
+	public long getCounter() {
 		return counter;
+	}
+	
+	public String getCounterBits() {
+		return Assembler.assembleIntegral(Long.toString(counter), 32);
 	}
 }

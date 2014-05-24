@@ -67,6 +67,26 @@ public class Operation {
 	
 	public Result slt() {
 		String result = Operation.getZero();
+		
+		boolean zero = true;
+		for (int i=0; i<SIZE; i++) {
+			int firstBit = inputA.charAt(i) - '0';
+			int secondBit = inputB.charAt(i) - '0';
+			if (firstBit == secondBit) continue;
+			else if (firstBit < secondBit) {
+				result = Operation.getOne();
+				zero = false;
+				return new Result(result, zero);
+			}
+			else {
+				return new Result(result, zero);
+			}
+		}
+		return new Result(result, zero);
+	}
+	
+	public Result sltu() {
+		String result = Operation.getZero();
 		boolean zero = true;
 		for (int i=0; i<SIZE; i++) {
 			int firstBit = inputA.charAt(i) - '0';

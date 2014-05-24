@@ -35,7 +35,8 @@ public class ASMReader {
 		ArrayList<String> filtered = new ArrayList<String>();
 		for(int i = 0; i < inputFileLines.length; i++) {
 			String inputFileLine = inputFileLines[i].trim();
-			
+			if(inputFileLine.length() == 0)
+				continue;
 			if(inputFileLine.charAt(0) == '.') {
 				boolean markerMatch = inputFileLine.equals("." + marker);
 				boolean safeMarker = false;
