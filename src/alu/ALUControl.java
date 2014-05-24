@@ -14,7 +14,12 @@ public class ALUControl {
 			else if (funct.equals("100100")) this.operation = "0000";
 			else if (funct.equals("100101")) this.operation = "0001";
 			else if (funct.equals("101010")) this.operation = "0111";
-			else throw new InvalidOperationException();
+			else if (funct.equals("000000")) this.operation = "0011";
+			else if (funct.equals("000010")) this.operation = "0100";
+			else  {
+				System.out.println(funct);
+				throw new InvalidOperationException();
+			}
 		}
 		else throw new InvalidOperationException();
 	}
@@ -31,6 +36,8 @@ public class ALUControl {
 		if (operation.equals("0000")) return "And";
 		else if (operation.equals("0001")) return "Or";
 		else if (operation.equals("0010")) return "Add";
+		else if (operation.equals("0011")) return "Sll";
+		else if (operation.equals("0100")) return "Srl";
 		else if (operation.equals("0110")) return "Sub";
 		else if (operation.equals("0111")) return "Slt";
 		else if (operation.equals("1100")) return "Nor";

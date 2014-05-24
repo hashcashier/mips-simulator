@@ -25,9 +25,9 @@ public class RegisterManager {
 	public void setRegisterValue(int regNumber, String regValue)
 			throws RegisterOperationNotAllowedException {
 		if (regNumber == 0)
-			throw new RegisterOperationNotAllowedException(
-					"Cannot change value of register $zero");
+			return;
 		registers[regNumber].setValue(regValue);
+		displayRegisters();
 	}
 
 	public boolean setRegisterValue(String regTitle, String regValue) {

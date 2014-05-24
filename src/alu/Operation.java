@@ -15,16 +15,18 @@ public class Operation {
 	}
 	
 	private BigInteger sign(String input) {
-		if(input.length() == SIZE && input.charAt(SIZE-1) == '1')
+		if(input.length() == SIZE && input.charAt(0) == '1')
 			return new BigInteger(input, 2).subtract(BigInteger.ONE).not();
 		return new BigInteger(input, 2);
 	}
 	
 	private Result retRes(BigInteger c) {
 		boolean zero = c.compareTo(BigInteger.ZERO) == 0;
+		
 		String result = c.toString(2);
 		while(result.length() < SIZE)
 			result = (c.compareTo(BigInteger.ZERO) >= 0 ? "0" : "1") + result;
+		System.out.println("RAW RES: " + result);
 		return new Result(result.substring(0, SIZE), zero);
 	}
 	
@@ -55,5 +57,13 @@ public class Operation {
 	
 	public Result sub() {
 		return retRes(A.subtract(B));
+	}
+	
+	public Result sll() {
+		return retRes(A.shiftLeft(B.intValue()));
+	}
+	
+	public Result srl() {
+		return retRes(A.shiftRight(B.intValue()));
 	}
 }

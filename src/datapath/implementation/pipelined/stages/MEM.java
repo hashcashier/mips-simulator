@@ -25,7 +25,7 @@ public class MEM extends Stage {
 		String memWrite = EXMEM.getOutputValue("MemWrite"), memRead = EXMEM.getOutputValue("MemRead");
 		String readRes = RegisterManager.zeros32();
 		try {
-			if(memRead == "1")
+			if(memRead.equals("1"))
 				readRes = dm.memoryAction(memWrite, memRead, address, writeData);
 			else
 				dm.memoryAction(memWrite, memRead, address, writeData);

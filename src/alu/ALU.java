@@ -56,6 +56,7 @@ public class ALU {
 			Class<?> commandClass = Class.forName(className);
 			Constructor<?> constructor = commandClass.getConstructor(Operation.class);
 			Command result = (Command) constructor.newInstance(op);
+			System.out.println(className +": " + result.execute().getResult());
 			return result.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
