@@ -51,7 +51,11 @@ public abstract class AbstractDatapath {
 	public RegisterManager getRegisterManager(){
 		return registerManager;
 	}
-
+	
+	public Hashtable<String, String> getControlSignals(){
+		return cu.getControlSignals();
+	}
+	
 	public abstract Hashtable<String, String> getPipelineRegistersContents();
 	public abstract boolean nextStep() throws InvalidOperationException;
 	public abstract boolean previousStep();	

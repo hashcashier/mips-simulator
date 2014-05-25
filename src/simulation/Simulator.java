@@ -5,6 +5,8 @@ import instructions.UnkownInstructionException;
 import java.io.FileNotFoundException;
 import java.util.Hashtable;
 
+import control.ControlUnit;
+
 import registers.RegisterManager;
 
 import alu.InvalidOperationException;
@@ -64,7 +66,9 @@ public class Simulator {
 	}
 
 	public Hashtable<String, String> getControlSignals() {
-		return new Hashtable<String, String>();
+		if(datapath != null)
+			return datapath.getControlSignals();
+		return ControlUnit.getEmptyControlSignals();
 	}
 
 	public Hashtable<String, String> getRegisterMemoryContents() {
