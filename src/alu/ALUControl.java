@@ -18,7 +18,6 @@ public class ALUControl {
 			else if (funct.equals("000000")) this.operation = "0011";
 			else if (funct.equals("000010")) this.operation = "0100";
 			else  {
-				System.out.println(funct);
 				throw new InvalidOperationException();
 			}
 		}
