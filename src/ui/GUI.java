@@ -372,6 +372,7 @@ public class GUI {
 				setProgramMemory(
 						Long.parseLong(programMemoryAddressTextField.getText()),
 						programMemoryValueTextField.getText());
+				updateProgramMemoryTable();
 			}
 		});
 		btnSpm.setBounds(950, 347, 61, 29);
