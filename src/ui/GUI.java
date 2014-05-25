@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
@@ -397,11 +398,14 @@ public class GUI {
 		Hashtable<String, String> signals = simulator.getControlSignals();
 		// COME HERE
 		Object[][] values = new Object[signals.size()][2];
-
+		Object keys[] = signals.keySet().toArray();
+		Arrays.sort(keys);
 		int count = 0;
-		for (Entry<String, String> entry : signals.entrySet()) {
-			values[count][0] = entry.getKey();
-			values[count][1] = entry.getValue();
+		for (int q = 0; q < keys.length; q++) {
+			String key = (String) keys[q];
+			System.out.println(key + " HEEEELO");
+			values[count][0] = key;
+			values[count][1] = signals.get(key);
 			count++;
 		}
 		return values;
@@ -565,12 +569,15 @@ public class GUI {
 	public Object[][] getPipelineRegisterValues() {
 		Hashtable<String, String> registers = simulator
 				.getPipelineRegistersContents();
+		Object keys[] = registers.keySet().toArray();
+		Arrays.sort(keys);
 		
 		Object[][] res = new Object[registers.size()][2];
 		int i = 0;
-		for (Entry<String, String> entry : registers.entrySet()) {
-			res[i][0] = entry.getKey();
-			res[i++][1] = entry.getValue();
+		for (int q = 0; q < keys.length; q++) {
+			String key = (String) keys[q];
+			res[i][0] = key;
+			res[i++][1] = registers.get(key);
 		}
 		
 		return res;
