@@ -423,13 +423,16 @@ public class GUI {
 		Object[][] values = null;
 		Hashtable<Long, String> programContents = simulator
 				.getInstructionMemoryContents();
-
+		Object keys[] = programContents.keySet().toArray();
+		Arrays.sort(keys);
+		
 		values = new Object[programContents.size()][2];
 
 		int count = 0;
-		for (Entry<Long, String> entry : programContents.entrySet()) {
-			values[count][0] = entry.getKey();
-			values[count][1] = entry.getValue();
+		for (int q = 0; q < keys.length; q++) {
+			Long key = (Long) keys[q];
+			values[count][0] = key;
+			values[count][1] = programContents.get(key);
 			count++;
 		}
 		return values;
