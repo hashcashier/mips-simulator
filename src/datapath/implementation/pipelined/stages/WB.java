@@ -17,11 +17,21 @@ public class WB extends Stage {
 		AbstractPipelineRegister MEMWB = pr[3], EXMEM = pr[2], IDEX = pr[1], IFID = pr[0];
 		//Write to register
 		String RegWrite = MEMWB.getOutputValue("RegWrite");
-		if(RegWrite.equals("1")) {
+		if(RegWrite.equals("01")) {
 			String RD = MEMWB.getOutputValue("RegisterRd"), RT = MEMWB.getOutputValue("Rt"), RS = MEMWB.getOutputValue("Rs");
 			String data = Mux.multiplex(new String[] {RT, RS}, MEMWB.getOutputValue("MemToReg"));
 			try {
 				rm.setRegisterValue(Integer.parseInt(RD, 2), data);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RegisterOperationNotAllowedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if(RegWrite.equals("10")) {
+			try {
+				rm.setRegisterValue(31, MEMWB.getOutputValue("PC"));
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -25,7 +25,6 @@ public class IF extends Stage {
 		String jump = IDEX.getOutputValue("JumpReg") + cu.getJump();
 		String jumpTarget = PC4.substring(0, 4) + IFID.getOutputValue("Instruction").substring(6, 32) + "00"; 
 		String PCJumpResult = Mux.multiplex(new String [] {PCBranchResult, jumpTarget, IDEX.getOutputValue("Rs")}, jump);
-		System.out.println("JUMP RESULT:" + PCJumpResult);
 		// Fetch Instruction
 		try {
 			IFID.setInputValue("Instruction", im.instructionRead(pc.getCounterBits()));

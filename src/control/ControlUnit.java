@@ -19,13 +19,13 @@ public class ControlUnit {
 				JumpReg = "1";
 			} else {
 				RegDst = "1";
-				RegWrite = "1";
+				RegWrite = "01";
 				ALUOp = "100";
 			}
 		} else if(opcode.equals("100011")) {//lw
 			ALUSrc = "1";
 			MemToReg = "1";
-			RegWrite = "1";
+			RegWrite = "01";
 			MemRead = "1";
 		} else if(opcode.equals("101011")) {//sw
 			ALUSrc = "1";
@@ -36,16 +36,18 @@ public class ControlUnit {
 		} else if(opcode.equals("001000") || opcode.equals("001100") || opcode.equals("001101")) {
 			// addi, andi, ori q
 			ALUSrc = "1";
-			RegWrite = "1";
+			RegWrite = "01";
 			if(opcode.equals("001000"))
 				ALUOp = "000";
 			else if(opcode.equals("001100"))
 				ALUOp = "011";
 			else if(opcode.equals("001101"))
 				ALUOp = "010";
-		} else if(opcode.equals("000010") || opcode.equals("000011")) { // j, jal
+		} else if(opcode.equals("000010")) { // j, jal
 			Jump = "1";
-		} 
+		} else if(opcode.equals("000011")) {
+			RegWrite = "10";
+		}
 	}
 	
 	private void reset() {
@@ -56,7 +58,7 @@ public class ControlUnit {
 		Jump = "0";
 		JumpReg = "0";
 		PCSrc = "0";
-		RegWrite = "0";
+		RegWrite = "00";
 		MemWrite = "0";
 		MemRead = "0";
 		MemToReg = "0";

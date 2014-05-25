@@ -164,7 +164,7 @@ public class Assembler {
 							params[j] = Long.toString((value-programOffset)/4)
 									+ ","
 									+ Long.toString(parsedInstructions
-											.size()) + "," + Long.toString(value/4);
+											.size()) + "," + Long.toString(value/4) + "," + Long.toString(value);
 						} else if(types[j] == 4) {// Register label
 							params[j] = assembleIntegral(Long.toString(value), 5);
 						}
