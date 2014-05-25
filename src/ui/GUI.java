@@ -36,6 +36,7 @@ import javax.swing.JTextField;
 import datapath.AbstractDatapath;
 
 import alu.InvalidOperationException;
+import assembly.Assembler;
 import assembly.DuplicateLabelException;
 
 public class GUI {
@@ -349,8 +350,9 @@ public class GUI {
 		btnSetDataMemory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setDataMemory(
-						Long.parseLong(dataMemoryAddressTextField.getText()),
+						Assembler.DM_OFFSET | Long.parseLong(dataMemoryAddressTextField.getText()),
 						dataMemoryValueTextField.getText());
+				updateDataMemoryTable();
 			}
 		});
 		btnSetDataMemory.setBounds(950, 183, 65, 29);
