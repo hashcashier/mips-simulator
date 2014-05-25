@@ -47,6 +47,10 @@ public abstract class AbstractDatapath {
 	public long getProgramCounterValue() {
 		return pc.getCounter();
 	}
+	
+	public RegisterManager getRegisterManager(){
+		return registerManager;
+	}
 
 	public abstract Hashtable<String, String> getPipelineRegistersContents();
 	public abstract boolean nextStep() throws InvalidOperationException;

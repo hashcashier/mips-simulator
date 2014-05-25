@@ -5,6 +5,8 @@ import instructions.UnkownInstructionException;
 import java.io.FileNotFoundException;
 import java.util.Hashtable;
 
+import registers.RegisterManager;
+
 import alu.InvalidOperationException;
 import assembly.ASMReader;
 import assembly.Assembler;
@@ -61,7 +63,6 @@ public class Simulator {
 	}
 
 	public Hashtable<String, String> getControlSignals() {
-		// TODO Wait for Azazy..
 		return new Hashtable<String, String>();
 	}
 
@@ -98,5 +99,11 @@ public class Simulator {
 	public void setMemoryContent(long address, String value) {
 		if(datapath != null)
 			datapath.setMemoryContent(address, value);
+	}
+	
+	public RegisterManager getRegisterManager(){
+		if(datapath != null)
+			return datapath.getRegisterManager();
+		return new RegisterManager();
 	}
 }

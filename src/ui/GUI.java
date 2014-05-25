@@ -33,6 +33,8 @@ import java.util.Map.Entry;
 
 import javax.swing.JTextField;
 
+import datapath.AbstractDatapath;
+
 import alu.InvalidOperationException;
 import assembly.DuplicateLabelException;
 
@@ -61,7 +63,7 @@ public class GUI {
 
 	// private File file;
 
-	private RegisterManager rm = new RegisterManager();
+	//private RegisterManager rm = simulator.getDataPath().getRegisterManager();
 
 	private JTable controlTable;
 
@@ -456,6 +458,7 @@ public class GUI {
 
 	private Object[][] getRegisterValues() {
 		Object[][] values = new Object[32][3];
+		RegisterManager rm = simulator.getRegisterManager();
 		for (int i = 0; i < 32; i++) {
 			Register r = rm.getRegister(i);
 			String regTitle = r.getTitle();
@@ -566,6 +569,7 @@ public class GUI {
 		updateRegistersTable();
 		updateControlSignalsTable();
 		updatePipeLineRegistersTable();
+		System.out.println("HELOOOOOOOOOOOOOOOOOOOOOOOOOOO\n");
 		log("PC: " + simulator.getProgramCounterValue());
 	}
 	
@@ -610,7 +614,11 @@ public class GUI {
 		System.out.println("UPDATING REG VALUES");
 		Object registerTableColumnNames[] = { "Title", "#", "Value" };
 		Object[][] registerData = getRegisterValues();
-
+		System.out.println("+_+_+_+__+_+_+_+_+_+_+_+_+_+_+_+_+");
+		for(int q = 0; q < 32; q++){
+			System.out.println(registerData[q][0].toString() + " " + registerData[q][1].toString() + " " + registerData[q][2].toString());
+		}
+		System.out.println("+_+_+_+__+_+_+_+_+_+_+_+_+_+_+_+_+");
 		DefaultTableModel model = new DefaultTableModel(registerData,
 				registerTableColumnNames);
 
