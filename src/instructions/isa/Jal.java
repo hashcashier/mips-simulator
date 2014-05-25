@@ -13,7 +13,6 @@ public class Jal extends Instruction {
 		
 		String extendedParams[] = parameters[0].split(",");
 		int jumpTarget = Integer.parseInt(extendedParams[2]);
-		System.out.println("JAL: " + jumpTarget);
 		String deltaValue = Integer.toString(jumpTarget);
 		
 		address = Assembler.assembleIntegral(deltaValue, 26);
