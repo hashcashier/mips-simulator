@@ -571,7 +571,6 @@ public class GUI {
 		updateRegistersTable();
 		updateControlSignalsTable();
 		updatePipeLineRegistersTable();
-		System.out.println("HELOOOOOOOOOOOOOOOOOOOOOOOOOOO\n");
 		log("PC: " + simulator.getProgramCounterValue());
 	}
 	
@@ -615,11 +614,7 @@ public class GUI {
 	public void updateRegistersTable() {
 		Object registerTableColumnNames[] = { "Title", "#", "Value" };
 		Object[][] registerData = getRegisterValues();
-		System.out.println("+_+_+_+__+_+_+_+_+_+_+_+_+_+_+_+_+");
-		for(int q = 0; q < 32; q++){
-			System.out.println(registerData[q][0].toString() + " " + registerData[q][1].toString() + " " + registerData[q][2].toString());
-		}
-		System.out.println("+_+_+_+__+_+_+_+_+_+_+_+_+_+_+_+_+");
+		
 		DefaultTableModel model = new DefaultTableModel(registerData,
 				registerTableColumnNames);
 
@@ -684,7 +679,6 @@ public class GUI {
 		if (!file.getName().endsWith(".asm")) {
 			file = new File(file.getAbsolutePath() + ".asm");
 			currentFilePath = file.getAbsolutePath();
-//			System.out.println(currentFilePath);
 		}
 
 		BufferedWriter outFile = null;
