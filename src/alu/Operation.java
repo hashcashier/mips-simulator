@@ -13,14 +13,23 @@ public class Operation {
 		A = sign(inputA);
 		B = sign(inputB);
 	}
-
+	
+	public static String rev(String input) {
+		String tmp = "";
+		for(int i = 0; i < input.length(); i++)
+			if(input.charAt(i) == '0')
+				tmp += '1';
+			else
+				tmp += '0';
+		return tmp;
+	}
+	
 	public static BigInteger sign(String input) {
 		if (input.length() == SIZE && input.charAt(0) == '1') {
-			System.out.println("SigN: " + input + ' '
-					+ new BigInteger(input, 2).not());
-			return new BigInteger(input, 2).subtract(BigInteger.ONE).not();
+			String tmp = rev(input);
+			BigInteger val = new BigInteger(tmp, 2).add(BigInteger.ONE);
+			return val.negate();
 		}
-		System.out.println("Sign: " + input + ' ' + new BigInteger(input, 2));
 		return new BigInteger(input, 2);
 	}
 

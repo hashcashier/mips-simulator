@@ -21,8 +21,6 @@ public class EX extends Stage {
 			RegisterManager rm, ProgramCounter pc, AbstractPipelineRegister[] pr, ControlUnit cu) {
 		AbstractPipelineRegister MEMWB = pr[3], EXMEM = pr[2], IDEX = pr[1], IFID = pr[0];
 		// Calculate Branch Target
-		if(IDEX.getOutputValue("Branch").equals("1"))
-			System.out.println("BRANCH!");
 		String BranchDiff = LeftShifter.shiftLeft(IDEX.getOutputValue("Immediate"), 2, 32),
 				BranchTarget = Adder.add(BranchDiff, IDEX.getOutputValue("PC"));
 		EXMEM.setInputValue("BranchAddress", BranchTarget);
