@@ -21,6 +21,8 @@ public class EX extends Stage {
 			RegisterManager rm, ProgramCounter pc, AbstractPipelineRegister[] pr, ControlUnit cu) {
 		AbstractPipelineRegister MEMWB = pr[3], EXMEM = pr[2], IDEX = pr[1], IFID = pr[0];
 		// Calculate Branch Target
+		if(IDEX.getOutputValue("Branch").equals("1"))
+			System.out.println("BRANCH!");
 		String BranchDiff = LeftShifter.shiftLeft(IDEX.getOutputValue("Immediate"), 2, 32),
 				BranchTarget = Adder.add(BranchDiff, IDEX.getOutputValue("PC"));
 		EXMEM.setInputValue("BranchAddress", BranchTarget);
@@ -44,7 +46,8 @@ public class EX extends Stage {
 		EXMEM.setInputValue("RegisterRd", RD);
 		// Set Rt
 		EXMEM.setInputValue("Rt", IDEX.getOutputValue("Rt"));
-		// Forward control signals "MemWrite", "MemRead", "MemToReg", "RegWrite"
+		// Forward control signals "Branch", "MemWrite", "MemRead", "MemToReg", "RegWrite"
+		EXMEM.setInputValue("Branch", IDEX.getOutputValue("Branch"));
 		EXMEM.setInputValue("MemWrite", IDEX.getOutputValue("MemWrite"));
 		EXMEM.setInputValue("MemRead", IDEX.getOutputValue("MemRead"));
 		EXMEM.setInputValue("MemToReg", IDEX.getOutputValue("MemToReg"));

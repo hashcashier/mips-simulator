@@ -53,8 +53,9 @@ public class Simulator {
 	public void step() throws InvalidOperationException {
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
 		if(datapath != null)
-			if(!datapath.nextStep())
-				throw new InvalidOperationException();
+			if(!datapath.nextStep()) {
+				System.out.println("Reached last operation.");
+			}
 	}
 
 	public void run() throws InvalidOperationException {

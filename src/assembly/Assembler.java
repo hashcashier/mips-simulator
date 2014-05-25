@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
+import registers.RegisterManager;
+
 public class Assembler {
 	String[] filteredInstructions, filteredData, assembledInstructions, assembledData, parsedData;
 	Integer[] parsedDataType;
@@ -158,9 +160,9 @@ public class Assembler {
 						if(types[j] == 1) {// Data label
 							params[j] = Long.toString(value);
 						} else if(types[j] == 2) {// Instruction label: Target,Current
-							params[j] = Long.toString(value)
+							params[j] = Long.toString((value-programOffset)/4)
 									+ ","
-									+ Integer.toString(parsedInstructions
+									+ Long.toString(parsedInstructions
 											.size());
 						} else if(types[j] == 4) {// Register label
 							params[j] = assembleIntegral(Long.toString(value), 5);
@@ -200,11 +202,16 @@ public class Assembler {
 	}
 	
 	private void assembleInstructions() {
-		assembledInstructions = new String[parsedInstructions.length];
+		assembledInstructions = new String[parsedInstructions.length + 4];
 		System.out.println("Instruction assembly:");
-		for(int i = 0; i < assembledInstructions.length; i++) {
+		for(int i = 0; i < parsedInstructions.length; i++) {
 			assembledInstructions[i] = parsedInstructions[i].getBits();
 			System.out.println(assembledInstructions[i]);
+		}
+		int len = parsedInstructions.length;
+		for(int i = 0; i < 4; i++) {
+			assembledInstructions[len + i] = RegisterManager.zeros32();
+			System.out.println(assembledInstructions[len+i]);
 		}
 	}
 	

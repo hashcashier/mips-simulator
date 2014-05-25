@@ -611,7 +611,6 @@ public class GUI {
 	}
 
 	public void updateRegistersTable() {
-		System.out.println("UPDATING REG VALUES");
 		Object registerTableColumnNames[] = { "Title", "#", "Value" };
 		Object[][] registerData = getRegisterValues();
 		System.out.println("+_+_+_+__+_+_+_+_+_+_+_+_+_+_+_+_+");

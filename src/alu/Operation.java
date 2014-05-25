@@ -14,13 +14,13 @@ public class Operation {
 		B = sign(inputB);
 	}
 
-	private BigInteger sign(String input) {
+	public static BigInteger sign(String input) {
 		if (input.length() == SIZE && input.charAt(0) == '1') {
-			System.out.println("Sign: " + input + ' '
-					+ new BigInteger(input, 2).subtract(BigInteger.ONE).not());
+			System.out.println("SigN: " + input + ' '
+					+ new BigInteger('-' + input.substring(1), 2));
 			return new BigInteger(input, 2).subtract(BigInteger.ONE).not();
 		}
-		System.out.println("Sign: " + input + ' ' + new BigInteger(input, 2));
+		System.out.println("Sign: " + input + ' ' + new BigInteger(input, 2).toString(2));
 		return new BigInteger(input, 2);
 	}
 
@@ -28,8 +28,11 @@ public class Operation {
 		boolean zero = c.compareTo(BigInteger.ZERO) == 0;
 
 		String result = c.toString(2);
+		if(result.charAt(0) == '-')
+			result = result.substring(1);
 		while (result.length() < SIZE)
 			result = (c.compareTo(BigInteger.ZERO) >= 0 ? "0" : "1") + result;
+		
 		System.out.println("RAW RES: " + result);
 		return new Result(result.substring(0, SIZE), zero);
 	}
