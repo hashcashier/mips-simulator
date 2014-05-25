@@ -586,10 +586,6 @@ public class GUI {
 		model.fireTableDataChanged();
 	}
 
-	public void updatePipelineRegistersData() {
-		setPipelineRegisterValues();
-	}
-
 	public void updateControlSignalsTable() {
 		Object controlTableColumns[] = { "Title", "Value" };
 		Object[][] controlData = getControlSignals();
@@ -601,6 +597,7 @@ public class GUI {
 	}
 
 	public void updateRegistersTable() {
+		System.out.println("UPDATING REG VALUES");
 		Object registerTableColumnNames[] = { "Title", "#", "Value" };
 		Object[][] registerData = getRegisterValues();
 
