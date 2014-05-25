@@ -12,7 +12,8 @@ public class J extends Instruction {
 		opcode = "000010";
 		
 		String extendedParams[] = parameters[0].split(",");
-		int jumpTarget = Integer.parseInt(extendedParams[0]);
+		int jumpTarget = Integer.parseInt(extendedParams[2]);
+		System.out.println("JUMP: " + jumpTarget);
 		String deltaValue = Integer.toString(jumpTarget);
 		
 		address = Assembler.assembleIntegral(deltaValue, 26);

@@ -152,6 +152,7 @@ public class Assembler {
 						params[j] = trimmedParam;
 						
 					} else if(!labelManager.containsLabel(trimmedParam)) {
+						System.out.println("ERROR: " + trimmedParam);
 						throw new UnkownLabelException();
 					} else {
 						types[j] = labelManager.getLabelType(trimmedParam);
@@ -163,7 +164,7 @@ public class Assembler {
 							params[j] = Long.toString((value-programOffset)/4)
 									+ ","
 									+ Long.toString(parsedInstructions
-											.size());
+											.size()) + "," + Long.toString(value/4);
 						} else if(types[j] == 4) {// Register label
 							params[j] = assembleIntegral(Long.toString(value), 5);
 						}
