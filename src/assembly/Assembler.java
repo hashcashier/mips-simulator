@@ -160,9 +160,9 @@ public class Assembler {
 						if(types[j] == 1) {// Data label
 							params[j] = Long.toString(value);
 						} else if(types[j] == 2) {// Instruction label: Target,Current
-							params[j] = Long.toString(value)
+							params[j] = Long.toString((value-programOffset)/4)
 									+ ","
-									+ Integer.toString(parsedInstructions
+									+ Long.toString(parsedInstructions
 											.size());
 						} else if(types[j] == 4) {// Register label
 							params[j] = assembleIntegral(Long.toString(value), 5);

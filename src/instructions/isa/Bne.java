@@ -17,6 +17,7 @@ public class Bne extends Instruction {
 		int branchTarget = Integer.parseInt(extendedParams[0]);
 		int currentPosition = Integer.parseInt(extendedParams[1]);
 		String deltaValue = Integer.toString(branchTarget - currentPosition - 1);
+		System.out.println("BNE: " + extendedParams[0] + ' ' + extendedParams[1] + ' ' + deltaValue);
 		
 		immediate = Assembler.assembleIntegral(deltaValue, 16);
 	}
