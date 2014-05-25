@@ -106,7 +106,7 @@ public class GUI {
 	private void initialize() {
 		frmOraka = new JFrame();
 		frmOraka.setTitle("ORAKA MIPS Simulator");
-		frmOraka.setBounds(100, 100, 1000, 550);
+		frmOraka.setBounds(100, 100, 1200, 650);
 		// frame.setBounds(100, 100, 450, 300);
 		frmOraka.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmOraka.getContentPane().setLayout(null);
@@ -165,7 +165,7 @@ public class GUI {
 				resetAll();
 			}
 		});
-		btnStop.setBounds(568, 6, 105, 29);
+		btnStop.setBounds(568, 6, 125, 29);
 		frmOraka.getContentPane().add(btnStop);
 
 		JButton btnNewFile = new JButton("Clear/New File");
@@ -189,7 +189,7 @@ public class GUI {
 		// editorScrollPane.setRowHeaderView(tln);
 
 		JScrollPane registerTableScrollPane = new JScrollPane();
-		registerTableScrollPane.setBounds(453, 47, 197, 310);
+		registerTableScrollPane.setBounds(453, 47, 297, 535);
 		frmOraka.getContentPane().add(registerTableScrollPane);
 
 		Object registerTableColumnNames[] = { "Title", "#", "Value" };
@@ -213,40 +213,40 @@ public class GUI {
 		logScrollPane.setColumnHeaderView(logTextPane);
 		logTextPane.setEditable(false);
 
-		lblExMem = new JLabel("EX/MEM");
-		lblExMem.setBounds(468, 389, 61, 16);
-		frmOraka.getContentPane().add(lblExMem);
+//		lblExMem = new JLabel("EX/MEM");
+//		lblExMem.setBounds(468, 389, 61, 16);
+//		frmOraka.getContentPane().add(lblExMem);
 
-		lblIdex = new JLabel("ID/EX");
-		lblIdex.setBounds(468, 417, 61, 16);
-		frmOraka.getContentPane().add(lblIdex);
+//		lblIdex = new JLabel("ID/EX");
+//		lblIdex.setBounds(468, 417, 61, 16);
+//		frmOraka.getContentPane().add(lblIdex);
 
-		lblIfid = new JLabel("IF/ID");
-		lblIfid.setBounds(468, 445, 61, 16);
-		frmOraka.getContentPane().add(lblIfid);
+//		lblIfid = new JLabel("IF/ID");
+//		lblIfid.setBounds(468, 445, 61, 16);
+//		frmOraka.getContentPane().add(lblIfid);
 
-		lblMemwb = new JLabel("MEM/WB");
-		lblMemwb.setBounds(468, 473, 61, 16);
-		frmOraka.getContentPane().add(lblMemwb);
+//		lblMemwb = new JLabel("MEM/WB");
+//		lblMemwb.setBounds(468, 473, 61, 16);
+//		frmOraka.getContentPane().add(lblMemwb);
 
 		exmemVal = new JLabel("-----");
-		exmemVal.setBounds(541, 389, 312, 16);
+//		exmemVal.setBounds(541, 389, 312, 16);
 		frmOraka.getContentPane().add(exmemVal);
 
 		idexVal = new JLabel("-----");
-		idexVal.setBounds(541, 417, 312, 16);
+//		idexVal.setBounds(541, 417, 312, 16);
 		frmOraka.getContentPane().add(idexVal);
 
 		ifidVal = new JLabel("-----");
-		ifidVal.setBounds(541, 445, 312, 16);
+//		ifidVal.setBounds(541, 445, 312, 16);
 		frmOraka.getContentPane().add(ifidVal);
 
 		memwbVal = new JLabel("-----");
-		memwbVal.setBounds(541, 473, 312, 16);
+//		memwbVal.setBounds(541, 473, 312, 16);
 		frmOraka.getContentPane().add(memwbVal);
 
 		JScrollPane controlScrollPane = new JScrollPane();
-		controlScrollPane.setBounds(865, 47, 129, 203);
+		controlScrollPane.setBounds(1050, 47, 129, 203);
 		frmOraka.getContentPane().add(controlScrollPane);
 
 		Object controlTableColumns[] = { "Title", "Value" };
@@ -256,12 +256,12 @@ public class GUI {
 		controlTable = new JTable(controlData, controlTableColumns);
 		controlScrollPane.setViewportView(controlTable);
 
-		JLabel lblProgramStartAddress = new JLabel("Program Start Adr.");
-		lblProgramStartAddress.setBounds(865, 262, 129, 16);
+		JLabel lblProgramStartAddress = new JLabel("Program Start");
+		lblProgramStartAddress.setBounds(1070, 262, 129, 26);
 		frmOraka.getContentPane().add(lblProgramStartAddress);
 
 		programStartAddressTextField = new JTextField();
-		programStartAddressTextField.setBounds(860, 283, 134, 28);
+		programStartAddressTextField.setBounds(1050, 283, 134, 28);
 		frmOraka.getContentPane().add(programStartAddressTextField);
 		programStartAddressTextField.setColumns(10);
 
@@ -283,11 +283,11 @@ public class GUI {
 				}
 			}
 		});
-		btnSetAddress.setBounds(865, 328, 117, 29);
+		btnSetAddress.setBounds(1053, 318, 127, 29);
 		frmOraka.getContentPane().add(btnSetAddress);
 		
 		JScrollPane pipelineRegisterScrollPane = new JScrollPane();
-		pipelineRegisterScrollPane.setBounds(662, 400, 197, 90);
+		pipelineRegisterScrollPane.setBounds(755, 400, 297, 120);
 		frmOraka.getContentPane().add(pipelineRegisterScrollPane);
 
 		Object pipelineTableCols[] = { "Name", "Value" };
@@ -297,7 +297,7 @@ public class GUI {
 		pipelineRegisterScrollPane.setViewportView(pipelineTable);
 
 		JScrollPane dataMemoryScrollPane = new JScrollPane();
-		dataMemoryScrollPane.setBounds(662, 47, 197, 115);
+		dataMemoryScrollPane.setBounds(755, 47, 290, 115);
 		frmOraka.getContentPane().add(dataMemoryScrollPane);
 
 		Object dataMemoryTableCols[] = { "Address", "Value" };
@@ -307,7 +307,7 @@ public class GUI {
 		dataMemoryScrollPane.setViewportView(dataMemoryTable);
 
 		JScrollPane programMemoryScrollPane = new JScrollPane();
-		programMemoryScrollPane.setBounds(662, 224, 197, 90);
+		programMemoryScrollPane.setBounds(755, 224, 290, 90);
 		frmOraka.getContentPane().add(programMemoryScrollPane);
 
 		Object[] programMemoryCols = { "Address", "Value" };
@@ -317,32 +317,32 @@ public class GUI {
 		programMemoryScrollPane.setViewportView(programMemoryTable);
 
 		JLabel lblAddress = new JLabel("Address");
-		lblAddress.setBounds(662, 166, 61, 16);
+		lblAddress.setBounds(755, 166, 61, 16);
 		frmOraka.getContentPane().add(lblAddress);
 
 		JLabel lblValue = new JLabel("Value");
-		lblValue.setBounds(735, 166, 61, 16);
+		lblValue.setBounds(870, 166, 61, 16);
 		frmOraka.getContentPane().add(lblValue);
 
 		JLabel lblAddress_1 = new JLabel("Address");
-		lblAddress_1.setBounds(662, 318, 61, 16);
+		lblAddress_1.setBounds(755, 318, 61, 16);
 		frmOraka.getContentPane().add(lblAddress_1);
 
 		JLabel lblValue_1 = new JLabel("Value");
-		lblValue_1.setBounds(735, 318, 61, 16);
+		lblValue_1.setBounds(870, 318, 61, 16);
 		frmOraka.getContentPane().add(lblValue_1);
 
 		dataMemoryAddressTextField = new JTextField();
-		dataMemoryAddressTextField.setBounds(662, 184, 65, 28);
+		dataMemoryAddressTextField.setBounds(755, 184, 65, 28);
 		frmOraka.getContentPane().add(dataMemoryAddressTextField);
 		dataMemoryAddressTextField.setColumns(10);
 
 		dataMemoryValueTextField = new JTextField();
-		dataMemoryValueTextField.setBounds(730, 184, 65, 28);
+		dataMemoryValueTextField.setBounds(870, 184, 65, 28);
 		frmOraka.getContentPane().add(dataMemoryValueTextField);
 		dataMemoryValueTextField.setColumns(10);
 
-		JButton btnSetDataMemory = new JButton("SDM");
+		JButton btnSetDataMemory = new JButton("Set");
 		btnSetDataMemory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setDataMemory(
@@ -350,20 +350,20 @@ public class GUI {
 						dataMemoryValueTextField.getText());
 			}
 		});
-		btnSetDataMemory.setBounds(792, 183, 65, 29);
+		btnSetDataMemory.setBounds(950, 183, 65, 29);
 		frmOraka.getContentPane().add(btnSetDataMemory);
 
 		programMemoryAddressTextField = new JTextField();
-		programMemoryAddressTextField.setBounds(662, 346, 61, 28);
+		programMemoryAddressTextField.setBounds(755, 346, 61, 28);
 		frmOraka.getContentPane().add(programMemoryAddressTextField);
 		programMemoryAddressTextField.setColumns(10);
 
 		programMemoryValueTextField = new JTextField();
-		programMemoryValueTextField.setBounds(735, 346, 61, 28);
+		programMemoryValueTextField.setBounds(870, 346, 61, 28);
 		frmOraka.getContentPane().add(programMemoryValueTextField);
 		programMemoryValueTextField.setColumns(10);
 
-		JButton btnSpm = new JButton("SPM");
+		JButton btnSpm = new JButton("Set");
 		btnSpm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setProgramMemory(
@@ -371,13 +371,13 @@ public class GUI {
 						programMemoryValueTextField.getText());
 			}
 		});
-		btnSpm.setBounds(792, 347, 61, 29);
+		btnSpm.setBounds(950, 347, 61, 29);
 		frmOraka.getContentPane().add(btnSpm);
 
-		setEXMEM("/\\/\\/\\/\\/\\");
-		setIDEX("/\\/\\/\\/\\/\\");
-		setIFID("/\\/\\/\\/\\/\\");
-		setMEMWB("/\\/\\/\\/\\/\\");
+//		setEXMEM("/\\/\\/\\/\\/\\");
+//		setIDEX("/\\/\\/\\/\\/\\");
+//		setIFID("/\\/\\/\\/\\/\\");
+//		setMEMWB("/\\/\\/\\/\\/\\");
 
 		log("-- Simulator just started --");
 		// logTextPane.in
