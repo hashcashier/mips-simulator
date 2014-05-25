@@ -32,18 +32,28 @@ public class Operation {
 		}
 		return new BigInteger(input, 2);
 	}
+	
+	public static String wellFormedWord(BigInteger input) {
+		String res = Long.toBinaryString(input.longValue());
+		while (res.length() < SIZE)
+			res = (input.compareTo(BigInteger.ZERO) >= 0 ? "0" : "1") + res;
+		while (res.length() > SIZE)
+			res = res.substring(1);
+		return res;
+	}
+
+	public static String wellFormedWord(BigInteger input, int size) {
+		String res = Long.toBinaryString(input.longValue());
+		while (res.length() < size)
+			res = (input.compareTo(BigInteger.ZERO) >= 0 ? "0" : "1") + res;
+		while (res.length() > size)
+			res = res.substring(1);
+//		System.out.println("Well forming: " + input + " -> " + res);
+		return res;
+	}
 
 	private Result retRes(BigInteger c) {
-		boolean zero = c.compareTo(BigInteger.ZERO) == 0;
-
-		String result = c.toString(2);
-		if(result.charAt(0) == '-')
-			result = result.substring(1);
-		while (result.length() < SIZE)
-			result = (c.compareTo(BigInteger.ZERO) >= 0 ? "0" : "1") + result;
-		
-		System.out.println("RAW RES: " + result);
-		return new Result(result.substring(0, SIZE), zero);
+		return new Result(wellFormedWord(c), c.compareTo(BigInteger.ZERO) == 0);
 	}
 
 	public Result add() {

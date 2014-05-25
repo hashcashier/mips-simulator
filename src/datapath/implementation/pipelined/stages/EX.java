@@ -10,6 +10,7 @@ import registers.RegisterManager;
 import alu.ALU;
 import alu.ALUControl;
 import alu.InvalidOperationException;
+import alu.Operation;
 import alu.Result;
 import control.ControlUnit;
 import datapath.implementation.pipelined.registers.AbstractPipelineRegister;
@@ -21,8 +22,9 @@ public class EX extends Stage {
 			RegisterManager rm, ProgramCounter pc, AbstractPipelineRegister[] pr, ControlUnit cu) {
 		AbstractPipelineRegister MEMWB = pr[3], EXMEM = pr[2], IDEX = pr[1], IFID = pr[0];
 		// Calculate Branch Target
-		String BranchDiff = LeftShifter.shiftLeft(IDEX.getOutputValue("Immediate"), 2, 32),
-				BranchTarget = Adder.add(BranchDiff, IDEX.getOutputValue("PC"));
+		String BranchDiff = LeftShifter.shiftLeft(
+				IDEX.getOutputValue("Immediate"), 2, 32), BranchTarget = Adder
+				.add(BranchDiff, IDEX.getOutputValue("PC"));
 		EXMEM.setInputValue("BranchAddress", BranchTarget);
 		try {
 			// Set ALU Control
