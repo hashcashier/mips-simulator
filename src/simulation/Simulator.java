@@ -104,6 +104,9 @@ public class Simulator {
 	public void setMemoryContent(long address, String value) {
 		if(datapath != null)
 			datapath.setMemoryContent(address, value);
+		else{
+			System.out.println("NOOOOOOOOOOOOOOOOOOOO!");
+		}
 	}
 	
 	public RegisterManager getRegisterManager(){
