@@ -42,13 +42,12 @@ public class Pipelined extends AbstractDatapath {
 
 	@Override
 	public boolean nextStep() {
-		// DON'T FORGET TERMINATION
 		for (int i = 0; i < stages.length; i++)
 			stages[i].execute(dataMemory, instructionMemory, registerManager,
 					pc, pipelineRegisters, cu);
 		for (int i = 0; i < pipelineRegisters.length; i++)
 			pipelineRegisters[i].transferValues();
-		System.out.println(pc.getCounter() + "::" + instructionMemory.getLastInstructionAddress());
+//		System.out.println(pc.getCounter() + "::" + instructionMemory.getLastInstructionAddress());
 		return pc.getCounter() <= instructionMemory.getLastInstructionAddress();
 	}
 
