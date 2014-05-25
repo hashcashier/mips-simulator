@@ -26,6 +26,8 @@ public class EX extends Stage {
 				IDEX.getOutputValue("Immediate"), 2, 32), BranchTarget = Adder
 				.add(BranchDiff, IDEX.getOutputValue("PC"));
 		EXMEM.setInputValue("BranchAddress", BranchTarget);
+		EXMEM.setInputValue("PC", IDEX.getOutputValue("PC"));
+
 		try {
 			// Set ALU Control
 			ALUControl ac = new ALUControl(IDEX.getOutputValue("ALUOp"), IDEX.getOutputValue("Immediate").substring(26, 32));

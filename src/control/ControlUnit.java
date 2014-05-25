@@ -46,6 +46,7 @@ public class ControlUnit {
 		} else if(opcode.equals("000010")) { // j, jal
 			Jump = "1";
 		} else if(opcode.equals("000011")) {
+			Jump = "1";
 			RegWrite = "10";
 		}
 	}

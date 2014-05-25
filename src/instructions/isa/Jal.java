@@ -12,7 +12,7 @@ public class Jal extends Instruction {
 		opcode = "000011";
 		
 		String extendedParams[] = parameters[0].split(",");
-		int jumpTarget = Integer.parseInt(extendedParams[3]);
+		int jumpTarget = Integer.parseInt(extendedParams[2]);
 		System.out.println("JAL: " + jumpTarget);
 		String deltaValue = Integer.toString(jumpTarget);
 		

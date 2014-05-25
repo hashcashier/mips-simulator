@@ -408,7 +408,6 @@ public class GUI {
 		int count = 0;
 		for (int q = 0; q < keys.length; q++) {
 			String key = (String) keys[q];
-			System.out.println(key + " HEEEELO");
 			values[count][0] = key;
 			values[count][1] = signals.get(key);
 			count++;
