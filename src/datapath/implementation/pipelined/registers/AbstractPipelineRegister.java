@@ -41,7 +41,10 @@ public abstract class AbstractPipelineRegister {
 	}
 
 	public void transferValues() {
-		for(int i = 0; i < outputNames.length; i++)
+		System.out.println("-------------------------------");
+		for(int i = 0; i < outputNames.length; i++) {
+			System.out.println(name + ' ' + outputNames[i] + ' ' + outputs[i] + " <---- " + getInputValue(outputNames[i]));
 			outputs[i] = getInputValue(outputNames[i]);
+		}
 	}
 }

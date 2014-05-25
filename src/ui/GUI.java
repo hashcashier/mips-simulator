@@ -43,6 +43,7 @@ public class GUI {
 	private JTable registerTable;
 	private JTable table;
 	private JTable memoryTable;
+	private JTable pipelineTable;
 	private JTextPane logTextPane;
 	private JTable reigsterTable;
 	private JTextArea editor;
@@ -284,6 +285,16 @@ public class GUI {
 		});
 		btnSetAddress.setBounds(865, 328, 117, 29);
 		frmOraka.getContentPane().add(btnSetAddress);
+		
+		JScrollPane pipelineRegisterScrollPane = new JScrollPane();
+		pipelineRegisterScrollPane.setBounds(662, 400, 197, 90);
+		frmOraka.getContentPane().add(pipelineRegisterScrollPane);
+
+		Object pipelineTableCols[] = { "Name", "Value" };
+		Object[][] pipelineData = getPipelineRegisterValues();
+
+		pipelineTable = new JTable(pipelineData, pipelineTableCols);
+		pipelineRegisterScrollPane.setViewportView(pipelineTable);
 
 		JScrollPane dataMemoryScrollPane = new JScrollPane();
 		dataMemoryScrollPane.setBounds(662, 47, 197, 115);
@@ -453,19 +464,24 @@ public class GUI {
 	private void setPipelineRegisterValues() {
 		Hashtable<String, String> registers = simulator
 				.getPipelineRegistersContents();
+		
+		setEXMEM("");
+		setIDEX("");
+		setIFID("");
+		setMEMWB("");
 
 		for (Entry<String, String> entry : registers.entrySet()) {
-			if (entry.getKey().equals("EX/MEM")
-					|| entry.getKey().equals("EXMEM"))
-				setEXMEM(entry.getValue());
-			else if (entry.getKey().equals("ID/EX")
-					|| entry.getKey().equals("IDEX"))
-				setIDEX(entry.getValue());
-			else if (entry.getKey().equals("IF/ID")
-					|| entry.getKey().equals("IFID"))
-				setIFID(entry.getValue());
+			if (entry.getKey().startsWith("EX/MEM")
+					|| entry.getKey().startsWith("EXMEM"))
+				setEXMEM(exmemVal.getText() + ' ' + entry.getKey() + entry.getValue());
+			else if (entry.getKey().startsWith("ID/EX")
+					|| entry.getKey().startsWith("IDEX"))
+				setIDEX(idexVal.getText() + ' ' + entry.getKey() + entry.getValue());
+			else if (entry.getKey().startsWith("IF/ID")
+					|| entry.getKey().startsWith("IFID"))
+				setIFID(ifidVal.getText() + ' ' + entry.getKey() + entry.getValue());
 			else
-				setMEMWB(entry.getValue());
+				setMEMWB(memwbVal.getText() + ' ' + entry.getKey() + entry.getValue());
 		}
 	}
 
@@ -548,8 +564,32 @@ public class GUI {
 		updateProgramMemoryTable();
 		updateRegistersTable();
 		updateControlSignalsTable();
-		updatePipelineRegistersData();
+		updatePipeLineRegistersTable();
 		log("PC: " + simulator.getProgramCounterValue());
+	}
+	
+	public Object[][] getPipelineRegisterValues() {
+		Hashtable<String, String> registers = simulator
+				.getPipelineRegistersContents();
+		
+		Object[][] res = new Object[registers.size()][2];
+		int i = 0;
+		for (Entry<String, String> entry : registers.entrySet()) {
+			res[i][0] = entry.getKey();
+			res[i++][1] = entry.getValue();
+		}
+		
+		return res;
+	}
+	
+	public void updatePipeLineRegistersTable() {
+		Object pipelineTableColumns[] = { "Title", "Value" };
+		Object[][] pipelineData = getPipelineRegisterValues();
+
+		DefaultTableModel model = new DefaultTableModel(pipelineData,
+				pipelineTableColumns);
+		pipelineTable.setModel(model);
+		model.fireTableDataChanged();
 	}
 
 	public void updatePipelineRegistersData() {
@@ -593,7 +633,7 @@ public class GUI {
 
 		DefaultTableModel model = new DefaultTableModel(programMemoryData,
 				programMemoryTableCols);
-		dataMemoryTable.setModel(model);
+		programMemoryTable.setModel(model);
 		model.fireTableDataChanged();
 	}
 
@@ -634,7 +674,7 @@ public class GUI {
 		if (!file.getName().endsWith(".asm")) {
 			file = new File(file.getAbsolutePath() + ".asm");
 			currentFilePath = file.getAbsolutePath();
-			System.out.println(currentFilePath);
+//			System.out.println(currentFilePath);
 		}
 
 		BufferedWriter outFile = null;

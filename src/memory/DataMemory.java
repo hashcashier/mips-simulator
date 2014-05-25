@@ -11,7 +11,7 @@ public class DataMemory {
 	public DataMemory(Memory hardwareMemory, String[] data) {
 		this.hardwareMemory = hardwareMemory;
 		for (int i = 0; i < data.length; i++) {
-			long address = i + Assembler.DM_OFFSET;
+			long address = 4*i + Assembler.DM_OFFSET;
 			hardwareMemory.write(address, data[i]);
 		}
 	}
@@ -19,8 +19,8 @@ public class DataMemory {
 	public String memoryAction(String memWrite, String memRead, String address,
 			String writeData) throws AddressNotFoundException,
 			WriteDataMoreThan32BitsException {
-		int read = memRead == "" ? 0 : Integer.parseInt(memRead, 2);
-		int write = memWrite == "" ? 0 : Integer.parseInt(memWrite, 2);
+		int read = memRead.equals("") ? 0 : Integer.parseInt(memRead, 2);
+		int write = memWrite.equals("") ? 0 : Integer.parseInt(memWrite, 2);
 		long addressKey = Long.parseLong(address, 2);
 		if (address.length() > 32)
 			throw new AddressNotFoundException();

@@ -17,6 +17,7 @@ public class InstructionFactory {
 			instructionClass = Class.forName("instructions.isa." + name);
 			constructor = instructionClass.getConstructor(String[].class, int[].class);
 			result = (Instruction) constructor.newInstance(parameters, types);
+			
 		} catch (NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -49,8 +49,10 @@ public class Simulator {
 	}
 
 	public void step() throws InvalidOperationException {
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
 		if(datapath != null)
-			datapath.nextStep();
+			if(!datapath.nextStep())
+				throw new InvalidOperationException();
 	}
 
 	public void run() throws InvalidOperationException {

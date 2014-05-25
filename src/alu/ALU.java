@@ -11,6 +11,12 @@ public class ALU {
 	private ALUControl control;
 
 	public ALU(String inputA, String inputB, ALUControl control) {
+		try {
+			System.out.println("ALU: " + inputA + ' ' + inputB + ' ' + control.decodeOperation());
+		} catch (InvalidOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.inputA = inputA;
 		this.inputB = inputB;
 		this.control = control;
@@ -50,6 +56,7 @@ public class ALU {
 			Class<?> commandClass = Class.forName(className);
 			Constructor<?> constructor = commandClass.getConstructor(Operation.class);
 			Command result = (Command) constructor.newInstance(op);
+			System.out.println(className +": " + result.execute().getResult());
 			return result.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
