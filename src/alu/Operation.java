@@ -28,8 +28,11 @@ public class Operation {
 		boolean zero = c.compareTo(BigInteger.ZERO) == 0;
 
 		String result = c.toString(2);
+		if(result.charAt(0) == '-')
+			result = result.substring(1);
 		while (result.length() < SIZE)
 			result = (c.compareTo(BigInteger.ZERO) >= 0 ? "0" : "1") + result;
+		
 		System.out.println("RAW RES: " + result);
 		return new Result(result.substring(0, SIZE), zero);
 	}
