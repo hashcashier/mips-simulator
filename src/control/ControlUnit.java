@@ -12,7 +12,7 @@ public class ControlUnit {
 	
 	public void setInput(String input) {
 		String opcode = input.substring(0, 6), funct = input.substring(26, 32);
-		System.out.println("Control Unit: " + input + " " + opcode + " " + funct);
+//		System.out.println("Control Unit: " + input + " " + opcode + " " + funct);
 		reset();
 		if(opcode.equals("000000")) {//rtype
 			if(funct.equals("001000")) {

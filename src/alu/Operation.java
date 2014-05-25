@@ -17,10 +17,10 @@ public class Operation {
 	public static BigInteger sign(String input) {
 		if (input.length() == SIZE && input.charAt(0) == '1') {
 			System.out.println("SigN: " + input + ' '
-					+ new BigInteger('-' + input.substring(1), 2));
+					+ new BigInteger(input, 2).not());
 			return new BigInteger(input, 2).subtract(BigInteger.ONE).not();
 		}
-		System.out.println("Sign: " + input + ' ' + new BigInteger(input, 2).toString(2));
+		System.out.println("Sign: " + input + ' ' + new BigInteger(input, 2));
 		return new BigInteger(input, 2);
 	}
 
