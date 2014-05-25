@@ -287,7 +287,7 @@ public class GUI {
 		frmOraka.getContentPane().add(btnSetAddress);
 		
 		JScrollPane pipelineRegisterScrollPane = new JScrollPane();
-		pipelineRegisterScrollPane.setBounds(755, 400, 297, 120);
+		pipelineRegisterScrollPane.setBounds(755, 400, 297, 220);
 		frmOraka.getContentPane().add(pipelineRegisterScrollPane);
 
 		Object pipelineTableCols[] = { "Name", "Value" };
@@ -342,7 +342,7 @@ public class GUI {
 		frmOraka.getContentPane().add(dataMemoryValueTextField);
 		dataMemoryValueTextField.setColumns(10);
 
-		JButton btnSetDataMemory = new JButton("Set");
+		JButton btnSetDataMemory = new JButton("Set DM");
 		btnSetDataMemory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setDataMemory(
@@ -363,7 +363,7 @@ public class GUI {
 		frmOraka.getContentPane().add(programMemoryValueTextField);
 		programMemoryValueTextField.setColumns(10);
 
-		JButton btnSpm = new JButton("Set");
+		JButton btnSpm = new JButton("Set PM");
 		btnSpm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setProgramMemory(
@@ -462,27 +462,21 @@ public class GUI {
 	}
 
 	private void setPipelineRegisterValues() {
-		Hashtable<String, String> registers = simulator
-				.getPipelineRegistersContents();
-		
-		setEXMEM("");
-		setIDEX("");
-		setIFID("");
-		setMEMWB("");
+		Hashtable<String, String> registers = simulator.getPipelineRegistersContents();
 
-		for (Entry<String, String> entry : registers.entrySet()) {
-			if (entry.getKey().startsWith("EX/MEM")
-					|| entry.getKey().startsWith("EXMEM"))
-				setEXMEM(exmemVal.getText() + ' ' + entry.getKey() + entry.getValue());
-			else if (entry.getKey().startsWith("ID/EX")
-					|| entry.getKey().startsWith("IDEX"))
-				setIDEX(idexVal.getText() + ' ' + entry.getKey() + entry.getValue());
-			else if (entry.getKey().startsWith("IF/ID")
-					|| entry.getKey().startsWith("IFID"))
-				setIFID(ifidVal.getText() + ' ' + entry.getKey() + entry.getValue());
-			else
-				setMEMWB(memwbVal.getText() + ' ' + entry.getKey() + entry.getValue());
-		}
+//		for (Entry<String, String> entry : registers.entrySet()) {
+//			if (entry.getKey().startsWith("EX/MEM")
+//					|| entry.getKey().startsWith("EXMEM"))
+//				setEXMEM(exmemVal.getText() + ' ' + entry.getKey() + entry.getValue());
+//			else if (entry.getKey().startsWith("ID/EX")
+//					|| entry.getKey().startsWith("IDEX"))
+//				setIDEX(idexVal.getText() + ' ' + entry.getKey() + entry.getValue());
+//			else if (entry.getKey().startsWith("IF/ID")
+//					|| entry.getKey().startsWith("IFID"))
+//				setIFID(ifidVal.getText() + ' ' + entry.getKey() + entry.getValue());
+//			else
+//				setMEMWB(memwbVal.getText() + ' ' + entry.getKey() + entry.getValue());
+//		}
 	}
 
 	public void runProgram() {
@@ -713,22 +707,6 @@ public class GUI {
 		} else {
 			log("File access not permitted by system");
 		}
-	}
-
-	public void setEXMEM(String val) {
-		exmemVal.setText(val);
-	}
-
-	public void setIDEX(String val) {
-		idexVal.setText(val);
-	}
-
-	public void setIFID(String val) {
-		ifidVal.setText(val);
-	}
-
-	public void setMEMWB(String val) {
-		memwbVal.setText(val);
 	}
 
 	private boolean isNumeric(String str) {
