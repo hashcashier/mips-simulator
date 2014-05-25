@@ -1,5 +1,7 @@
 package control;
 
+import java.util.Hashtable;
+
 public class ControlUnit {
 	private String ALUOp, RegDst, ALUSrc, Branch, Jump, JumpReg,
 			PCSrc, RegWrite, MemWrite, MemRead, MemToReg;
@@ -102,5 +104,29 @@ public class ControlUnit {
 
 	public synchronized String getMemToReg() {
 		return MemToReg;
+	}
+	
+	public synchronized Hashtable<String, String> getControlSignals(){
+		Hashtable<String, String> controlSignals = new Hashtable<String, String>();
+		
+		controlSignals.put("ALUOp", getALUOp());
+		controlSignals.put("RegDst", getRegDst());
+		controlSignals.put("ALUSrc", getALUSrc());
+		controlSignals.put("Branch", getBranch());
+		controlSignals.put("Jump", getJump());
+		controlSignals.put("JumpReg", getJumpReg());
+		controlSignals.put("PCSrc", getPCSrc());
+		controlSignals.put("RegWrite", getRegWrite());
+		controlSignals.put("MemWrite", getMemWrite());
+		controlSignals.put("MemRead", getMemRead());
+		controlSignals.put("MemToReg", getMemToReg());
+		
+		return controlSignals;
+	}
+	
+	public static Hashtable<String, String> getEmptyControlSignals(){
+		ControlUnit controlUnit = new ControlUnit();
+		controlUnit.reset();
+		return controlUnit.getControlSignals();
 	}
 }
